@@ -1,0 +1,5 @@
+time docker run \
+    --rm \
+    -it \
+    hello_bot \
+    sh -c 'cd /app; rm -rf cpanfile.snapshot local; carton install'
