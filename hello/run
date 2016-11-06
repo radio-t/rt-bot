@@ -1,0 +1,4 @@
+docker run \
+    --rm \
+    --publish 8080:8080 \
+    hello_bot

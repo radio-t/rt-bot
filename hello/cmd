@@ -1,0 +1,1 @@
+MOJO_MODE=production MOJO_LISTEN=http://*:8080 carton exec perl app.psgi daemon
