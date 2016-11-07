@@ -3,5 +3,6 @@ version: '2'
 services:
    rt-bot-memberberries:
     build: .
+    container_name: rt-bot-memberberries
     ports:
     - "8080:8080"

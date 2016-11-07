@@ -21,8 +21,7 @@ namespace memberberries.Controllers
             
             if (answer == null) {
                 HttpContext.Response.StatusCode = 417;
-                return null;
-                
+                return new JsonResult("");
             }
             
             HttpContext.Response.StatusCode = 201;
