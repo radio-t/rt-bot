@@ -14,7 +14,7 @@ $ curl -H "Content-type: application/json" -X POST http://localhost:8080/event -
 ## Ответ
 ```
 {
-  "text": "Я помню...",
+  "text": "О! Я помню...",
   "bot": "MemberBerries"
 }
 ```
