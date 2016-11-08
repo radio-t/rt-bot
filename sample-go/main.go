@@ -34,7 +34,7 @@ func main() {
 	}
 
 	reportErr := func(err error, w http.ResponseWriter) {
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusExpectationFailed)
 		fmt.Fprintf(w, "%v", err)
 	}
 
@@ -61,6 +61,7 @@ func main() {
 		}
 
 		log.Printf("%+v - %v - %s - %s", ev, time.Since(st), r.RemoteAddr, r.UserAgent())
+		w.WriteHeader(http.StatusCreated)
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		fmt.Fprintf(w, "%s", string(bresp))
 	})
