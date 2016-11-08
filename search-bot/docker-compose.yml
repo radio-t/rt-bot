@@ -1,0 +1,8 @@
+# Source repo: https://github.com/alehano/radiotbot
+version: '2'
+services:
+  bot:
+    image: akhalyapin/radiotbot
+    restart: always
+    ports:
+    - "8080:8080"
