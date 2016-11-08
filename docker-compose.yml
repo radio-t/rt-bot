@@ -17,6 +17,7 @@ services:
         depends_on:
             - hello
             - memberberries
+            - wiki-bot
 
     hello:
         build: hello
