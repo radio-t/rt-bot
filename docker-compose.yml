@@ -18,6 +18,7 @@ services:
             - hello
             - memberberries
             - wiki-bot
+            - search-bot
 
     hello:
         build: hello
@@ -47,6 +48,18 @@ services:
         build: wiki-bot
         container_name: wiki-bot
         hostname: wiki-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    search-bot:
+        build: search-bot
+        container_name: search-bot
+        hostname: search-bot
         restart: always
 
         logging:
