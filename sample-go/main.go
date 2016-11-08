@@ -61,8 +61,8 @@ func main() {
 		}
 
 		log.Printf("%+v - %v - %s - %s", ev, time.Since(st), r.RemoteAddr, r.UserAgent())
-		w.WriteHeader(http.StatusCreated)
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.WriteHeader(http.StatusCreated)
 		fmt.Fprintf(w, "%s", string(bresp))
 	})
 
