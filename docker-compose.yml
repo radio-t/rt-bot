@@ -20,7 +20,7 @@ services:
             - wiki-bot
             - search-bot
             - noter-bot
-            - rt-repl-bot
+            - repl-bot
 
     hello:
         build: hello
@@ -81,11 +81,11 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
-              
-    rt-repl-bot:
-        build: rt-repl-bot
-        container_name: rt-repl-bot
-        hostname: rt-repl-bot
+
+    repl-bot:
+        build: repl-bot
+        container_name: repl-bot
+        hostname: repl-bot
         restart: always
 
         logging:
