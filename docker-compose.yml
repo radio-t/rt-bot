@@ -1,0 +1,82 @@
+version: '2'
+services:
+
+    nginx:
+        build: .
+        container_name: nginx-bot
+        hostname: nginx-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+        ports:
+            - "8080:80"
+        depends_on:
+            - hello
+            - memberberries
+            - wiki-bot
+            - search-bot
+            - noter-bot
+
+    hello:
+        build: hello
+        container_name: hello-bot
+        hostname: hello-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    memberberries:
+        build: memberberries
+        container_name: memberberries-bot
+        hostname: memberberries-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    wiki-bot:
+        build: wiki-bot
+        container_name: wiki-bot
+        hostname: wiki-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    search-bot:
+        build: search-bot
+        container_name: search-bot
+        hostname: search-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    noter-bot:
+        build: noter-bot
+        container_name: noter-bot
+        hostname: noter-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
