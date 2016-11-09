@@ -7,7 +7,7 @@
 (defn handle-command [command]
   (try
     (let [result (eval (read-string command))]
-      {:status 401
+      {:status 201
        :body   {:text (str "<span>" (prn-str result) "</span>")
                 :bot  "REPL-bot"}})
     (catch Exception e
