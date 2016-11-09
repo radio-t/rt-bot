@@ -30,6 +30,7 @@ public class Storage {
         String res = "";
         switch (parts[1]) {
             case "note":
+            case "save":
                 res = saveNote(chatRequest);
                 break;
             case "list":
@@ -37,7 +38,7 @@ public class Storage {
                 break;
             case "clear":
                 storage.remove(chatRequest.username);
-                res = "history is empty";
+                res = "### Твоя история пуста, " + chatRequest.username;
                 break;
             default:
                 res = getHelpMessage();
@@ -51,8 +52,9 @@ public class Storage {
         if (story.isEmpty()) {
             return "Your story is empty";
         }
+        res += "### Вот твоя история, " + chatRequest.username;
         for (Map.Entry<String, String> entry : story.entrySet()) {
-            res += (entry.getKey() + " - " + entry.getValue() + "\n");
+            res += "\n * " + (entry.getKey() + " - " + entry.getValue());
         }
         return res;
     }
@@ -63,7 +65,7 @@ public class Storage {
         if (parts.length == 2) {
             userStory.put(getTime(), "");
             storage.put(chatRequest.username, userStory);
-            return "time saved without note";
+            return "### " + chatRequest.username + ", ты только что сохранил пустую временную заметку";
         } else {
             String note = "";
             for (int t = 2; t < parts.length; t++) {
@@ -72,7 +74,7 @@ public class Storage {
             note = note.trim();
             userStory.put(getTime(), note);
             storage.put(chatRequest.username, userStory);
-            return "note saved";
+            return "### " + chatRequest.username + ", сохранено";
         }
     }
 
@@ -85,8 +87,10 @@ public class Storage {
     }
 
     private String getHelpMessage() {
-        return "sbot note {text} - save current time to your list\n" +
-                "sbot list - get your current notes list\n" +
-                "sbot clear - clear your history list";
+        return "Бот может сохранять заметки привязанные к таймингу подкаста,\n" +
+                "доступно несколько команд\n" +
+                "* sbot note/save {text} - сохранить заметку\n" +
+                "* sbot list - показать список моих заметок\n" +
+                "* sbot clear - очистить список заметок";
     }
 }

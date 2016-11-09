@@ -52,12 +52,4 @@ public class Server {
         return null;
     }
 
-    private static String getCommand(ChatRequest chatRequest) {
-        String[] split = chatRequest.text.split(" ");
-        if (split.length < 2)
-            return "commands";
-        return split[1];
-    }
-
-
 }
