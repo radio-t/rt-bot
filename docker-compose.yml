@@ -19,6 +19,7 @@ services:
             - memberberries
             - wiki-bot
             - search-bot
+            - noter-bot
 
     hello:
         build: hello
