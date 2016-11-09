@@ -16,7 +16,7 @@ import (
 	"github.com/umputun/rt-bot/search-bot/config"
 )
 
-// GetShows gets shows data concurrently. Starts from "fromID" (included)
+// GetShows gets shows data concurrently. Starts from "fromID" (excluded)
 // Returns errors to "errHandler" function.
 func Get(fromID int, errHandler func(error)) *Shows {
 	shows := NewShows()
@@ -60,7 +60,7 @@ func fetchShowsLinks(fromID int) ([]string, error) {
 		if url, ok := s.Attr("href"); ok {
 			if ok, id := parseTitle(s.Text()); ok {
 				if fromID > 0 {
-					if id >= fromID {
+					if id > fromID {
 						links = append(links, config.RadioTURL+url)
 					}
 				} else {
