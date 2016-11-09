@@ -93,3 +93,16 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    stat-bot:
+        build: stat-bot
+        container_name: stat-bot
+        hostname: stat-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+			  
