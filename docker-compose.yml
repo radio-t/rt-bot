@@ -20,6 +20,7 @@ services:
             - wiki-bot
             - search-bot
             - noter-bot
+            - rt-repl-bot
 
     hello:
         build: hello
@@ -73,6 +74,18 @@ services:
         build: noter-bot
         container_name: noter-bot
         hostname: noter-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+              
+    rt-repl-bot:
+        build: rt-repl-bot
+        container_name: rt-repl-bot
+        hostname: rt-repl-bot
         restart: always
 
         logging:
