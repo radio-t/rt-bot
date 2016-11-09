@@ -67,3 +67,15 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    noter-bot:
+        build: noter-bot
+        container_name: noter-bot
+        hostname: noter-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
