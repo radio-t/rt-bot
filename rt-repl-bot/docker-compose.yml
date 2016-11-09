@@ -1,0 +1,4 @@
+hello:
+  build: .
+  ports:
+    - "8080:3000"
