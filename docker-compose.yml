@@ -83,7 +83,7 @@ services:
               max-file: "5"
 
     repl-bot:
-        build: repl-bot
+        build: rt-repl-bot
         container_name: repl-bot
         hostname: repl-bot
         restart: always
