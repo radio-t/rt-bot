@@ -7,10 +7,10 @@ import aiohttp.web
 import async_timeout
 
 GIPHY_API_KEY = os.environ.get('GIPHY_API_KEY', 'dc6zaTOxFJmzC')
-MY_NAME = os.environ.get('MY_NAME', 'Giphy')
+GIPHY_API_ENDPOINT = os.environ.get('GIPHY_API_ENDPOINT', 'http://api.giphy.com/v1/gifs/translate')
+GIPHY_API_TIMEOUT = int(os.environ.get('GIPHY_API_TIMEOUT', '3'))
 
-GIPHY_ENDPOINT = 'http://api.giphy.com/v1/gifs/translate'
-GIPHY_TIMEOUT = 3
+MY_NAME = os.environ.get('MY_NAME', 'Giphy')
 
 loop = asyncio.get_event_loop()
 web_app = aiohttp.web.Application(loop=loop)
@@ -57,7 +57,7 @@ async def giphy_image_response(giphy_response: aiohttp.ClientResponse):
 
 
 async def call_gyphy(search_string):
-    async with client_session.get(GIPHY_ENDPOINT, params={
+    async with client_session.get(GIPHY_API_ENDPOINT, params={
         's': search_string,
         'api_key': GIPHY_API_KEY,
     }) as client_response:
@@ -83,7 +83,7 @@ async def handle(request: aiohttp.web.Request):
     search_string = request_text[6:].strip()
 
     try:
-        with async_timeout.timeout(GIPHY_TIMEOUT):
+        with async_timeout.timeout(GIPHY_API_TIMEOUT):
             return await call_gyphy(search_string)
     except asyncio.TimeoutError:
         return giphy_timeout_response()
