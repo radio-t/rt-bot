@@ -44,8 +44,13 @@ async def giphy_image_response(giphy_response: aiohttp.ClientResponse):
     except json.decoder.JSONDecodeError:
         return wrap_response('Something bad happened :(')
 
-    giphy_image_url = giphy_data. \
-        get('data', {}). \
+    giphy_data_data = giphy_data.get('data', None)
+    # it can be a dict or an empty LIST o_O
+
+    if not giphy_data_data:
+        return wrap_response('I cannot understand **Giphy** response :(')
+
+    giphy_image_url = giphy_data_data. \
         get('images', {}). \
         get('fixed_height_small', {}). \
         get('webp', None)
