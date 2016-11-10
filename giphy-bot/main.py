@@ -88,7 +88,9 @@ async def handle(request: aiohttp.web.Request):
     search_string = request_text[5:].strip()
 
     if not search_string:
-        return wrap_response('Your search query is empty!')
+        return wrap_response('Hey, @{}, your search query is empty!'.format(
+            request_data.get('username', '')
+        ))
 
     try:
         with async_timeout.timeout(GIPHY_API_TIMEOUT):
