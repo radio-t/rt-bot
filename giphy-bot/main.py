@@ -82,10 +82,13 @@ async def handle(request: aiohttp.web.Request):
 
     request_text = request_data.get('text')
 
-    if not request_text.lower().startswith('giphy '):
+    if not request_text.lower().startswith('giphy'):
         return aiohttp.web.Response(status=417)
 
-    search_string = request_text[6:].strip()
+    search_string = request_text[5:].strip()
+
+    if not search_string:
+        return wrap_response('Your search query is empty!')
 
     try:
         with async_timeout.timeout(GIPHY_API_TIMEOUT):
