@@ -154,11 +154,15 @@ func webHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func query(q string) (string, error) {
-	if q == "поиск!" || q == "поиск !" {
-		return getHelp()
-	}
-
 	if strings.HasPrefix(q, "поиск") && strings.HasSuffix(q, "!") {
+		q = strings.Replace(q, "поиск", "", 1)
+		q = strings.Replace(q, "!", "", -1)
+		q = strings.TrimSpace(q)
+
+		if q == "" {
+			return getHelp()
+		}
+
 		return search.Query(searchIndex, q, allShows)
 	}
 
