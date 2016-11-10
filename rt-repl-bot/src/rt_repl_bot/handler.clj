@@ -1,44 +1,49 @@
 (ns rt-repl-bot.handler
-  (:use compojure.core ring.middleware.json)
-  (:import (java.util.concurrent TimeUnit TimeoutException FutureTask))
+  (:use compojure.core ring.middleware.json ring.middleware.session)
+  (:import (java.util.concurrent TimeoutException)
+           (java.io StringWriter))
   (:require [clojure.string :as str]
             [clojure.tools.logging :as log]
             [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [clojail.core :refer [sandbox]]
+            [clojail.testers :refer [secure-tester-without-def]]))
 
-(defmacro with-timeout [millis & body]
-  `(let [task# (FutureTask. (fn [] ~@body))
-         thread# (Thread. task# "repl-thread")]
-     (.setDaemon thread# true)
-     (try
-       (.start thread#)
-       (.get task# ~millis TimeUnit/MILLISECONDS)
-       (catch TimeoutException _#
-         (log/warn "Evaluation timed out in 5 seconds")
-         (.cancel task# true)
-         "Evaluation timed out in 5 seconds")
-       (finally
-         (.stop thread#)))))
-
-(defn eval-command [command]
-  (with-out-str
+(defn eval-command [sandbox command]
+  (with-open [out (StringWriter.)]
     (try
-      (print (eval (read-string command)))
-      (catch Exception e (print (.getMessage e))))))
+      (let [form (binding [*read-eval* false] (read-string command))
+            eval-result (sandbox form {#'*out* out})]
+        (str/join "\n" [out eval-result]))
+      (catch TimeoutException _
+        (print "Evaluation timed out in 5 seconds"))
+      (catch Exception e
+        (.getMessage e)))))
 
-(defn handle-command [command]
-  (let [eval-result (with-timeout 5000 (eval-command command))]
+(defn handle-command [sandbox command]
+  (let [eval-result (eval-command sandbox command)]
     (log/info "clj>" command " ~ " eval-result)
-    {:status 201
-     :body   {:text (str "`" eval-result "`")
-              :bot  "REPL-bot"}
+    {:status  201
+     :body    {:text (str "`" eval-result "`")
+               :bot  "REPL-bot"}
+     :session {"sb" sandbox}
      }))
+
+(defn create-sandbox []
+  (sandbox secure-tester-without-def
+           :timeout 5000
+           :init '(do (require '[clojure.repl :refer [doc source]])
+                      (future (Thread/sleep 600000)
+                              (-> *ns*
+                                  .getName
+                                  remove-ns)))))
 
 (defroutes app-routes
            (POST "/event" request
              (let [text (or (get-in request [:body "text"]) "")]
                (cond
-                 (str/starts-with? text "clj>") (handle-command (subs text 4))
+                 (str/starts-with? text "clj>") (let [sandbox (get-in request [:session "sb"] (create-sandbox))]
+                                                  (handle-command sandbox (subs text 4)))
                  :else {:status 417})))
            (route/not-found {:status 404}))
 
@@ -46,4 +51,5 @@
   (->
     (handler/site app-routes)
     (wrap-json-body)
+    (wrap-session)
     (wrap-json-response)))
