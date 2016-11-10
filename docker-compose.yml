@@ -118,3 +118,15 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    gif-bot:
+        build: gif-bot
+        container_name: gif-bot
+        hostname: gif-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
