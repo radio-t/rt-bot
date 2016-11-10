@@ -48,7 +48,7 @@ async def giphy_image_response(giphy_response: aiohttp.ClientResponse):
         get('data', {}). \
         get('images', {}). \
         get('fixed_height_small', {}). \
-        get('webp', {})
+        get('webp', None)
 
     if giphy_image_url is None:
         return wrap_response('I cannot understand **Giphy** response :(')
