@@ -2,7 +2,7 @@ version: '2'
 services:
 
     nginx:
-        build: .
+        image: umputun/nginx-le:latest
         container_name: nginx-bot
         hostname: nginx-bot
         restart: always
@@ -12,8 +12,21 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+        volumes:
+            - ./bin/etc/ssl:/etc/nginx/ssl
+            - ./bin/etc/nginx.conf:/etc/nginx/service.conf
+
         ports:
-            - "8080:80"
+            - "80:80"
+            - "443:443"
+
+        environment:
+           - TZ=America/Chicago
+           - LETSENCRYPT=true
+           - LE_EMAIL=umputun@gmail.com
+           - LE_FQDN=bot.radio-t.com
+
         depends_on:
             - hello
             - memberberries
