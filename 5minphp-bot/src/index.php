@@ -17,8 +17,14 @@ if (!$inputData || !isset($inputData['text']) || !is_string($inputData['text']))
 
 $username = $inputData['username'] ?? '';
 $displayname = $inputData['display_name'] ?? '';
-if ($username === BOT_NAME || $displayname === BOT_NAME) {
-    // prevent reply on self messages
+if ($username === BOT_NAME
+    || $displayname === BOT_NAME
+    || $username === 'rt-bot'
+    || $displayname === 'rt-bot'
+    || mb_stripos($inputData['text'], BOT_NAME) !== false) {
+
+    // without test chat it's not clear yet how messagees from the bot will look like
+    // so trying to check all possible conditions to prevent reply on self messages
     http_response_code(417);
     exit();
 }
