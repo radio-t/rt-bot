@@ -167,3 +167,15 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    brackets-bot:
+        build: brackets-bot
+        container_name: brackets-bot
+        hostname: brackets-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
