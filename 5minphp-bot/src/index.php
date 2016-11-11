@@ -5,13 +5,13 @@ define('BOT_NAME', 'Пятиминутка PHP');
 
 $input = file_get_contents('php://input');
 if (!$input) {
-    http_response_code(407);
+    http_response_code(417);
     exit();
 }
 
 $inputData = json_decode($input, true);
 if (!$inputData || !isset($inputData['text']) || !is_string($inputData['text'])) {
-    http_response_code(407);
+    http_response_code(417);
     exit();
 }
 
@@ -19,7 +19,7 @@ $username = $inputData['username'] ?? '';
 $displayname = $inputData['display_name'] ?? '';
 if ($username === BOT_NAME || $displayname === BOT_NAME) {
     // prevent reply on self messages
-    http_response_code(407);
+    http_response_code(417);
     exit();
 }
 
@@ -30,13 +30,13 @@ if (mb_stripos($inputData['text'], 'пятиминутка обновись') !=
 }
 
 if (!hasWordPhp($inputData['text'])) {
-    http_response_code(407);
+    http_response_code(417);
     exit();
 }
 
 $fact = getRandomFact($inputData['text']);
 if (!$fact) {
-    http_response_code(407);
+    http_response_code(417);
     exit();
 }
 
