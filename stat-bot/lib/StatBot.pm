@@ -5,10 +5,12 @@ use warnings;
 use JSON;
 use utf8;
 use Encode;
+use Digest::MD5 qw/md5_hex/;
 
 my $NAMES = {};
 my $MYSTEM_PATH = '';
 my $CUT = 5;
+my $SECRET = 'e615d5f8426a238ea8b15445c9ce8fea';
 
 my $BABBLERS = {
     'total' => {},
@@ -23,7 +25,8 @@ sub new {
 
     my $self = {
         @_,
-        'last_action_time'   => time(),
+        'last_action_time'  => time(),
+        'buffer'            => [],
     };
 
     bless($self, $class);
@@ -39,6 +42,14 @@ sub init {
     else {
         $MYSTEM_PATH = '/stat-bot/mystem';
     }
+
+    $BABBLERS = {
+        'total' => {},
+    };
+    $WORDS = {
+        'total' => {},
+    };
+    $self->{'buffer'} = [];
 
     return $self;
 }
@@ -59,7 +70,7 @@ sub hello {
     return 'Привет! Меня зовут stat-bot v 0.1 и я слежу за вашим базаром!';
 }
 
-sub catch_action {
+sub sb_catch_action {
     my $self = shift;
     my $data = shift || '';
     my $r = '';
@@ -73,25 +84,38 @@ sub catch_action {
         my $last_time = $self->last_action_time( time() );
 
         if ( $text =~ /кто.+?болтун/ ) {
-            $r = $self->who_is_babbler( $text =~ /сегодня/ );
+            $r = $self->sb_who_is_babbler( $text =~ /сегодня/ );
         }
         elsif ( $text =~ /топ болтунов/ ) {
-            $r = $self->babblers_top( $text =~ /сегодня/ );
+            $r = $self->sb_babblers_top( $text =~ /сегодня/ );
         }
         elsif ( $text =~ /о ч(е|ё)м.+?говорили/ ) {
-            $r = $self->topic_top( 'S' );
+            $r = $self->sb_topic_top( 'S' );
         }
         elsif ( $text =~ /как в целом/ ) {
-            $r = $self->topic_top( 'A' );
+            $r = $self->sb_topic_top( 'A' );
         }
         elsif ( $text =~ /а что делать/ ) {
-            $r = $self->topic_top( 'V' );
+            $r = $self->sb_topic_top( 'V' );
         }
         elsif ( $text =~ /сколько раз.+?слово (.+?)\?/ ) {
-            $r = $self->count_word( $1 );
+            $r = $self->sb_count_word( $1 );
         }
         elsif ( $text =~ /давайте познакомимся/ ) {
-            $r = $self->hello;
+            $r = $self->sb_hello;
+        }
+        elsif ( $data->{'action'} ) {
+            if ( $self->check_rights( $data ) ) {
+                if ( $data->{'action'} eq 'configure' ) {
+                    $self->sb_configure( $data );
+                }
+                if ( $data->{'action'} eq 'reset' ) {
+                    $self->init;
+                }
+                elsif ( $data->{'action'} eq 'internals' ) {
+                    $r = $self->sb_internals;
+                }
+            }
         }
         else {
             $self->update_stat( $data );
@@ -102,6 +126,20 @@ sub catch_action {
     }
 
     return $r;
+}
+
+sub check_rights {
+    my $self = shift;
+    my $data = shift || {};
+    my $is = 0;
+
+    if ( $data->{'secret'} ) {
+        if ( md5_hex( $data->{'secret'} ) eq $SECRET ) {
+            $is = 1;
+        }
+    }
+
+    return $is;
 }
 
 sub get_active_day {
@@ -125,21 +163,26 @@ sub get_active_day {
     return $day;
 }
 
-sub update_stat {
+sub push_text {
     my $self = shift;
-    my $data = shift || {};
+    my $text = shift || '';
+
+    push @{$self->{'buffer'}}, $text;
+
+    return $self;
+}
+
+sub process_line_buffer {
+    my $self = shift;
+
+    return $self unless ( @{$self->{'buffer'}} );
 
     my $active_day = $self->get_active_day;
-
-    $NAMES->{ $data->{'username'} } = $data->{'display_name'};
-
-    $BABBLERS->{'total'}->{ $data->{'username'} } ++;
-    $BABBLERS->{ $active_day }->{ $data->{'username'} } ++;
 
     my $fp;
     my $fname = rand(100).'.tmp';
     open( $fp, ">:encoding(UTF-8)", $fname );
-    print $fp $data->{'text'};
+    print $fp join( "\n", @{$self->{'buffer'}} );
     close( $fp );
 
     my $out = `$MYSTEM_PATH -e utf-8 -nli $fname`;
@@ -159,6 +202,24 @@ sub update_stat {
     }
     unlink $fname;
 
+    $self->{'buffer'} = [];
+
+    return $self;
+}
+
+sub update_stat {
+    my $self = shift;
+    my $data = shift || {};
+
+    my $active_day = $self->get_active_day;
+
+    $NAMES->{ $data->{'username'} } = $data->{'display_name'};
+
+    $BABBLERS->{'total'}->{ $data->{'username'} } ++;
+    $BABBLERS->{ $active_day }->{ $data->{'username'} } ++;
+
+    $self->push_text( $data->{'text'} || '' );
+
     return $self;
 }
 
@@ -175,7 +236,7 @@ sub get_babblers_top {
     return sort { $target_map->{$b} <=> $target_map->{$a} } keys( %{$target_map} );
 }
 
-sub who_is_babbler {
+sub sb_who_is_babbler {
     my $self = shift;
     my $is_today = shift || 0;
     my $r = 'И покойники с косами стоять, и тишинаааа...';
@@ -195,7 +256,7 @@ sub who_is_babbler {
     return $r;
 }
 
-sub babblers_top {
+sub sb_babblers_top {
     my $self = shift;
     my $is_today = shift || 0;
     my $r = 'И покойники с косами стоять, и тишинаааа...';
@@ -214,7 +275,7 @@ sub babblers_top {
     return $r;
 }
 
-sub topic_top {
+sub sb_topic_top {
     my $self = shift;
     my $type = shift;
     my $r = '';
@@ -226,6 +287,8 @@ sub topic_top {
     };
 
     $r = $R->{$type};
+
+    $self->process_line_buffer;
 
     my $target = $self->get_active_day;
 
@@ -243,11 +306,12 @@ sub topic_top {
     return $r;
 }
 
-sub count_word {
+sub sb_count_word {
     my $self = shift;
     my $word = shift || '';
     my $r = 'Чот незнаю слова '.$word.' ((( Я считаю только существительные...';
 
+    $self->process_line_buffer;
     my $target = $self->get_active_day;
     if ( $WORDS->{$target}->{'S'}->{$word} ) {
         my $c = $WORDS->{$target}->{'S'}->{$word};
@@ -257,6 +321,24 @@ sub count_word {
     }
 
     return $r;
+}
+
+sub sb_internals {
+    my $self = shift;
+    return {
+        'bubblers'  => $BABBLERS,
+        'words'     => $WORDS,
+        'lines'     => $self->{'buffer'}
+    }
+}
+
+sub sb_configure {
+    my $self = shift;
+    my $data = shift || {};
+
+    $CUT = $data->{'cut'} || $CUT;
+
+    return $self;
 }
 
 sub flush_debug_data {
