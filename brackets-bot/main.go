@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -25,14 +26,6 @@ type response struct {
 func main() {
 	log.Printf("brackets-bot")
 
-	reverse := func(s string) string {
-		runes := []rune(s)
-		for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
-			runes[i], runes[j] = runes[j], runes[i]
-		}
-		return string(runes)
-	}
-
 	reportErr := func(err error, w http.ResponseWriter) {
 		w.WriteHeader(http.StatusExpectationFailed)
 		fmt.Fprintf(w, "%v", err)
@@ -53,7 +46,20 @@ func main() {
 			return
 		}
 
-		resp := response{Bot: botID, Text: reverse(ev.Text)}
+		text_resp, err := processString(ev.Text)
+		if err != nil {
+			reportErr(err, w)
+			return
+		}
+		if text_resp == "" {
+			reportErr(errors.New("Empty result"), w)
+			return
+		}
+
+		resp := response{
+			Bot:  botID,
+			Text: fmt.Sprintf("%s\nЗакрывай скобки, @%s !!!", text_resp, ev.Username),
+		}
 		bresp, err := json.Marshal(resp)
 		if err != nil {
 			reportErr(err, w)
