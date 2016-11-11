@@ -23,7 +23,7 @@ type response struct {
 }
 
 func main() {
-	log.Printf("brackets-bot bot")
+	log.Printf("brackets-bot")
 
 	reverse := func(s string) string {
 		runes := []rune(s)
