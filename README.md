@@ -40,7 +40,7 @@
 - Можно убедиться, что он зарегистрирован сделав `GET` на https://bot.radio-t.com/list
 - Можно к нему обратиться, послав `POST` на https://bot.radio-t.com/api/:botname и это прийдет в ваш /event
  ```
- > http POST https://bot.radio-t.com/api/hello text=Привет username=user123 display_name:Вася
+ > http POST https://bot.radio-t.com/api/hello/event text=Привет username=user123 display_name:Вася
  HTTP/1.1 201 Created
  Connection: keep-alive
  Content-Length: 31
