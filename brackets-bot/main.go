@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const botID = "sample-go"
+const botID = "brackets-bot"
 
 type event struct {
 	Text        string `json:"text"`
@@ -23,7 +23,7 @@ type response struct {
 }
 
 func main() {
-	log.Printf("sample-go bot")
+	log.Printf("brackets-bot bot")
 
 	reverse := func(s string) string {
 		runes := []rune(s)
