@@ -37,7 +37,7 @@ public class Server {
 
             if (chatRequest.startMessage()) {
                 storage.setStartTime(LocalDateTime.now());
-                halt(417);
+                return mapper.writeValueAsString(Response.podcastStarted());
             }
             if (!chatRequest.text.startsWith("sbot")) {
                 halt(417);
