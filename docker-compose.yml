@@ -34,6 +34,7 @@ services:
             - search-bot
             - noter-bot
             - repl-bot
+            - 5minphp-bot
 
     hello:
         build: hello
@@ -135,6 +136,18 @@ services:
         build: giphy-bot
         container_name: giphy-bot
         hostname: giphy-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    5minphp-bot:
+        build: 5minphp-bot
+        container_name: 5minphp-bot
+        hostname: 5minphp-bot
         restart: always
 
         logging:
