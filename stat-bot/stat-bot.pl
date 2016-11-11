@@ -17,7 +17,7 @@ post '/event' => sub {
         $data = from_json( $c->req->body, { 'utf8' => 1 } ) || {};
     };
 
-    my $response = $c->bot->catch_action( $data );
+    my $response = $c->bot->sb_catch_action( $data );
     if ( $response ) {
         $c->render(
             status => 201,
