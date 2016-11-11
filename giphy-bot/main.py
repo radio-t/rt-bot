@@ -28,7 +28,7 @@ def wrap_response(text):
 
 
 def giphy_timeout_response():
-    return wrap_response('**Giphy** did not responded in 3 seconds :(')
+    return wrap_response('**Giphy** did not responded in {} seconds :('.format(GIPHY_API_TIMEOUT))
 
 
 def giphy_error_response(giphy_response: aiohttp.ClientResponse):
@@ -48,7 +48,7 @@ async def giphy_image_response(giphy_response: aiohttp.ClientResponse):
     # it can be a dict or an empty LIST o_O
 
     if not giphy_data_data:
-        return wrap_response('**Giphy** have not found anything :(')
+        return wrap_response('**Giphy** has not found anything :(')
 
     giphy_image_url = giphy_data_data. \
         get('images', {}). \
@@ -81,8 +81,9 @@ async def handle(request: aiohttp.web.Request):
         return aiohttp.web.Response(status=400)
 
     request_text = request_data.get('text')
+    username = request_data.get('username', None)
 
-    if not request_text.lower().startswith('giphy'):
+    if not request_text.lower().startswith('giphy') or username == 'rt-bot':
         return aiohttp.web.Response(status=417)
 
     search_string = request_text[5:].strip()
