@@ -4,20 +4,20 @@ import (
 	"errors"
 )
 
-const openingBrackets = [...]rune{'(', '[', '{', '<', '«'}
-const closingBrackets = [...]rune{')', ']', '}', '>', '»'}
+var openingBrackets = [...]rune{'(', '[', '{', '<', '«'}
+var closingBrackets = [...]rune{')', ']', '}', '>', '»'}
 
 var inconsistentError = errors.New("Stack is inconsistent")
 var emptyError = errors.New("Stack is empty")
 
-type bracketsStack []rune;
+type bracketsStack []rune
 
 func (a bracketsStack) pop() (rune, error) {
+	var s rune
 	if len(a) < 1 {
-		return nil, emptyError
+		return s, emptyError
 	} else {
-		var s rune
-		s, a = a[len(a) - 1], a[:len(a) - 1]
+		s, a = a[len(a)-1], a[:len(a)-1]
 		return s, nil
 	}
 }
