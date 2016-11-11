@@ -155,3 +155,15 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    loro-bot:
+        build: loro-bot
+        container_name: loro-bot
+        hostname: loro-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
