@@ -48,7 +48,7 @@ async def giphy_image_response(giphy_response: aiohttp.ClientResponse):
     # it can be a dict or an empty LIST o_O
 
     if not giphy_data_data:
-        return wrap_response('I cannot understand **Giphy** response :(')
+        return wrap_response('**Giphy** have not found anything :(')
 
     giphy_image_url = giphy_data_data. \
         get('images', {}). \
