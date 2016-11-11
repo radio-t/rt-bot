@@ -179,3 +179,15 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    guido-bot:
+        build: guido-bot
+        container_name: guido-bot
+        hostname: guido-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
