@@ -12,21 +12,22 @@ var emptyError = errors.New("Stack is empty")
 
 type bracketsStack []rune
 
-func (a bracketsStack) pop() (rune, error) {
+func (a *bracketsStack) pop() (rune, error) {
 	var s rune
-	if len(a) < 1 {
+	if len(*a) < 1 {
 		return s, emptyError
 	} else {
-		s, a = a[len(a)-1], a[:len(a)-1]
+		s = (*a)[len(*a)-1]
+		*a = (*a)[:len(*a)-1]
 		return s, nil
 	}
 }
 
-func (a bracketsStack) push(s rune) {
-	a = append(a, s)
+func (a *bracketsStack) push(s rune) {
+	*a = append(*a, s)
 }
 
-func (a bracketsStack) processSymbol(s rune) error {
+func (a *bracketsStack) processSymbol(s rune) error {
 	for _, opening_bracket := range openingBrackets {
 		if s == opening_bracket {
 			a.push(s)
@@ -61,4 +62,16 @@ func (a bracketsStack) getResult() []rune {
 		}
 	}
 	return runes
+}
+
+func processString(str string) (string, error) {
+	runes := []rune(str)
+	brackets_stack := bracketsStack{}
+	for _, s := range runes {
+		err := brackets_stack.processSymbol(s)
+		if err != nil {
+			return "", err
+		}
+	}
+	return string(brackets_stack.getResult()), nil
 }
