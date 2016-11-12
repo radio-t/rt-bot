@@ -7,4 +7,8 @@ public class Response {
     public Response(String s) {
         this.text = s;
     }
+
+    public static Response podcastStarted() {
+        return new Response("Начинаю записывать заметки с этого момента.");
+    }
 }

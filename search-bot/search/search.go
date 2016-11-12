@@ -37,10 +37,6 @@ func ReindexAll(index bleve.Index, shows *shows.Shows) error {
 }
 
 func Query(index bleve.Index, q string, allShows *shows.Shows) (string, error) {
-	q = strings.Replace(q, "поиск", "", 1)
-	q = strings.Replace(q, "!", "", -1)
-	q = strings.TrimSpace(q)
-
 	size := config.DefaultSearchResults
 
 	// Check if results count set

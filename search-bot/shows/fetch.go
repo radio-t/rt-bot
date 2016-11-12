@@ -139,8 +139,8 @@ func fetchShow(url string) (Show, error) {
 func parseTitle(title string) (bool, int) {
 	title = strings.TrimSpace(strings.ToLower(title))
 	if strings.HasPrefix(title, "радио") {
-		parts := strings.Split(title, " ")
-		if len(parts) == 2 {
+		parts := strings.Fields(title)
+		if len(parts) >= 2 {
 			if num, err := strconv.Atoi(parts[1]); err == nil {
 				return true, num
 			}
