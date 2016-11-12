@@ -20,6 +20,19 @@ func sendError(w http.ResponseWriter, err error) {
 	w.WriteHeader(http.StatusExpectationFailed)
 }
 
+func info(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != "GET" {
+		return
+	}
+
+	info := fmt.Sprintf(`{"author": "%v", "info": "%v", "commands": "%v"}`, BotAuthor, BotDescription, BotCommand)
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "%s", info)
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
@@ -76,6 +89,7 @@ func panicRecover(f func(w http.ResponseWriter, r *http.Request)) func(w http.Re
 
 func main() {
 
+	http.HandleFunc("/info", panicRecover(info))
 	http.HandleFunc("/event", panicRecover(handler))
 
 	fmt.Printf("Start listening server on port %v", Port)
