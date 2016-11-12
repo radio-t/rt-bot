@@ -3,6 +3,16 @@ define('LOCAL_FILE', __DIR__ . '/phpfact.txt');
 define('REMOTE_FILE', 'https://raw.githubusercontent.com/pqr/5minphp-bot/master/phpfact.txt');
 define('BOT_NAME', 'Пятиминутка PHP');
 
+if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/info') {
+    http_response_code(200);
+    print json_encode([
+        'author' => 'Пётр Мязин (https://twitter.com/PetrMyazin)',
+        'info' => 'Если в чате упоминается PHP, то "Пятиминутка PHP" сообщает какой-то интересный и полезный факт об этом языке программирования! База знаний постоянно пополняется!',
+        'commands' => []
+    ]);
+    exit();
+}
+
 $input = file_get_contents('php://input');
 if (!$input) {
     http_response_code(417);
