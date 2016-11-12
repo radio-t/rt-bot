@@ -2,7 +2,7 @@
 
 write chat message: **wiki json** 
 
-https://bot.radio-t.com/api/wiki-bot/event?text=**wiki%20json**&username=mike&display_name=shem
+https://bot.radio-t.com/api/wiki-bot/event?text=wiki%20json&username=mike&display_name=shem
 
 return url to russian wiki: **https://ru.wikipedia.org/wiki/JSON**
 
