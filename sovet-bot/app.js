@@ -1,6 +1,6 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var rp = require('request-promise');
+const express = require('express');
+const bodyParser = require('body-parser');
+const rp = require('request-promise');
 
 var app = express(), port = 8080;
 
@@ -12,12 +12,12 @@ app
 .use(bodyParser.urlencoded({ extended: false }))
 .use(bodyParser.json())
 
-.post('/event', function(req, res, next) {
+.post('/event', (req, res, next) => {
 	var msg = req.body;
 
 	if(/совет|грей|грэй|gray|как\sжить|подскажите|\?/i.test(msg.text)) {
 		rp('http://fucking-great-advice.ru/api/random')
-		.then(function(r) {
+		.then(r => {
 			var sovet = 'Совета нет(';
 			try {
 				r = JSON.parse(r);
@@ -32,7 +32,7 @@ app
 			.end();
 
 		})
-		.catch(function() {
+		.catch(() => {
 			res.sendStatus(417);
 		});
 	} else {
