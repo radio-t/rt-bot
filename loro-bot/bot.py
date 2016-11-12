@@ -84,8 +84,21 @@ def event_handler():
 
     return Response(
         response=json.dumps({'text': result, 'bot': BOTNAME}),
-        status=200,
+        status=201,
         mimetype="application/json"
+    )
+
+
+def info_handler():
+    keys_str = ",".join(list(current_app.text_models.keys()))
+    return Response(
+        response=json.dumps({
+            'author': "astoliarov",
+            "info": "Бот, генератор предложений, на основе твиттер аккаунтов. Есть корпусы для генерации твитов от {}".
+                format(keys_str)
+        }),
+        status=200,
+        mimetype="application/json",
     )
 
 
@@ -108,7 +121,8 @@ def start_app():
     app.text_models = get_text_models()
     app.config.DEBUG = True
 
-    app.add_url_rule('/event', 'event', event_handler, methods=['POST',])
+    app.add_url_rule('/event', 'event', event_handler, methods=['POST',], strict_slashes=False)
+    app.add_url_rule('/info', 'info', info_handler, methods=['GET',], strict_slashes=False)
 
     return app
 
