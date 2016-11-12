@@ -1,6 +1,6 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const rp = require('request-promise');
+var express = require('express');
+var bodyParser = require('body-parser');
+var rp = require('request-promise');
 
 var app = express(), port = 8080;
 
@@ -17,7 +17,7 @@ app
 
 	if(/совет|грей|грэй|gray|как\sжить|подскажите|\?/i.test(msg.text)) {
 		rp('http://fucking-great-advice.ru/api/random')
-		.then(r => {
+		.then(function(r) {
 			var sovet = 'Совета нет(';
 			try {
 				r = JSON.parse(r);
@@ -32,7 +32,7 @@ app
 			.end();
 
 		})
-		.catch(() => {
+		.catch(function() {
 			res.sendStatus(417);
 		});
 	} else {
