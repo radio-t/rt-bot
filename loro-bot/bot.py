@@ -108,7 +108,7 @@ def start_app():
     app.text_models = get_text_models()
     app.config.DEBUG = True
 
-    app.add_url_rule('/event', 'event', event_handler, methods=['POST',])
+    app.add_url_rule('/event', 'event', event_handler, methods=['POST',], strict_slashes=False)
 
     return app
 
