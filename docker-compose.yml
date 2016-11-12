@@ -218,3 +218,15 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    sovet-bot:
+        build: sovet-bot
+        container_name: sovet-bot
+        hostname: sovet-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
