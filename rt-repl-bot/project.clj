@@ -7,4 +7,4 @@
                  [clojail "1.0.6"]]
   :jvm-opts ["-Djava.security.policy=.java.policy"]
   :plugins [[lein-ring "0.9.7"]]
-  :ring {:handler rt-repl-bot.handler/app} :port 3000)
+  :ring {:handler rt-repl-bot.handler/app :port 3000})
