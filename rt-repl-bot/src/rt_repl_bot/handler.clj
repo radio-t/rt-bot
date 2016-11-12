@@ -39,6 +39,11 @@
                                   remove-ns)))))
 
 (defroutes app-routes
+           (GET "/info" []
+             {:status 200
+              :body   {:author   "SimY4",
+                       :info     "Clojure REPL bot",
+                       :commands ["clj> (do\n\t(prn \"Весь текст после префикса 'clj>' будет вычислен как форма Clojure. Например:\")\n\t(+ 5 5))"]}})
            (POST "/event" request
              (let [text (or (get-in request [:body "text"]) "")]
                (cond
