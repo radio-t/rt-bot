@@ -9,7 +9,7 @@ COPY package.json /usr/src/app/
 RUN npm install
 
 # Bundle app source
-COPY . /go/src/github.com/umputun/rt-bot/sovet-bot
+COPY . /usr/src/app
 
 EXPOSE 8080
 CMD [ "npm", "start" ]
