@@ -9,15 +9,15 @@ KARMA_INCR = 1
 KARMA_DECR = 2
 KARMA_STAT = 3
 
-KARMA_STAT_REGEXP = re.compile(r'^/karma ([\w_]+)$')
-KARMA_INCR_REGEXP = re.compile(r'^([\w_]+)\+\+$')
-KARMA_DECR_REGEXP = re.compile(r'^([\w_]+)\-\-$')
+KARMA_STAT_REGEXP = re.compile(r'^/karma ([\w_\-]+)$')
+KARMA_INCR_REGEXP = re.compile(r'^([\w_\-]+)\+\+$')
+KARMA_DECR_REGEXP = re.compile(r'^([\w_\-]+)\-\-$')
 
 
 class Message:
 
     def __init__(self, username, text, display_name):
-        self.username = username
+        self.username = username.lower()
         self.text = text
         self.display_name = display_name
 
@@ -41,7 +41,7 @@ class KarmaCmd:
 
     def __init__(self, type_, username):
         self.type = type_
-        self.username = username
+        self.username = username.lower()
 
     @classmethod
     def from_message(cls, message: Message):
