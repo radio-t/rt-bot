@@ -35,6 +35,7 @@ services:
             - noter-bot
             - repl-bot
             - 5minphp-bot
+            - karma-bot
 
     hello:
         build: hello
@@ -185,6 +186,27 @@ services:
         container_name: guido-bot
         hostname: guido-bot
         restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    karma-bot-storage:
+      image: redis:3-alpine
+      container_name: karma-bot-storage
+      hostname: karma-bot-storage
+
+    karma-bot:
+        build: karma-bot
+        container_name: karma-bot
+        hostname: karma-bot
+        restart: always
+        environment:
+          - REDIS_HOST=karma-bot-storage
+        depends_on:
+          - karma-bot-storage
 
         logging:
           driver: json-file
