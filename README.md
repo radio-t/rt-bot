@@ -39,7 +39,8 @@
 ### Как проверить бот в реальной жизни?
 - Ваш бот будет установлен на https://bot.radio-t.com
 - Можно убедиться, что он зарегистрирован сделав `GET` на https://bot.radio-t.com/list
-- Можно к нему обратиться, послав `POST` на https://bot.radio-t.com/api/:botname и это прийдет в ваш /event
+- Можно к нему обратиться, послав `POST` на https://bot.radio-t.com/api/:botname/event и это прийдет в ваш /event
+- Или послать `GET` на https://bot.radio-t.com/api/:botname/info и это прийдет в ваш /info
  ```
  > http POST https://bot.radio-t.com/api/hello/event text=Привет username=user123 display_name:Вася
  HTTP/1.1 201 Created
