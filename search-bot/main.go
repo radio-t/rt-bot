@@ -23,12 +23,27 @@ import (
 	"gopkg.in/robfig/cron.v2"
 )
 
-const helpTextMd = "`Поиск!` - помощь\n`Поиск [запрос[:число результатов]]!` - поиск по выпускам\n`Выпуск [номер выпуска]!` - содержание выпуска\n\nВ запросе поддерживаются `-` и `+` префиксы и маска `*`\nПримеры: `Выпуск 520!`, `Поиск docker swarm!`, `Поиск +яндекс* +google :10!`\n"
-
 var (
 	searchIndex bleve.Index
 	allShows    *shows.Shows
 )
+
+type reqData struct {
+	Text        string `json:"text"`
+	Username    string `json:"username"`
+	DisplayName string `json:"display_name"`
+}
+
+type respData struct {
+	Text string `json:"text"`
+	Bot  string `json:"bot"`
+}
+
+type infoData struct {
+	Author   string   `json:"author"`
+	Info     string   `json:"info"`
+	Commands []string `json:"commands"`
+}
 
 func main() {
 	allShows = shows.Load()
@@ -62,7 +77,8 @@ func main() {
 	log.Printf("Total shows: %d, last show #%d\n", allShows.Len(), allShows.Last().ID)
 	log.Printf("Bot running at %s\n", config.Port)
 
-	http.HandleFunc("/event", panicRecover(webHandler))
+	http.HandleFunc("/event", panicRecover(eventHandler))
+	http.HandleFunc("/info", panicRecover(infoHandler))
 	if err := http.ListenAndServe(config.Port, nil); err != nil {
 		log.Fatalf("failed to start server, %v", err)
 	}
@@ -105,27 +121,27 @@ func update(allShows *shows.Shows, index bleve.Index) {
 	log.Printf("%d show(s) updated\n", count)
 }
 
-func webHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
+func reportErr(err error, w http.ResponseWriter) {
+	w.WriteHeader(http.StatusExpectationFailed)
+	if err != nil {
+		fmt.Fprintf(w, "%v", err)
+	}
+}
+
+func jsonResponse(w http.ResponseWriter, code int, data interface{}) {
+	out, err := json.Marshal(data)
+	if err != nil {
+		reportErr(err, w)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(code)
+	fmt.Fprintf(w, "%s", out)
+}
 
-	type reqData struct {
-		Text        string `json:"text"`
-		Username    string `json:"username"`
-		DisplayName string `json:"display_name"`
-	}
-
-	type respData struct {
-		Text string `json:"text"`
-		Bot  string `json:"bot"`
-	}
-
-	reportErr := func(err error, w http.ResponseWriter) {
-		w.WriteHeader(http.StatusExpectationFailed)
-		if err != nil {
-			fmt.Fprintf(w, "%v", err)
-		}
+func eventHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		return
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -143,14 +159,15 @@ func webHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	out, err := json.Marshal(respData{Text: answer, Bot: config.BotName})
-	if err != nil {
-		reportErr(err, w)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "%s", out)
+	jsonResponse(w, http.StatusCreated, respData{Text: answer, Bot: config.BotName})
+}
+
+func infoHandler(w http.ResponseWriter, r *http.Request) {
+	jsonResponse(w, http.StatusOK, infoData{
+		Author:   config.Author,
+		Info:     config.Info,
+		Commands: config.Commans,
+	})
 }
 
 func query(q string) (string, error) {
@@ -174,7 +191,12 @@ func query(q string) (string, error) {
 }
 
 func getHelp() (string, error) {
-	return helpTextMd, nil
+	help := config.Info
+	help += "\n\n**Команды:**\n"
+	for _, cmd := range config.Commans {
+		help += cmd + "\n"
+	}
+	return help, nil
 }
 
 func getShowDetail(q string) (string, error) {
