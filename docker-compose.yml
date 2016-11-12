@@ -36,6 +36,11 @@ services:
             - repl-bot
             - 5minphp-bot
             - karma-bot
+            - loro-bot
+            - guido-bot
+            - giphy-bot
+            - gif-bot
+            - stat-bot
 
     hello:
         build: hello
