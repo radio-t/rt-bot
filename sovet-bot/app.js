@@ -12,6 +12,11 @@ app
 .use(bodyParser.urlencoded({ extended: false }))
 .use(bodyParser.json())
 
+.get('/event', (req, res, next) => {
+	res
+	.json({name: 'sovet bot', version: '0.0.1'})
+	.end();
+})
 .post('/event', (req, res, next) => {
 	var msg = req.body;
 
