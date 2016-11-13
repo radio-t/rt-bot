@@ -2,7 +2,7 @@ import os
 
 
 BOT_NAME = 'karma-bot'
-BOT_DESCRIPTION = 'Implementation of users karma in radio-t chat'
+BOT_DESCRIPTION = 'Бот позволяет изменять карму пользователей чата'
 AUTHOR = 'Sergey Levitin <sergey.levitin@gmail.com>'
 
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')

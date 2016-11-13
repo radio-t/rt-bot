@@ -25,10 +25,10 @@ class KarmaBotAPITestCase(unittest.TestCase):
                 "author": settings.AUTHOR,
                 "info": settings.BOT_DESCRIPTION,
                 "commands": [
-                    '<username>++ (increase user karma)',
-                    '<username>-- (decrease user karma)',
-                    '/karma <username> (show user karma)',
-                    '/karma (show own karma)',
+                    'username++ (увеличить карму пользователя)',
+                    'username-- (уменьшить карму пользователя)',
+                    '/karma username (узнать карму пользователя)',
+                    '/karma (узнать свою карму)',
                 ],
             }
         )
