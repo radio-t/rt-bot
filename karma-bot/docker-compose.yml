@@ -5,6 +5,7 @@ services:
     image: redis:3-alpine
     container_name: karma-bot-storage
     hostname: karma-bot-storage
+    restart: always
 
   karma-bot:
       build: .
