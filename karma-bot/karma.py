@@ -16,11 +16,11 @@ KARMA_STAT_PATTERNS = (
 )
 KARMA_INCR_PATTERNS = (
     re.compile(r'^@?([\w_\-]+)\s*\+\+'),
-    re.compile(r'^@?([\w_\-]+)\s*,?\+\s*1'),
+    re.compile(r'^@?([\w_\-]+)\s*\,?\s*\+\s*1'),
 )
 KARMA_DECR_PATTERNS = (
     re.compile(r'^@?([\w_\-]+)\s*\-\-'),
-    re.compile(r'^@?([\w_\-]+)\s*,?\-\s*1'),
+    re.compile(r'^@?([\w_\-]+)\s*\,?\s*\-\s*1'),
 )
 
 
