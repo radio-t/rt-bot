@@ -67,7 +67,7 @@
      })
   (GET "/info" []
     {:status 200
-     :body   {:author   "Alex 'SimY4' Simkin (https://twitter.com/actinglikecrazy)"
+     :body   {:author   "Alex 'SimY4' Simkin"
               :info     "Clojure REPL bot"
               :commands ["clj> (do\n  (prn \"Весь текст после префикса 'clj>' будет вычислен как форма Clojure. Например:)\n  (+ 5 5))\n```\n10\n```"]}
      })
