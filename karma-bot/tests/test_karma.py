@@ -106,7 +106,8 @@ class KarmaCmdTestCase(unittest.TestCase):
 
         message = Message(username="joe", text="/karma foobar  ",
                           display_name="Joe")
-        self.assertIsNone(KarmaCmd.from_message(message))
+        self.assertEqual(cmd.type, KARMA_STAT)
+        self.assertEqual(cmd.username, "foobar")
 
 
 class KarmaAppTestCase(unittest.TestCase):

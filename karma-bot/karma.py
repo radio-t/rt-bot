@@ -9,9 +9,19 @@ KARMA_INCR = 1
 KARMA_DECR = 2
 KARMA_STAT = 3
 
-KARMA_STAT_REGEXP = re.compile(r'^/karma ([\w_\-]+)$')
-KARMA_INCR_REGEXP = re.compile(r'^([\w_\-]+)\+\+$')
-KARMA_DECR_REGEXP = re.compile(r'^([\w_\-]+)\-\-$')
+KARMA_STAT_PATTERNS = (
+    re.compile(r'^/?karma @?([\w_\-]+)\s*', re.IGNORECASE),
+    re.compile(r'^/?karma\s*$', re.IGNORECASE),
+    re.compile(r'^моя\s+карма\s*$', re.IGNORECASE),
+)
+KARMA_INCR_PATTERNS = (
+    re.compile(r'^@?([\w_\-]+)\s*\+\+'),
+    re.compile(r'^@?([\w_\-]+)\s*,?\+\s*1'),
+)
+KARMA_DECR_PATTERNS = (
+    re.compile(r'^@?([\w_\-]+)\s*\-\-'),
+    re.compile(r'^@?([\w_\-]+)\s*,?\-\s*1'),
+)
 
 
 class Message:
@@ -50,24 +60,26 @@ class KarmaCmd:
 
     @classmethod
     def _parse_stat_cmd(cls, message: Message):
-        if message.text == '/karma':
-            return cls(KARMA_STAT, message.username)
-        elif message.text.startswith('/karma '):
-            match = KARMA_STAT_REGEXP.search(message.text)
+        for regexp in KARMA_STAT_PATTERNS:
+            match = regexp.search(message.text)
             if match:
-                return cls(KARMA_STAT, match.group(1))
+                try:
+                    username = match.group(1)
+                except IndexError:
+                    username = message.username
+                return cls(KARMA_STAT, username)
 
     @classmethod
     def _parse_incr_cmd(cls, message: Message):
-        if message.text.endswith('++'):
-            match = KARMA_INCR_REGEXP.search(message.text)
+        for regexp in KARMA_INCR_PATTERNS:
+            match = regexp.search(message.text)
             if match:
                 return cls(KARMA_INCR, match.group(1))
 
     @classmethod
     def _parse_decr_cmd(cls, message: Message):
-        if message.text.endswith('--'):
-            match = KARMA_DECR_REGEXP.search(message.text)
+        for regexp in KARMA_DECR_PATTERNS:
+            match = regexp.search(message.text)
             if match:
                 return cls(KARMA_DECR, match.group(1))
 
