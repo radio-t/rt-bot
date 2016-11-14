@@ -21,7 +21,7 @@ public class RtbotController {
         @RequestMapping(value = "/info", method=GET)
         public String info () throws Exception {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("author", "Mike Shemanskiy @shamanskiy11");
+            jsonObject.put("author", "Mike Shemanskiy [@shamanskiy11](https://twitter.com/shamanskiy11)");
             jsonObject.put("info", "wiki-bot return first url form wiki search engine");
             jsonObject.put("commands", "['wiki-bot java8', 'wiki-bot rest']");
             return jsonObject.toString();
