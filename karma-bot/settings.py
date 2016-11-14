@@ -3,7 +3,7 @@ import os
 
 BOT_NAME = 'karma-bot'
 BOT_DESCRIPTION = 'Бот позволяет изменять карму пользователей чата'
-AUTHOR = 'Sergey Levitin <sergey.levitin@gmail.com>'
+AUTHOR = 'Sergey Levitin <selevit@gmail.com>'
 
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
 REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
