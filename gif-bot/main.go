@@ -18,6 +18,7 @@ func sendError(w http.ResponseWriter, err error) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusExpectationFailed)
+	fmt.Fprintf(w, "%v", err)
 }
 
 func info(w http.ResponseWriter, r *http.Request) {
