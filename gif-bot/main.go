@@ -7,6 +7,12 @@ import (
 	"net/http"
 )
 
+type Info struct {
+	Author   string   `json:"author"`
+	Info     string   `json:"info"`
+	Commands []string `json:"commands"`
+}
+
 func sendSuccess(w http.ResponseWriter, text []byte) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -27,11 +33,14 @@ func info(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	info := fmt.Sprintf(`{"author": "%v", "info": "%v", "commands": "%v"}`, BotAuthor, BotDescription, BotCommand)
-
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "%s", info)
+	info := Info{Author: BotAuthor, Info: BotDescription, Commands: BotCommands}
+	text, err := json.Marshal(info)
+	if err != nil {
+		sendError(w, err)
+		return
+	}
+	sendSuccess(w, text)
+	return
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {

@@ -7,5 +7,8 @@ const (
 	UrlRandomItem  = "http://developerslife.ru/random?json=true"
 	BotAuthor      = "Igor Yatsenko"
 	BotDescription = "Бот генерирует случайную gif картинку"
-	BotCommand     = "показать гифку"
 )
+
+var BotCommands = []string{
+	"показать гифку",
+}
