@@ -8,4 +8,4 @@
                  [amalloy/ring-buffer "1.2.1" :exclusions [org.clojure/clojurescript]]]
   :jvm-opts ["-Djava.security.policy=.java.policy"]
   :plugins [[lein-ring "0.9.7"]]
-  :ring {:handler rt-repl-bot.handler/app :port 3000})
+  :ring {:handler rt-repl-bot.handler/app :port 8080})
