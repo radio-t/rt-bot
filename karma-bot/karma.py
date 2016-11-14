@@ -38,32 +38,48 @@ class Message:
 
 
 class KarmaCmd:
+    msg_parsers = [
+        '_parse_stat_cmd',
+        '_parse_incr_cmd',
+        '_parse_decr_cmd',
+    ]
 
     def __init__(self, type_, username):
         self.type = type_
         self.username = username.lower()
 
     @classmethod
+    def _parse_stat_cmd(cls, message: Message):
+        if message.text == '/karma':
+            return cls(KARMA_STAT, message.username)
+        elif message.text.startswith('/karma '):
+            match = KARMA_STAT_REGEXP.search(message.text)
+            if match:
+                return cls(KARMA_STAT, match.group(1))
+
+    @classmethod
+    def _parse_incr_cmd(cls, message: Message):
+        if message.text.endswith('++'):
+            match = KARMA_INCR_REGEXP.search(message.text)
+            if match:
+                return cls(KARMA_INCR, match.group(1))
+
+    @classmethod
+    def _parse_decr_cmd(cls, message: Message):
+        if message.text.endswith('--'):
+            match = KARMA_DECR_REGEXP.search(message.text)
+            if match:
+                return cls(KARMA_DECR, match.group(1))
+
+    @classmethod
     def from_message(cls, message: Message):
         """
         Get karma command or None if message isn't karma cmd
         """
-        cmd = None
-        if message.text == '/karma':
-            cmd = cls(KARMA_STAT, message.username)
-        elif message.text.startswith('/karma '):
-            match = KARMA_STAT_REGEXP.search(message.text)
-            if match:
-                cmd = cls(KARMA_STAT, match.group(1))
-        elif message.text.endswith('++'):
-            match = KARMA_INCR_REGEXP.search(message.text)
-            if match:
-                cmd = cls(KARMA_INCR, match.group(1))
-        elif message.text.endswith('--'):
-            match = KARMA_DECR_REGEXP.search(message.text)
-            if match:
-                cmd = cls(KARMA_DECR, match.group(1))
-        return cmd
+        for method_name in cls.msg_parsers:
+            command = getattr(cls, method_name)(message)
+            if command:
+                return command
 
 
 class KarmaApp:
