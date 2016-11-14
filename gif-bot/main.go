@@ -39,7 +39,10 @@ func info(w http.ResponseWriter, r *http.Request) {
 		sendError(w, err)
 		return
 	}
-	sendSuccess(w, text)
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "%s", text)
+
 	return
 }
 
