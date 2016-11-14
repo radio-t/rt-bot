@@ -27,7 +27,8 @@ KARMA_DECR_PATTERNS = (
 class Message:
 
     def __init__(self, username, text, display_name):
-        self.username = username.lower()
+        self.user_id = username.lower()
+        self.username = username
         self.text = text
         self.display_name = display_name
 
@@ -56,7 +57,8 @@ class KarmaCmd:
 
     def __init__(self, type_, username):
         self.type = type_
-        self.username = username.lower()
+        self.username = username
+        self.user_id = username.lower()
 
     @classmethod
     def _parse_stat_cmd(cls, message: Message):
@@ -113,14 +115,14 @@ class KarmaApp:
             for username, value in initial_data.items():
                 self.redis.hset('karma', username, value)
 
-    def incr(self, username):
-        return int(self.redis.hincrby('karma', username, 1))
+    def incr(self, user_id):
+        return int(self.redis.hincrby('karma', user_id, 1))
 
-    def decr(self, username):
-        return int(self.redis.hincrby('karma', username, -1))
+    def decr(self, user_id):
+        return int(self.redis.hincrby('karma', user_id, -1))
 
-    def get(self, username):
-        value = self.redis.hget('karma', username)
+    def get(self, user_id):
+        value = self.redis.hget('karma', user_id)
         if value is None:
             return 0
         return int(value)
@@ -133,41 +135,41 @@ class KarmaApp:
         cmd = KarmaCmd.from_message(message)
         if cmd is None:
             return
-        return self.cmd_processors[cmd.type](cmd, by_username=message.username)
+        return self.cmd_processors[cmd.type](cmd, message)
 
-    def _process_incr(self, cmd, by_username):
-        if cmd.username == by_username:
+    def _process_incr(self, cmd, message):
+        if cmd.user_id == message.user_id:
             return 'Вы не можете изменять свою карму!'
         change_flag_key = 'karma_change/{by}/{to}/'.format(
-            by=by_username, to=cmd.username
+            by=message.user_id, to=cmd.user_id
         )
         if self.redis.exists(change_flag_key):
             return 'Вы можете менять карму пользователю не чаще раза в сутки.'
-        user_karma = self.incr(cmd.username)
+        user_karma = self.incr(cmd.user_id)
         self.redis.set(change_flag_key, 1)
         self.redis.expire(change_flag_key, self.KARMA_CHANGE_TIME_LIMIT)
 
-        return 'Карма пользователя {} увеличена (текущее значение: {}).'\
+        return 'Карма пользователя @{} увеличена (текущее значение: {}).'\
             .format(cmd.username, user_karma)
 
-    def _process_decr(self, cmd, by_username):
-        if cmd.username == by_username:
+    def _process_decr(self, cmd, message):
+        if cmd.user_id == message.user_id:
             return 'Вы не можете изменять свою карму!'
         change_flag_key = 'karma_change/{by}/{to}/'.format(
-            by=by_username, to=cmd.username
+            by=message.user_id, to=cmd.user_id
         )
         if self.redis.exists(change_flag_key):
             return 'Вы можете менять карму пользователю не чаще раза в сутки.'
-        user_karma = self.decr(cmd.username)
+        user_karma = self.decr(cmd.user_id)
         self.redis.set(change_flag_key, 1)
         self.redis.expire(change_flag_key, self.KARMA_CHANGE_TIME_LIMIT)
-        return 'Карма пользователя {} уменьшена (текущее значение: {}).'\
+        return 'Карма пользователя @{} уменьшена (текущее значение: {}).'\
             .format(cmd.username, user_karma)
 
-    def _process_stat(self, cmd, by_username):
-        user_karma = self.get(cmd.username)
-        if cmd.username == by_username:
-            return 'Ваша карма = {}.'.format(user_karma)
-        return 'Карма пользователя {} = {}.'.format(
+    def _process_stat(self, cmd, message):
+        user_karma = self.get(cmd.user_id)
+        if cmd.user_id == message.user_id:
+            return '@{}, ваша карма: {}.'.format(cmd.username, user_karma)
+        return 'Карма пользователя @{}: {}.'.format(
             cmd.username, user_karma
         )
