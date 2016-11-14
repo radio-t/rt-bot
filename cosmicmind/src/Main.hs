@@ -2,7 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import qualified Data.Map as Map
 import Control.Monad.Trans
-import Data.Aeson (FromJSON)
+import Data.Aeson (FromJSON, ToJSON)
 import Data.List (isInfixOf)
 import Data.Char (toLower, toUpper)
 import GHC.Generics (Generic)
@@ -15,19 +15,23 @@ data ChatMsg = ChatMsg { text :: String
                        , display_name :: String
                        } deriving (Show, Generic)
 
-instance FromJSON ChatMsg
+data Info = Info { author :: String
+                 , info :: String
+                 , commands :: [String]
+                 } deriving (Show, Generic)
 
-botName = "cosmicmind"
+instance FromJSON ChatMsg
+instance ToJSON Info
+
+botName :: String
+botName = "Cosmicmind"
 
 respond :: String -> String -> ActionM()
 respond user question = do
   answer <- liftIO cosmicmindSays
   json $ Map.fromList ([ ("text", sayAnswer user question answer)
-                       , ("name", capitalize botName)] :: [(String, String)])
+                       , ("name", botName)] :: [(String, String)])
   where
-    capitalize :: String -> String
-    capitalize inp = (toUpper (head inp)):(tail inp)
-
     cosmicmindSays :: IO Bool
     cosmicmindSays = do
       r <- randomIO :: IO Double
@@ -42,12 +46,13 @@ respond user question = do
 main = scotty 8080 $ do
   get "/info" $ do
     let
-      info ::[(String, String)]
-      info = [ ("author","Scorpil")
-             , ("info", "Answers all questions.")]
-    json $ Map.fromList info
+      info :: Info
+      info = Info { Main.author = "Scorpil"
+                  , Main.info = "Answers all questions."
+                  , Main.commands = [botName ++ " [any question here]?"] }
+    json info
 
-  get "/event" $ do
+  post "/event" $ do
     t <- jsonData
     let
       question = Main.text t
@@ -58,4 +63,4 @@ main = scotty 8080 $ do
     where
       isInteresting :: String -> Bool
       isInteresting question =
-        (botName `isInfixOf` (map toLower question)) && (last question) == '?'
+        ((map toLower botName) `isInfixOf` (map toLower question)) && (last question) == '?'
