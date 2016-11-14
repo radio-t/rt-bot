@@ -54,6 +54,17 @@ services:
               max-size: "10m"
               max-file: "5"
 
+    cosmicmind:
+        build: cosmicmind
+        container_name: cosmicmind
+        hostname: cosmicmind
+        restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
     memberberries:
         build: memberberries
         container_name: memberberries-bot

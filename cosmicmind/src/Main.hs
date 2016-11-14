@@ -11,7 +11,7 @@ import Web.Scotty
 import System.Random
 
 data ChatMsg = ChatMsg { text :: String
-                       , username :: Integer
+                       , username :: String
                        , display_name :: String
                        } deriving (Show, Generic)
 
