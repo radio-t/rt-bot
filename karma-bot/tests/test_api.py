@@ -25,10 +25,10 @@ class KarmaBotAPITestCase(unittest.TestCase):
                 "author": settings.AUTHOR,
                 "info": settings.BOT_DESCRIPTION,
                 "commands": [
-                    '<username>++ (increase user karma)',
-                    '<username>-- (decrease user karma)',
-                    '/karma <username> (show user karma)',
-                    '/karma (show own karma)',
+                    'username++ (увеличить карму пользователя)',
+                    'username-- (уменьшить карму пользователя)',
+                    '/karma username (узнать карму пользователя)',
+                    '/karma (узнать свою карму)',
                 ],
             }
         )
@@ -65,14 +65,14 @@ class KarmaBotAPITestCase(unittest.TestCase):
             response = self.app.post('/event', data=json.dumps({
                 'username': 'joe',
                 'display_name': 'Test',
-                'text': 'alice++',
+                'text': 'Alice++',
             }))
             self.assertEqual(response.status_code, 201)
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(response_data['bot'], settings.BOT_NAME)
             self.assertEqual(
                 response_data['text'],
-                'Карма пользователя alice увеличена (текущее значение: 1).'
+                'Карма пользователя @Alice увеличена (текущее значение: 1).'
             )
             response = self.app.post('/event', data=json.dumps({
                 'username': 'joe2',
@@ -82,12 +82,12 @@ class KarmaBotAPITestCase(unittest.TestCase):
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(
                 response_data['text'],
-                'Карма пользователя alice увеличена (текущее значение: 2).'
+                'Карма пользователя @alice увеличена (текущее значение: 2).'
             )
             response = self.app.post('/event', data=json.dumps({
                 'username': 'joe2',
                 'display_name': 'Test',
-                'text': 'alice++',
+                'text': 'Alice++',
             }))
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(
@@ -112,7 +112,7 @@ class KarmaBotAPITestCase(unittest.TestCase):
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(
                 response_data['text'],
-                'Карма пользователя joe увеличена (текущее значение: 1).'
+                'Карма пользователя @joe увеличена (текущее значение: 1).'
             )
 
     @patch('karma.redis.StrictRedis', mock_strict_redis_client)
@@ -128,14 +128,14 @@ class KarmaBotAPITestCase(unittest.TestCase):
             response = self.app.post('/event', data=json.dumps({
                 'username': 'joe',
                 'display_name': 'Test',
-                'text': 'alice--',
+                'text': 'Alice--',
             }))
             self.assertEqual(response.status_code, 201)
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(response_data['bot'], settings.BOT_NAME)
             self.assertEqual(
                 response_data['text'],
-                'Карма пользователя alice уменьшена (текущее значение: -1).'
+                'Карма пользователя @Alice уменьшена (текущее значение: -1).'
             )
             response = self.app.post('/event', data=json.dumps({
                 'username': 'joe2',
@@ -145,12 +145,12 @@ class KarmaBotAPITestCase(unittest.TestCase):
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(
                 response_data['text'],
-                'Карма пользователя alice уменьшена (текущее значение: -2).'
+                'Карма пользователя @alice уменьшена (текущее значение: -2).'
             )
             response = self.app.post('/event', data=json.dumps({
                 'username': 'joe2',
                 'display_name': 'Test',
-                'text': 'alice--',
+                'text': 'Alice--',
             }))
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(
@@ -181,7 +181,7 @@ class KarmaBotAPITestCase(unittest.TestCase):
             self.app.post('/event', data=json.dumps({
                 'username': 'joe',
                 'display_name': 'Test',
-                'text': 'alice++',
+                'text': 'Alice++',
             }))
             self.app.post('/event', data=json.dumps({
                 'username': 'joe2',
@@ -189,7 +189,7 @@ class KarmaBotAPITestCase(unittest.TestCase):
                 'text': 'alice++',
             }))
             response = self.app.post('/event', data=json.dumps({
-                'username': 'alice',
+                'username': 'Alice',
                 'display_name': 'Test',
                 'text': '/karma',
             }))
@@ -198,7 +198,7 @@ class KarmaBotAPITestCase(unittest.TestCase):
             self.assertEqual(response_data['bot'], settings.BOT_NAME)
             self.assertEqual(
                 response_data['text'],
-                'Ваша карма = 2.',
+                '@Alice, ваша карма: 2.',
             )
 
     @patch('karma.redis.StrictRedis', mock_strict_redis_client)
@@ -219,17 +219,17 @@ class KarmaBotAPITestCase(unittest.TestCase):
             self.app.post('/event', data=json.dumps({
                 'username': 'joe2',
                 'display_name': 'Test',
-                'text': 'alice++',
+                'text': '@Alice++',
             }))
             response = self.app.post('/event', data=json.dumps({
                 'username': 'joe',
                 'display_name': 'Test',
-                'text': '/karma alice',
+                'text': '/karma @Alice',
             }))
             self.assertEqual(response.status_code, 201)
             response_data = json.loads(response.data.decode('utf-8'))
             self.assertEqual(response_data['bot'], settings.BOT_NAME)
             self.assertEqual(
                 response_data['text'],
-                'Карма пользователя alice = 2.',
+                'Карма пользователя @Alice: 2.',
             )

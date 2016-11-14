@@ -19,7 +19,7 @@
 - UPD: Бот **не будет** получать свои собственные сообщения
 
 ### Идеи для полезных и забавных ботов
-- ведение псевдо-разумной дискусси по варианту сири/алкесы/гугла
+- ведение псевдо-разумной дискуссии по варианту сири/алексы/гугла
 - ответы над узкие вопросы, типа "какая погода в Москве сегодня"
 - функции поиска по подкасту (шоунотам и логам)
 - все остальное, что можете придумать
@@ -42,7 +42,7 @@
 - Можно к нему обратиться, послав `POST` на https://bot.radio-t.com/api/:botname/event и это прийдет в ваш /event
 - Или послать `GET` на https://bot.radio-t.com/api/:botname/info и это прийдет в ваш /info
  ```
- > http POST https://bot.radio-t.com/api/hello/event text=Привет username=user123 display_name:Вася
+ > http POST https://bot.radio-t.com/api/hello/event text=Привет username=user123 display_name=Вася
  HTTP/1.1 201 Created
  Connection: keep-alive
  Content-Length: 31

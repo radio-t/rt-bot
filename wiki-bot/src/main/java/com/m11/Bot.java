@@ -1,28 +1,33 @@
 package com.m11;
 
 public class Bot {
-    private final String text;
+    public String text;
 
-    private  final String botName;
+    public String username;
 
-    public Bot(String text, String botName) {
-        this.text = text;
-        this.botName = botName;
-    }
+    public String display_name;
+
+    public Bot() {}
 
     public String getText() {
         return text;
     }
 
-    public String getBotName() {
-        return botName;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getDisplay_name() {
+        return display_name;
     }
 
     @Override
     public String toString() {
         return "Bot{" +
                 "text='" + text + '\'' +
-                ", botName='" + botName + '\'' +
+                ", username='" + username + '\'' +
+                ", display_name='" + display_name + '\'' +
                 '}';
     }
+
 }

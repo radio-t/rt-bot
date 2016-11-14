@@ -58,34 +58,59 @@ class KarmaCmdTestCase(unittest.TestCase):
         self.assertIsNone(KarmaCmd.from_message(message))
 
     def test_from_incr_message(self):
-        message = Message(username="joe", text="foobar++",
-                          display_name="Joe")
-        cmd = KarmaCmd.from_message(message)
-        self.assertEqual(cmd.type, KARMA_INCR)
-        self.assertEqual(cmd.username, "foobar")
 
-        message = Message(username="joe", text="foo__bar++",
+        valid_messages = [
+            'foobar++', '@foobar++', '@foobar ++', '@foobar +1', '@foobar+1',
+            '@foobar, +1', '@foobar, + 1 ',
+        ]
+
+        for msg in valid_messages:
+            message = Message(username="joe", text=msg,
+                              display_name="Joe")
+            cmd = KarmaCmd.from_message(message)
+            self.assertEqual(cmd.type, KARMA_INCR)
+            self.assertEqual(cmd.username, "foobar")
+
+        message = Message(username="joe", text='foo__bar++',
                           display_name="Joe")
         cmd = KarmaCmd.from_message(message)
-        self.assertEqual(cmd.username, "foo__bar")
         self.assertEqual(cmd.type, KARMA_INCR)
+        self.assertEqual(cmd.username, "foo__bar")
+
+        message = Message(username="joe", text='foo-bar++',
+                          display_name="Joe")
+        cmd = KarmaCmd.from_message(message)
+        self.assertEqual(cmd.type, KARMA_INCR)
+        self.assertEqual(cmd.username, "foo-bar")
 
         message = Message(username="joe", text="foo Bar++",
                           display_name="Joe")
         self.assertIsNone(KarmaCmd.from_message(message))
 
     def test_from_decr_message(self):
-        message = Message(username="joe", text="foobar--",
-                          display_name="Joe")
-        cmd = KarmaCmd.from_message(message)
-        self.assertEqual(cmd.type, KARMA_DECR)
-        self.assertEqual(cmd.username, "foobar")
+        valid_messages = [
+            'foobar--', '@foobar--', '@foobar --', '@foobar -1', '@foobar-1',
+            '@foobar, -1', '@foobar, - 1 ',
+        ]
 
-        message = Message(username="joe", text="foo__bar--",
+        for msg in valid_messages:
+            message = Message(username="joe", text=msg,
+                              display_name="Joe")
+            cmd = KarmaCmd.from_message(message)
+            self.assertEqual(cmd.type, KARMA_DECR)
+            self.assertEqual(cmd.username, "foobar")
+
+        message = Message(username="joe", text='foo__bar--',
                           display_name="Joe")
         cmd = KarmaCmd.from_message(message)
-        self.assertEqual(cmd.username, "foo__bar")
         self.assertEqual(cmd.type, KARMA_DECR)
+        self.assertEqual(cmd.username, "foo__bar")
+
+        message = Message(username="joe", text='foo-bar--',
+                          display_name="Joe")
+        cmd = KarmaCmd.from_message(message)
+        self.assertEqual(cmd.type, KARMA_DECR)
+        self.assertEqual(cmd.username, "foo-bar")
 
         message = Message(username="joe", text="foo Bar--",
                           display_name="Joe")
@@ -93,6 +118,18 @@ class KarmaCmdTestCase(unittest.TestCase):
 
     def test_from_stat_message(self):
         message = Message(username="joe", text="/karma",
+                          display_name="Joe")
+        cmd = KarmaCmd.from_message(message)
+        self.assertEqual(cmd.type, KARMA_STAT)
+        self.assertEqual(cmd.username, "joe")
+
+        message = Message(username="joe", text="/KARMA ",
+                          display_name="Joe")
+        cmd = KarmaCmd.from_message(message)
+        self.assertEqual(cmd.type, KARMA_STAT)
+        self.assertEqual(cmd.username, "joe")
+
+        message = Message(username="joe", text="Моя карма",
                           display_name="Joe")
         cmd = KarmaCmd.from_message(message)
         self.assertEqual(cmd.type, KARMA_STAT)
@@ -106,7 +143,8 @@ class KarmaCmdTestCase(unittest.TestCase):
 
         message = Message(username="joe", text="/karma foobar  ",
                           display_name="Joe")
-        self.assertIsNone(KarmaCmd.from_message(message))
+        self.assertEqual(cmd.type, KARMA_STAT)
+        self.assertEqual(cmd.username, "foobar")
 
 
 class KarmaAppTestCase(unittest.TestCase):
