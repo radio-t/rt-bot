@@ -38,7 +38,7 @@ func (req *Request) ParseText() (string, error) {
 		return "", errors.New("Empty request text")
 	}
 
-	if strings.HasPrefix(strings.ToLower(req.Text), "гифка!") {
+	if strings.HasPrefix(strings.ToLower(req.Text), "показать гифку") {
 		return "random", nil
 	}
 

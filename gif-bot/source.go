@@ -35,7 +35,9 @@ func (s DevelopersLife) Random() (string, error) {
 		return "", err
 	}
 
-	text := fmt.Sprintf("[%v]  ![%v](%v)", s.Description, s.Description, s.GifUrl)
+	text := s.Description
+	text = text + "  \n"
+	text = text + fmt.Sprintf("![%v](%v)", s.Description, s.GifUrl)
 
 	return text, nil
 }
