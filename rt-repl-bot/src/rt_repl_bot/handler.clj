@@ -7,7 +7,10 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [clojail.core :refer [sandbox]]
-            [clojail.testers :refer [secure-tester-without-def]]))
+            [clojail.testers :refer [secure-tester-without-def]]
+            [amalloy.ring-buffer :refer [ring-buffer]]))
+
+(def most-recent-calls (atom (ring-buffer 50)))
 
 (defn eval-command [sandbox command]
   (with-open [out (StringWriter.)]
@@ -42,19 +45,36 @@
                (Thread/sleep 600000)
                (-> *ns*
                    .getName
-                   remove-ns)))))
+                   remove-ns)))
+    ))
+
+(defn wrap-statistics [handler]
+  (wrap-routes
+    handler
+    (fn [route-handler]
+      (fn [request]
+        (let [response (route-handler request)]
+          (swap! most-recent-calls conj (str (:compojure/route request) " ~ " (:status response)))
+          response
+          )))))
 
 (defroutes
   app-routes
+  (GET "/healthcheck" []
+    {:status 200
+     :body   {:status     "OK"
+              :statistics (sequence (deref most-recent-calls))}
+     })
   (GET "/info" []
     {:status 200
      :body   {:author   "Alex 'SimY4' Simkin (https://twitter.com/actinglikecrazy)"
               :info     "Clojure REPL bot"
-              :commands ["clj> (do\n  (prn \"Весь текст после префикса 'clj>' будет вычислен как форма Clojure. Например:)\n  (+ 5 5))\n```\n10\n```"]}})
-  (POST "/event" request
-    (let [text (or (get-in request [:body "text"]) "")]
+              :commands ["clj> (do\n  (prn \"Весь текст после префикса 'clj>' будет вычислен как форма Clojure. Например:)\n  (+ 5 5))\n```\n10\n```"]}
+     })
+  (POST "/event" {body :body session :session}
+    (let [text (or (get body "text") "")]
       (cond
-        (str/starts-with? text "clj>") (let [sandbox (get-in request [:session "sb"] (create-sandbox))]
+        (str/starts-with? text "clj>") (let [sandbox (get session "sb" (create-sandbox))]
                                          (handle-command sandbox (subs text 4)))
         :else {:status 417})))
   (route/not-found {:status 404}))
@@ -64,4 +84,5 @@
     (handler/site app-routes)
     (wrap-json-body)
     (wrap-session)
+    (wrap-statistics)
     (wrap-json-response)))
