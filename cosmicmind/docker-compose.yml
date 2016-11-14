@@ -1,0 +1,7 @@
+cosmicmind:
+    build: .
+    container_name: cosmicmind
+    hostname: cosmicmind
+    restart: always
+    ports:
+        - "8080:8080"
