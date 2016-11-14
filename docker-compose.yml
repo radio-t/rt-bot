@@ -41,6 +41,7 @@ services:
             - giphy-bot
             - gif-bot
             - stat-bot
+            - anek-bot
 
     hello:
         build: hello
@@ -231,6 +232,17 @@ services:
         hostname: sovet-bot
         restart: always
 
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    anek-bot:
+        build: anek-bot
+        container_name: anek-bot
+        hostname: anek-bot
+        restart: always
         logging:
           driver: json-file
           options:
