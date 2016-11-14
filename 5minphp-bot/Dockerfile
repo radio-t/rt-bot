@@ -3,6 +3,7 @@ FROM php:7.0-alpine
 RUN mkdir /bot
 
 COPY src/index.php /bot/
+COPY src/rollbar.php /bot/
 
 RUN chmod 777 /bot
 
