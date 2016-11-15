@@ -69,7 +69,7 @@ func Query(index bleve.Index, q string, allShows *shows.Shows) (string, error) {
 		for _, hit := range searchResult.Hits {
 			if ok, showID, topicIdx := parseSearchId(hit.ID); ok {
 				if len(allShows.ItemsByID[showID].TopicsMarkdown) > topicIdx {
-					out = fmt.Sprintf("%s* [Выпуск %d](%s): %s\n",
+					out = fmt.Sprintf("%s* **[Выпуск %d](%s)**: %s\\n",
 						out,
 						allShows.ItemsByID[showID].ID,
 						allShows.ItemsByID[showID].URL,
