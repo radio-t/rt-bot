@@ -3,6 +3,10 @@ sudo: required
 services:
   - docker
 
+addons:
+  hosts:
+    - travis.local
+
 env:
   DOCKER_COMPOSE_VERSION: 1.8.1
 
@@ -12,4 +16,14 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-script: docker-compose build
+install:
+  - docker-compose build
+  - docker build -t "rt-bot/checker" ci
+
+before_script:
+  - docker-compose up -d
+
+script: BOT_BASE_URL=http://travis.local ci/run_tests_in_docker.sh
+
+after_script:
+  - docker_compose down
