@@ -159,6 +159,9 @@ func eventHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Add extra new line first
+	answer = "\\n" + answer
+
 	jsonResponse(w, http.StatusCreated, respData{Text: answer, Bot: config.BotName})
 }
 
