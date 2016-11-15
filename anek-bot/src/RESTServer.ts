@@ -1,15 +1,15 @@
 /// <reference path="../typings/index.d.ts" />
 import * as express from "express";
-import * as bodyParser from 'body-parser';
 import {Express} from "express";
+import * as bodyParser from "body-parser";
 import {Request, Response} from "express-serve-static-core";
 import {RequestData} from "./RequestData";
-import {AnekdotStorage} from "./AnekdotStorage";
 import {EventEmitter} from "events";
+import {Bot} from "./Bot";
 
 
 export class RESTServer extends EventEmitter {
-    constructor(private storage: AnekdotStorage) {
+    constructor(private bot: Bot) {
         super();
 
         var app: Express = express();
@@ -45,22 +45,13 @@ export class RESTServer extends EventEmitter {
             return;
         }
 
-        if (this.hasTriggerPhrase(requestData) && this.storage.hasNext()) {
+        var answer = this.bot.getAnswer(requestData);
+        if (answer == "no_answer") {
+            res.status(417);
+            res.end();
+        } else {
             res.status(201);
-            res.json({text: this.storage.getNext().description, bot: 'anek-bot'});
-            return;
+            res.json({text: answer, bot: 'anek-bot'});
         }
-
-        res.status(417);
-        res.end();
     }
-
-    private hasTriggerPhrase(data: RequestData): boolean {
-        var text = data.text.toLowerCase();
-        if (text.indexOf('расскажи') != -1 && text.indexOf('анекдот') != -1) {
-            return true;
-        }
-        return false;
-    }
-
 }
