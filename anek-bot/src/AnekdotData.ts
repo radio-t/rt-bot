@@ -14,4 +14,10 @@ export class AnekdotData {
 
         return anekdot;
     }
+
+    public static getDefaultAnekdot(): AnekdotData {
+        var anekdot = new AnekdotData();
+        anekdot.description = "Забыл все анекдоты";
+        return anekdot;
+    }
 }

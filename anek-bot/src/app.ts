@@ -1,20 +1,19 @@
 /// <reference path="../typings/index.d.ts" />
 import {RESTServer} from "./RESTServer";
 import {AnekdotLoader} from "./AnekdotLoader";
-import {AnekdotStorage} from "./AnekdotStorage";
-import {AnekdotData} from "./AnekdotData";
+import {AnekdotChannel} from "./AnekdotChannel";
+import {Bot} from "./Bot";
 
 console.log("Anek-bot starting");
-var storage = new AnekdotStorage();
 
 var loader = new AnekdotLoader();
-loader.on('complete', (anekdots: AnekdotData[])=> {
-    storage.update(anekdots);
-});
-loader.on('error', (error: string)=> {
-    console.log('Error loading RSS');
-    console.log(error);
-});
-loader.load();
+var channels: AnekdotChannel[] = [];
+channels.push(new AnekdotChannel(loader, "https://www.anekdot.ru/rss/tag/26.xml", []));
+channels.push(new AnekdotChannel(loader, "https://www.anekdot.ru/rss/tag/21.xml", ["твиттер", "twitter"]));
+channels.push(new AnekdotChannel(loader, "https://www.anekdot.ru/rss/tag/33.xml", ["гейтс"]));
+channels.push(new AnekdotChannel(loader, "https://www.anekdot.ru/rss/tag/37.xml", ["интернет"]));
+channels.push(new AnekdotChannel(loader, "https://www.anekdot.ru/rss/tag/40.xml", ["apple", "эппл", "iphone", "айфон", "ipad"]));
 
-var server = new RESTServer(storage);
+var bot = new Bot(channels);
+
+var server = new RESTServer(bot);

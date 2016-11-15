@@ -6,14 +6,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 /// <reference path="../typings/index.d.ts" />
 var express = require("express");
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 var RequestData_1 = require("./RequestData");
 var events_1 = require("events");
 var RESTServer = (function (_super) {
     __extends(RESTServer, _super);
-    function RESTServer(storage) {
+    function RESTServer(bot) {
         _super.call(this);
-        this.storage = storage;
+        this.bot = bot;
         var app = express();
         app.use(bodyParser.json());
         app.get('/', this.defaultHandler.bind(this));
@@ -42,20 +42,15 @@ var RESTServer = (function (_super) {
             res.json({ error: error });
             return;
         }
-        if (this.hasTriggerPhrase(requestData) && this.storage.hasNext()) {
+        var answer = this.bot.getAnswer(requestData);
+        if (answer == "no_answer") {
+            res.status(417);
+            res.end();
+        }
+        else {
             res.status(201);
-            res.json({ text: this.storage.getNext().description, bot: 'anek-bot' });
-            return;
+            res.json({ text: answer, bot: 'anek-bot' });
         }
-        res.status(417);
-        res.end();
-    };
-    RESTServer.prototype.hasTriggerPhrase = function (data) {
-        var text = data.text.toLowerCase();
-        if (text.indexOf('расскажи') != -1 && text.indexOf('анекдот') != -1) {
-            return true;
-        }
-        return false;
     };
     return RESTServer;
 }(events_1.EventEmitter));
