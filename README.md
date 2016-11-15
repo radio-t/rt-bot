@@ -1,4 +1,6 @@
-# Мета-репо для движения "создай своего бота"
+# Мета-репо для движения «создай своего бота»
+
+[![Build Status](https://travis-ci.org/selevit/rt-bot.svg?branch=master)](https://travis-ci.org/selevit/rt-bot)
 
 ## Боты для чата подкаста Радио-Т
 
