@@ -23,7 +23,7 @@ def find_bots(directory) -> dict:
     """
     bot_configs = {}
     for dir_ in os.listdir(directory):
-        dir_ = os.path.join(directory, dir_)
+        dir_ = os.path.join(os.path.abspath(directory), dir_)
         if os.path.isdir(dir_):
             try:
                 config = BotConfig.from_dir(dir_)

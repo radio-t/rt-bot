@@ -1,11 +1,12 @@
 sudo: required
 
+language: python
+
+python:
+  - "3.5"
+
 services:
   - docker
-
-addons:
-  hosts:
-    - travis.local
 
 env:
   DOCKER_COMPOSE_VERSION: 1.8.1
@@ -17,13 +18,17 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
+  - pip install -r ci/requirements.txt
+  - sed -i 's/LETSENCRYPT=true/LETSENCRYPT=false/' docker-compose.yml
   - docker-compose build
-  - docker build -t "rt-bot/checker" ci
 
 before_script:
-  - docker-compose run --service-ports -e LETSENCRYPT=false -d nginx
+  - docker-compose up -d
 
-script: BOT_BASE_URL=http://travis.local ci/run_tests_in_docker.sh
-
+script:
+  - echo "Waiting nginx-bot to launch on nginx-bot:80..."
+  - while ! nc -z localhost 80; do sleep 1; done
+  - export BOT_BASE_URL=http://localhost
+  - python ci/run_bot_tests.py .
 after_script:
   - docker_compose kill
