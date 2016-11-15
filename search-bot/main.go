@@ -73,9 +73,9 @@ func main() {
 	}
 
 	// Run server
-	log.Printf("%s\n", config.BotName)
-	log.Printf("Total shows: %d, last show #%d\n", allShows.Len(), allShows.Last().ID)
-	log.Printf("Bot running at %s\n", config.Port)
+	log.Printf("%s\\n", config.BotName)
+	log.Printf("Total shows: %d, last show #%d\\n", allShows.Len(), allShows.Last().ID)
+	log.Printf("Bot running at %s\\n", config.Port)
 
 	http.HandleFunc("/event", panicRecover(eventHandler))
 	http.HandleFunc("/info", panicRecover(infoHandler))
@@ -88,7 +88,7 @@ func panicRecover(f func(w http.ResponseWriter, r *http.Request)) func(w http.Re
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if r := recover(); r != nil {
-				log.Printf("PANIC:%s\n", r)
+				log.Printf("PANIC:%s\\n", r)
 			}
 		}()
 		f(w, r)
@@ -118,7 +118,7 @@ func update(allShows *shows.Shows, index bleve.Index) {
 	if err != nil {
 		log.Println(err)
 	}
-	log.Printf("%d show(s) updated\n", count)
+	log.Printf("%d show(s) updated\\n", count)
 }
 
 func reportErr(err error, w http.ResponseWriter) {
@@ -192,9 +192,9 @@ func query(q string) (string, error) {
 
 func getHelp() (string, error) {
 	help := config.Info
-	help += "\n\n**Команды:**\n"
+	help += "\\n\\n**Команды:**\\n"
 	for _, cmd := range config.Commans {
-		help += cmd + "\n"
+		help += cmd + "\\n"
 	}
 	return help, nil
 }
@@ -208,9 +208,9 @@ func getShowDetail(q string) (string, error) {
 		return "", nil
 	}
 	if show, ok := allShows.ItemsByID[num]; ok {
-		out := fmt.Sprintf("**[Выпуск %d](%s)**\n", show.ID, show.URL)
+		out := fmt.Sprintf("**[Выпуск %d](%s)**\\n", show.ID, show.URL)
 		for _, topic := range show.TopicsMarkdown {
-			out = fmt.Sprintf("%s* %s\n", out, topic)
+			out = fmt.Sprintf("%s* %s\\n", out, topic)
 		}
 		if show.AudioURL != "" {
 			out = fmt.Sprintf("%s[аудио](%s)", out, show.AudioURL)
