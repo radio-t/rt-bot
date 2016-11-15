@@ -21,9 +21,9 @@ install:
   - docker build -t "rt-bot/checker" ci
 
 before_script:
-  - docker-compose up -d
+  - docker-compose run --service-ports -e LETSENCRYPT=false -d nginx
 
 script: BOT_BASE_URL=http://travis.local ci/run_tests_in_docker.sh
 
 after_script:
-  - docker_compose down
+  - docker_compose kill
