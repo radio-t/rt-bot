@@ -3,6 +3,7 @@
 var RESTServer_1 = require("./RESTServer");
 var AnekdotLoader_1 = require("./AnekdotLoader");
 var AnekdotStorage_1 = require("./AnekdotStorage");
+console.log("Anek-bot starting");
 var storage = new AnekdotStorage_1.AnekdotStorage();
 var loader = new AnekdotLoader_1.AnekdotLoader();
 loader.on('complete', function (anekdots) {

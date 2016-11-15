@@ -4,6 +4,7 @@ import {AnekdotLoader} from "./AnekdotLoader";
 import {AnekdotStorage} from "./AnekdotStorage";
 import {AnekdotData} from "./AnekdotData";
 
+console.log("Anek-bot starting");
 var storage = new AnekdotStorage();
 
 var loader = new AnekdotLoader();
