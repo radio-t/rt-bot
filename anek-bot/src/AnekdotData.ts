@@ -10,7 +10,7 @@ export class AnekdotData {
         anekdot.title = o.title[0];
         anekdot.pubDate = o.pubDate[0];
         anekdot.description = o.description[0];
-        anekdot.description = anekdot.description.replace(/<br>/g, "\n");
+        anekdot.description = anekdot.description.replace(/<br>/g, " \n ");
 
         return anekdot;
     }
