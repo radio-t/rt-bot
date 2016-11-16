@@ -26,7 +26,8 @@ export class Bot {
     //TODO refactor to hasAllWords
     private hasTriggerPhrase(message: RequestData): boolean {
         var text = message.text.toLowerCase();
-        if (text.indexOf('расскажи') != -1 && text.indexOf('анекдот') != -1) {
+        var adverbs = [];
+        if (text.indexOf('расскаж') != -1 && text.indexOf('анекдот') != -1) {
             return true;
         }
         return false;
