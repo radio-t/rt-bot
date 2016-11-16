@@ -42,19 +42,24 @@ def find_bots(directory) -> dict:
 
 def run_bot_testcase(url, test_case):
     request_data = test_case.command.as_dict()
+    logger.debug('Sending message to {}'.format(url))
+    logger.debug('Message content: {}'.format(request_data))
     response = requests.post(url, json=request_data, verify=False)
+    logger.debug('Response content: {}'.format(
+        response.content.decode('utf-8'))
+    )
 
     if response.status_code != test_case.response.status:
         raise ValueError(
-            '{} http status expected, {} given for message: {}'.format(
+            '{} HTTP status expected, {} given'.format(
                 test_case.response.status,
                 response.status_code,
-                json.dumps(request_data)
             )
         )
     if test_case.response.status != test_case.response.OK:
         # Content doesn't matter for ignored messages
         return
+
     if not response.headers.get('content-type').startswith('application/json'):
         raise ValueError(
             'application/json content type status expected, {} given'.format(
