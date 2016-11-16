@@ -19,7 +19,7 @@ logger = logging.getLogger(__file__)
 def find_bots(directory) -> dict:
     """
     Returns dict with BotConfig objects
-    Dict keys is bot names
+    Dict keys are bot names
     """
     bot_configs = {}
     for dir_ in os.listdir(directory):
