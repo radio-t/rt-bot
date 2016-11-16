@@ -42,6 +42,7 @@ services:
             - gif-bot
             - stat-bot
             - anek-bot
+            - grabpage-bot
 
     hello:
         build: hello
@@ -242,6 +243,17 @@ services:
         build: anek-bot
         container_name: anek-bot
         hostname: anek-bot
+        restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    grabpage-bot:
+        build: grabpage-bot
+        container_name: grabpage-bot
+        hostname: grabpage-bot
         restart: always
         logging:
           driver: json-file
