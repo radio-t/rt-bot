@@ -73,9 +73,9 @@ func main() {
 	}
 
 	// Run server
-	log.Printf("%s\\n", config.BotName)
-	log.Printf("Total shows: %d, last show #%d\\n", allShows.Len(), allShows.Last().ID)
-	log.Printf("Bot running at %s\\n", config.Port)
+	log.Printf("%s\n", config.BotName)
+	log.Printf("Total shows: %d, last show #%d\n", allShows.Len(), allShows.Last().ID)
+	log.Printf("Bot running at %s\n", config.Port)
 
 	http.HandleFunc("/event", panicRecover(eventHandler))
 	http.HandleFunc("/info", panicRecover(infoHandler))
@@ -194,7 +194,7 @@ func query(q string) (string, error) {
 }
 
 func getHelp() (string, error) {
-	help := config.Info
+	help := config.Help
 	help += "\\n\\n**Команды:**\\n"
 	for _, cmd := range config.Commans {
 		help += cmd + "\\n"
