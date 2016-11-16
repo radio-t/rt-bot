@@ -18,14 +18,11 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-  - docker run -v `pwd`/etc/ssl:/etc/nginx/ssl -e SSL_KEY=${SSL_KEY} -e SSL_CERT=${SSL_CERT} umputun/nginx-le openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=US/ST=Test/L=Test/O=Dis/CN=localhost" -keyout "/etc/nginx/ssl/${SSL_KEY}" -out "/etc/nginx/ssl/${SSL_CERT}"
-  - docker run -v `pwd`/etc/ssl:/etc/nginx/ssl umputun/nginx-le openssl dhparam -out /etc/nginx/ssl/dhparams.pem 2048
-  - sudo chmod 600 etc/ssl/dhparams.pem
+  - openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=US/ST=Test/L=Test/O=Dis/CN=localhost" -keyout "etc/ssl/${SSL_KEY}" -out "etc/ssl/${SSL_CERT}"
 
 install:
   - pip install -r ci/requirements.txt
   - sed -i "s|LETSENCRYPT=true|LETSENCRYPT=false\\n            - SSL_KEY=${SSL_KEY}\\n            - SSL_CERT=${SSL_CERT}|g" docker-compose.yml
-  - python -c 'import ssl; print(ssl.OPENSSL_VERSION)'
   - docker-compose build
 
 before_script:
