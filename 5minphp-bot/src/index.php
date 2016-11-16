@@ -15,10 +15,9 @@ define('REMOTE_FILE', 'https://raw.githubusercontent.com/pqr/5minphp-bot/master/
 define('BOT_NAME', 'Пятиминутка PHP');
 
 if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/info') {
-    http_response_code(200);
-    print json_encode([
-        'author' => 'Пётр Мязин',
-        'info' => 'бот "Пятиминутка PHP" расскажет интересный и полезный факт об этом языке программирования, при упоминании PHP. Twitter: 5minphp',
+    sendResponseJson(200, [
+        'author' => '[@5minphp](https://twitter.com/5minphp)',
+        'info' => 'бот "Пятиминутка PHP" расскажет интересный и полезный факт об этом языке программирования, при упоминании PHP',
         'commands' => []
     ]);
     exit();
@@ -37,13 +36,15 @@ if (!$inputData || !isset($inputData['text']) || !is_string($inputData['text']))
 }
 
 if (mb_stripos($inputData['text'], 'пятиминутка, обновись') !== false) {
-    http_response_code(201);
     downloadFacts();
-    print json_encode(['text' => 'У меня для вас есть свежие факты про PHP. Просто напишите сообщение с текстом содержащим "PHP", и вы узнаете, что...', 'bot' => BOT_NAME]);
+    sendResponseJson(201, [
+        'text' => 'У меня для вас есть свежие факты про PHP. Просто напишите сообщение с текстом содержащим "PHP", и вы узнаете, что...',
+        'bot' => BOT_NAME
+    ]);
     exit();
 }
 
-if (!hasWordPhp($inputData['text'])) {
+if (!preg_match('/\b(php\d*|пхп\d*)\b/iu', $inputData['text'])) {
     http_response_code(417);
     exit();
 }
@@ -54,22 +55,7 @@ if (!$fact) {
     exit();
 }
 
-
-http_response_code(201);
-print json_encode(['text' => $fact, 'bot' => BOT_NAME]);
-
-function hasWordPhp($inputText): bool
-{
-    $words = preg_split('/\s/', mb_strtolower($inputText, 'UTF-8'));
-    foreach ($words as $word) {
-        if ($word === 'php' || $word === 'пхп') {
-            return true;
-        }
-    }
-
-    return false;
-}
-
+sendResponseJson(201, ['text' => $fact, 'bot' => BOT_NAME]);
 
 function getRandomFact(string $inputData): string
 {
@@ -96,4 +82,11 @@ function downloadFacts()
     if ($newFacts) {
         @file_put_contents(LOCAL_FILE, $newFacts);
     }
+}
+
+function sendResponseJson($code, $data)
+{
+    http_response_code($code);
+    header('Content-Type: application/json;charset=UTF-8');
+    print json_encode($data);
 }
