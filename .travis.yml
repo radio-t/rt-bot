@@ -25,6 +25,7 @@ before_install:
 install:
   - pip install -r ci/requirements.txt
   - sed -i "s|LETSENCRYPT=true|LETSENCRYPT=false\\n            - SSL_KEY=${SSL_KEY}\\n            - SSL_CERT=${SSL_CERT}|g" docker-compose.yml
+  - python -c 'import ssl; print(ssl.OPENSSL_VERSION)'
   - docker-compose build
 
 before_script:
