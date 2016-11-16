@@ -42,8 +42,9 @@ def find_bots(directory) -> dict:
 
 def run_bot_testcase(url, test_case):
     request_data = test_case.command.as_dict()
-    request = Request(url, json.dumps(request_data).encode('utf-8'),
-                      headers={"Content-Type": "application/json"})
+    request = Request(url, data=json.dumps(request_data).encode('utf-8'),
+                      headers={"Content-Type": "application/json"},
+                      method='POST', unverifiable=True)
     try:
         response = urlopen(request)
     except HTTPError as exc:
