@@ -33,7 +33,7 @@ def make_pagelr_url(url):
     return PAGELR_URL_TMPL.format(url=url, key=PAGELR_API_KEY)
 
 
-async def handle(request: aiohttp.web.Request):
+async def event_handle(request: aiohttp.web.Request):
 
     try:
         request_data = await request.json()
@@ -54,7 +54,11 @@ async def handle(request: aiohttp.web.Request):
 
     return make_response('![{url}]({grabbed_page})'.format(url=urls[-1], grabbed_page=grabbed_page_url))
 
+async def info_handle(request: aiohttp.web.Request):
 
-web_app.router.add_post("/event", handle)
-aiohttp.web.run_app(web_app, host="127.0.0.1", port=8080)
-# aiohttp.web.run_app(web_app, host="0.0.0.0", port=8080)
+    return make_response("Ahoy! Grab url and return page snapshot!")
+
+
+web_app.router.add_post("/event", event_handle)
+web_app.router.add_get("/info", info_handle)
+aiohttp.web.run_app(web_app, host="0.0.0.0", port=8080)
