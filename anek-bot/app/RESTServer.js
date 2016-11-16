@@ -29,7 +29,8 @@ var RESTServer = (function (_super) {
         res.json({
             info: 'anek-bot в ответ на фразу ' +
                 '\'расскажи анекдот\' отвечает анекдотом ' +
-                'полученным из RSS сайта anekdot.ru'
+                'полученным из RSS сайта anekdot.ru',
+            author: 'Dmitry'
         });
     };
     RESTServer.prototype.eventHandler = function (req, res) {
