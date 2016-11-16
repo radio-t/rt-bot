@@ -6,6 +6,7 @@ import argparse
 import logging
 
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 from bot_configparser import BotConfig, BotConfigNotFound, BotConfigError
 
@@ -42,12 +43,9 @@ def find_bots(directory) -> dict:
 
 def run_bot_testcase(url, test_case):
     request_data = test_case.command.as_dict()
-    logger.warn('Sending message to {}'.format(url))
-    logger.warn('Message content: {}'.format(request_data))
+    logger.warn('Sending message {} to {}'.format(request_data, url))
+    requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
     response = requests.post(url, json=request_data, verify=False)
-    logger.warn('Response content: {}'.format(
-        response.content.decode('utf-8'))
-    )
 
     if response.status_code != test_case.response.status:
         raise ValueError(
@@ -78,7 +76,8 @@ def run_bot_testcase(url, test_case):
 
     if not test_case.response.text_regexp.match(response_data.get('text', "")):
         raise ValueError(
-            '{} does not match regexp {}'.format(
+            '{} does not match the regexp {}.'
+            ' Be careful with escaping of regex\'s special symbols.'.format(
                 response_data.get("text"),
                 test_case.response.text_regexp,
             )
