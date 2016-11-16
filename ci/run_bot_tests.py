@@ -42,10 +42,10 @@ def find_bots(directory) -> dict:
 
 def run_bot_testcase(url, test_case):
     request_data = test_case.command.as_dict()
-    logger.debug('Sending message to {}'.format(url))
-    logger.debug('Message content: {}'.format(request_data))
+    logger.warn('Sending message to {}'.format(url))
+    logger.warn('Message content: {}'.format(request_data))
     response = requests.post(url, json=request_data, verify=False)
-    logger.debug('Response content: {}'.format(
+    logger.warn('Response content: {}'.format(
         response.content.decode('utf-8'))
     )
 
