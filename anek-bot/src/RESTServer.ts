@@ -30,7 +30,8 @@ export class RESTServer extends EventEmitter {
             {
                 info: 'anek-bot в ответ на фразу ' +
                 '\'расскажи анекдот\' отвечает анекдотом ' +
-                'полученным из RSS сайта anekdot.ru'
+                'полученным из RSS сайта anekdot.ru',
+                author: 'Dmitry'
             }
         )
     }
