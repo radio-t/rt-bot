@@ -42,7 +42,7 @@ def find_bots(directory) -> dict:
 
 def run_bot_testcase(url, test_case):
     request_data = test_case.command.as_dict()
-    response = requests.post(url, json=request_data)
+    response = requests.post(url, json=request_data, verify=False)
 
     if response.status_code != test_case.response.status:
         raise ValueError(
