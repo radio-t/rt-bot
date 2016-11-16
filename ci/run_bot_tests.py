@@ -4,8 +4,8 @@ import os
 import json
 import argparse
 import logging
-from urllib.request import Request, urlopen
-from urllib.error import HTTPError
+
+import requests
 
 from bot_configparser import BotConfig, BotConfigNotFound, BotConfigError
 
@@ -42,26 +42,19 @@ def find_bots(directory) -> dict:
 
 def run_bot_testcase(url, test_case):
     request_data = test_case.command.as_dict()
-    request = Request(url, data=json.dumps(request_data).encode('utf-8'),
-                      headers={"Content-Type": "application/json"},
-                      method='POST', unverifiable=True)
-    try:
-        response = urlopen(request)
-    except HTTPError as exc:
-        response = exc
+    response = requests.post(url, json=request_data, verify=False)
 
-    if response.code != test_case.response.status:
+    if response.status_code != test_case.response.status:
         raise ValueError(
             '{} http status expected, {} given for message: {}'.format(
                 test_case.response.status,
-                response.code,
+                response.status_code,
                 json.dumps(request_data)
             )
         )
     if test_case.response.status != test_case.response.OK:
         # Content doesn't matter for ignored messages
         return
-
     if not response.headers.get('content-type').startswith('application/json'):
         raise ValueError(
             'application/json content type status expected, {} given'.format(
@@ -69,7 +62,7 @@ def run_bot_testcase(url, test_case):
             )
         )
 
-    response_data = json.loads(response.read().decode('utf-8'))
+    response_data = response.json()
     if response_data.get('bot') != test_case.response.bot:
         raise ValueError(
             '{} "bot" parameter expected, {} given'.format(
