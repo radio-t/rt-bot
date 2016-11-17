@@ -49,7 +49,7 @@ def run_bot_testcase(url, test_case) -> bool:
 
     if response.status_code != test_case.response.status:
         logger.error(
-            '{} HTTP status expected, {} given'.format(
+            '"{}" HTTP status expected, "{}" given'.format(
                 test_case.response.status,
                 response.status_code,
             )
@@ -62,7 +62,7 @@ def run_bot_testcase(url, test_case) -> bool:
 
     if not response.headers.get('content-type').startswith('application/json'):
         logger.error(
-            'application/json content type status expected, {} given'.format(
+            '"application/json" content-type expected, {} given'.format(
                 response.headers.get('content-type'),
             )
         )
@@ -77,7 +77,7 @@ def run_bot_testcase(url, test_case) -> bool:
     result = True
     if response_data.get('bot') != test_case.response.bot:
         logger.error(
-            '{} "bot" parameter expected, {} given'.format(
+            '"{}" bot parameter expected, "{}" given'.format(
                 test_case.response.bot,
                 response_data.get('bot')
             )
