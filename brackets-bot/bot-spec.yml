@@ -11,12 +11,12 @@ ignored_commands:
 
 test_cases:
   - command: "(((Привет))"
-    result: "Закрывай скобки, @test"
+    result: "\\)\\nЗакрывай скобки, @test"
 
   - command: "[((Привет))"
-    result: "Закрывай скобки, @test"
+    result: "]\\nЗакрывай скобки, @test"
 
   - command:
       text: "{{((Привет)"
       username: "alex"
-    result: "Закрывай скобки, @alex"
+    result: "\\)}}\\nЗакрывай скобки, @alex"
