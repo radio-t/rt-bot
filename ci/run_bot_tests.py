@@ -74,6 +74,13 @@ def run_bot_testcase(url, test_case) -> bool:
         logger.error("Invalid JSON returned: {}".format(response_data))
         return False
 
+    if set(response_data.keys()) != {'bot', 'text'}:
+        logger.error('Bot response must contain only "bot" and "text" keys')
+        logger.error('Keys received: {}'.format(
+            ', '.join(k for k in response_data.keys())
+        ))
+        return False
+
     result = True
     if response_data.get('bot') != test_case.response.bot:
         logger.error(
