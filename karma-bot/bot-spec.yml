@@ -13,5 +13,10 @@ test_cases:
   - command: "/karma selevit"
     result: "^Карма пользователя @selevit: \\d+.$"
 
+  - command:
+      username: "selevit"
+      text: "selevit +1"
+    result: "^Вы не можете изменять свою карму!$"
+
   - command: "selevit++"
     result: "^Карма пользователя @selevit увеличена \\(текущее значение: \\d+\\).$"

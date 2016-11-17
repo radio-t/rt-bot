@@ -151,10 +151,10 @@ class BotConfig:
                 )
             )
         if isinstance(command, dict):
-            forbidden_keys = allowed_keys - set(command.keys())
+            forbidden_keys = set(command.keys()) - allowed_keys
             if forbidden_keys:
                 raise BotConfigError(
-                    'unallowed command keys: {}'.format(forbidden_keys)
+                    'Not supported command keys: {}'.format(forbidden_keys)
                 )
         elif isinstance(command, str):
             command = {'text': command}
