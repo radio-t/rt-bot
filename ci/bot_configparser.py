@@ -81,15 +81,21 @@ class BotConfig:
 
     defaults = None
     bot_name = None
+    bot_display_name = None
     test_cases = None
 
     def __init__(
         self, bot_name: str,
-        test_cases: list, defaults: dict
+        test_cases: list, defaults: dict,
+        bot_display_name=None
     ):
         self.bot_name = bot_name
         self.test_cases = test_cases
         self.defaults = defaults
+        if bot_display_name is None:
+            self.bot_display_name = bot_name
+        else:
+            self.bot_display_name = bot_display_name
 
     @classmethod
     def from_dict(cls, data: dict) -> 'BotConfig':
@@ -97,15 +103,17 @@ class BotConfig:
             raise BotConfigError('bot config data must be a dict')
 
         bot_name = cls._parse_bot_name(data)
+        bot_display_name = data.get('bot_display_name') or bot_name
         defaults = cls._parse_defaults(data)
         ignored_commands_test_cases = cls._parse_ignored_commands(
             data, defaults
         )
-        test_cases = cls._parse_test_cases(data, defaults, bot_name)
+        test_cases = cls._parse_test_cases(data, defaults, bot_display_name)
         return cls(
             bot_name=bot_name,
             test_cases=ignored_commands_test_cases + test_cases,
             defaults=defaults,
+            bot_display_name=bot_display_name
         )
 
     @classmethod
@@ -183,7 +191,7 @@ class BotConfig:
         return test_cases
 
     @classmethod
-    def _parse_test_cases(cls, data, defaults, bot_name):
+    def _parse_test_cases(cls, data, defaults, bot_display_name):
         test_cases = data.get('test_cases', [])
 
         if not isinstance(test_cases, list):
@@ -202,7 +210,7 @@ class BotConfig:
                 raise BotConfigError('test_case.result must be a string')
             result = BotResponse(
                 status=BotResponse.OK,
-                bot=bot_name,
+                bot=bot_display_name,
                 text=test_case['result']
             )
             command = cls._parse_command(test_case['command'], defaults)
