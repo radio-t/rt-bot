@@ -34,4 +34,4 @@ script:
   - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
 
 after_script:
-  - docker_compose down
+  - docker-compose down
