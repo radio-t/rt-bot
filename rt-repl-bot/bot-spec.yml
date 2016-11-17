@@ -1,0 +1,15 @@
+bot_name: "rt-repl-bot"
+bot_display_name: "Clojure REPL bot"
+
+ignored_commands:
+  - "Привет"
+  - "Как дела?"
+  - "Один два три"
+
+test_cases:
+  - command: "clj> (+ 1 1)"
+    result: "2"
+  - command: "clj>"
+    result: "EOF while reading"
+  - command: "clj> (def var1 5)"
+    result: "#'sandbox[0-9]{1,4}/var1"
