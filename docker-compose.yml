@@ -273,7 +273,7 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
-			  
+
     rest-voter:
         build: rest-voter
         container_name: rest-voter
