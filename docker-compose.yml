@@ -44,7 +44,7 @@ services:
             - anek-bot
             - grabpage-bot
             - ksenks-bot
-            - rtnumber-bot			
+            - rtnumber-bot
             - rest-voter
 
     hello:
