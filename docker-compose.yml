@@ -43,6 +43,7 @@ services:
             - stat-bot
             - anek-bot
             - grabpage-bot
+            - ksenks-bot
 
     hello:
         build: hello
@@ -254,6 +255,17 @@ services:
         build: grabpage-bot
         container_name: grabpage-bot
         hostname: grabpage-bot
+        restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    ksenks-bot:
+        build: ksenks-bot
+        container_name: ksenks-bot
+        hostname: ksenks-bot
         restart: always
         logging:
           driver: json-file

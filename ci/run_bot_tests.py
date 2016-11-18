@@ -45,7 +45,8 @@ def run_bot_testcase(url, test_case) -> bool:
     request_data = test_case.command.as_dict()
     logger.warn('Sending message {} to {}'.format(request_data, url))
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    response = requests.post(url, json=request_data, verify=False)
+    response = requests.post(url, json=request_data, verify=False,
+                             allow_redirects=False)
 
     if response.status_code != test_case.response.status:
         logger.error(
