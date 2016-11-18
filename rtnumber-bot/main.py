@@ -57,7 +57,7 @@ def hours_minutes_text(minutes, hours=0):
 
 async def http_info(request):
     data = {'author': 'strayge',
-            'info': 'Пишет номер выпуска, время до эфира',
+            'info': 'Rtnumber-bot пишет номер выпуска и время до эфира',
             'commands': ['Номер! | Выпуск!', 'Время!']}
     return web.json_response(data)
 
@@ -125,9 +125,9 @@ async def http_event(request):
             delta_days_num = 5 - weekday
         day_num = (dt + timedelta(days=delta_days_num)).day
         if day_num <= 7:
-            text = 'Подкаст # %i, гиковский' % (last_podcast_num + 1)
+            text = 'Выпуск # %i, гиковский' % (last_podcast_num + 1)
         else:
-            text = 'Подкаст # %i, не гиковский' % (last_podcast_num + 1)
+            text = 'Выпуск # %i, не гиковский' % (last_podcast_num + 1)
         output = {'text': text, 'bot': 'rtnumber-bot'}
         return web.json_response(data=output, status=201)
 
