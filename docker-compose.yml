@@ -44,6 +44,7 @@ services:
             - anek-bot
             - grabpage-bot
             - ksenks-bot
+            - rtnumber-bot
 
     hello:
         build: hello
@@ -266,6 +267,17 @@ services:
         build: ksenks-bot
         container_name: ksenks-bot
         hostname: ksenks-bot
+        restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    rtnumber-bot:
+        build: rtnumber-bot
+        container_name: rtnumber-bot
+        hostname: rtnumber-bot
         restart: always
         logging:
           driver: json-file
