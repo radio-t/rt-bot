@@ -1,5 +1,5 @@
 bot_name: "repl-bot"
-bot_display_name: "Clojure REPL bot"
+bot_display_name: "REPL-bot"
 
 ignored_commands:
   - "Привет"
@@ -8,8 +8,8 @@ ignored_commands:
 
 test_cases:
   - command: "clj> (+ 1 1)"
-    result: "2"
+    result: "```\\n2"
   - command: "clj>"
-    result: "EOF while reading"
+    result: "```\\nEOF while reading"
   - command: "clj> (def var1 5)"
-    result: "#'sandbox[0-9]{1,4}/var1"
+    result: "```\\n#'sandbox[0-9]{1,4}/var1"
