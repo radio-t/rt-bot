@@ -27,7 +27,7 @@ last_detects = []
 last_ksenks_timestamp = 0
 svm_model = None
 
-last_logs = ArrayHandler()
+last_logs = ArrayHandler(max_count=200)
 logging.basicConfig(format='%(asctime)-15s %(levelname)-8s %(message)s', level=logging.INFO,
                     datefmt="%Y-%m-%d %H:%M:%S", handlers=[logging.StreamHandler(), last_logs])
 log = logging.getLogger()
