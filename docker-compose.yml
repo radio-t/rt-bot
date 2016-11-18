@@ -44,6 +44,7 @@ services:
             - anek-bot
             - grabpage-bot
             - ksenks-bot
+            - rtnumber-bot			
             - rest-voter
 
     hello:
@@ -273,6 +274,18 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+
+    rtnumber-bot:
+        build: rtnumber-bot
+        container_name: rtnumber-bot
+        hostname: rtnumber-bot
+        restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5" 
 
     rest-voter:
         build: rest-voter
