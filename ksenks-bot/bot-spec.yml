@@ -1,0 +1,20 @@
+bot_name: "ksenks-bot"
+
+defaults:
+  username: "ksenks-bot"
+  display_name: "ksenks-bot"
+
+ignored_commands:
+  -  "Привет"
+  -  "Где ксюша?"
+  -  "Ksenks! 123"
+
+test_cases:
+  - command: "Ксюша!"
+    result: ".+"
+
+  - command: "ksenks!"
+    result: ".+"
+
+  - command: "КсЮшА!"
+    result: ".+"
