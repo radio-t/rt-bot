@@ -1,14 +1,14 @@
 import asyncio
+import hashlib
 import json.decoder
 import logging
 from datetime import datetime
 from time import time
 
 import aiohttp
+import audio
 import pytz
 from aiohttp import web
-
-import audio
 from log_handler import ArrayHandler
 
 SECS_BEFORE_SILENT = 1 * 60
@@ -73,7 +73,16 @@ async def http_event(request):
     # input_username = input_json.get('username')
     # input_displayname = input_json.get('display_name')
 
+    valid_key = False
     if DEBUG_COMMANDS:
+        input_key = input_json.get('key')
+        if input_key:
+            calced_hash = hashlib.new('sha256', str(input_key).encode('utf-8', errors='ignore')).hexdigest()
+            predefined_hash = 'a49f6ea4bc8fd77cfa1f02ef1c2e0f6a37970ff964104982b3823e8fc825e971'
+            if calced_hash == predefined_hash:
+                valid_key = True
+
+    if DEBUG_COMMANDS and valid_key:
         global STREAM_URL, DEBUG_IGNORE_TIME_UNTIL, DEBUG_RESET_FLAG
         global PROBABILITY, last_ksenks_timestamp
 
