@@ -44,6 +44,7 @@ services:
             - anek-bot
             - grabpage-bot
             - ksenks-bot
+			- rest-voter
 
     hello:
         build: hello
@@ -267,6 +268,18 @@ services:
         container_name: ksenks-bot
         hostname: ksenks-bot
         restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+			  
+    rest-voter:
+        build: rest-voter
+        container_name: rest-voter
+        hostname: rest-voter
+        restart: always
+
         logging:
           driver: json-file
           options:
