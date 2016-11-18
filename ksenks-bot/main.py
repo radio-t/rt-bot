@@ -61,7 +61,7 @@ def hours_word(hours):
 
 async def http_info(request):
     data = {'author': 'strayge',
-            'info': 'Выводит время с момента последней реплики Ксюши',
+            'info': 'Ksenks-bot выводит время с момента последней реплики Ксюши',
             'commands': ['Ксюша!', 'ksenks!']}
     return web.json_response(data)
 
@@ -145,7 +145,7 @@ async def http_event(request):
 
     if not input_text:
         return web.Response(status=417)
-    if input_text.strip().lower() not in ['ксюша!', 'ksenks!']:
+    if input_text.strip().lower() not in ['ксюша!', 'ksenks!', '!ксюша', '!ksenks']:
         return web.Response(status=417)
 
     now = time()
