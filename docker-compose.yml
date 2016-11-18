@@ -44,7 +44,7 @@ services:
             - anek-bot
             - grabpage-bot
             - ksenks-bot
-			- rest-voter
+            - rest-voter
 
     hello:
         build: hello
