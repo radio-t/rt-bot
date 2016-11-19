@@ -266,4 +266,4 @@ if __name__ == "__main__":
     app.on_cleanup.append(cleanup_background_tasks)
     app.router.add_get('/info', http_info)
     app.router.add_post('/event', http_event)
-    web.run_app(app, port=8085)
+    web.run_app(app, port=8080)
