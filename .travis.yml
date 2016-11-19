@@ -19,7 +19,7 @@ before_install:
 
 install:
   - pip install -r ci/requirements.txt
-  - docker-compose pull
+  - docker-compose pull || true
   - docker-compose build
 
 before_script:
