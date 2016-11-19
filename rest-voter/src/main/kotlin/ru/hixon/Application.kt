@@ -12,6 +12,8 @@ open class Application {
     @Bean
     open fun objectMapperBuilder(): Jackson2ObjectMapperBuilder
             = Jackson2ObjectMapperBuilder().modulesToInstall(KotlinModule())
+            .featuresToEnable(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES)
+
 
     companion object {
         @JvmStatic fun main(args: Array<String>) {
