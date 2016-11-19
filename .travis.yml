@@ -31,6 +31,7 @@ script:
   - set -e
   - echo "Waiting nginx-bot to launch on nginx-bot:443..."
   - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1; done
+  - echo "Waiting 30 seconds to ensure if all bots are ready..."; sleep 30
   - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
   - |
       if [ "$TRAVIS_BRANCH" = "master" ]; then
