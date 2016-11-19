@@ -60,7 +60,7 @@ services:
           driver: json-file
           options:
               max-size: "10m"
-              max-file: "5a"
+              max-file: "5"
 
     memberberries:
         build: memberberries
