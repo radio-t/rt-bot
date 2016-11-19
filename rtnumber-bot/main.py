@@ -147,13 +147,13 @@ async def http_event(request):
                                        'темы пользователей!', '!темы пользователей'], input_text)
     if command:
         def gen_user_themes_text(posts_list, max_posts=0):
-            text_out = '**Темы слушателей:**\n'
+            text_out = '**Темы слушателей:**\\n\\n'
             if max_posts <= 0:
                 max_posts = len(posts_list)
             for post in posts_list[:max_posts]:
                 likes = post['likes']
                 msg = post['raw_message'].replace('\n', ' ')
-                text_out += '* **[%+i]** %s\n' % (likes, msg)
+                text_out += '* **[%+i]** %s\\n' % (likes, msg)
             return text_out
 
         max_len = 0
