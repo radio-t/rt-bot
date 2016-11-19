@@ -46,6 +46,7 @@ services:
             - ksenks-bot
             - rtnumber-bot
             - rest-voter
+            - excerpt-bot
 
     hello:
         build: hello
@@ -292,6 +293,17 @@ services:
         hostname: rest-voter
         restart: always
 
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    excerpt-bot:
+        build: excerpt-bot
+        container_name: excerpt-bot
+        hostname: excerpt-bot
+        restart: always
         logging:
           driver: json-file
           options:
