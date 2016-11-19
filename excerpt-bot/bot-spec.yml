@@ -1,5 +1,5 @@
 bot_name: "excerpt-bot"
-display_name: "excerpt"
+bot_display_name: "excerpt"
 
 ignored_commands:
   - "Привет"
