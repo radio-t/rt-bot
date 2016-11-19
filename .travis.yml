@@ -22,8 +22,7 @@ before_install:
 
 install:
   - pip install -r ci/requirements.txt
-  - docker-compose pull --ignore-pull-failures
-  - docker-compose build
+  - docker-compose build --pull
 
 before_script:
   - docker-compose up -d
