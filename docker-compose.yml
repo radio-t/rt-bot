@@ -45,6 +45,7 @@ services:
             - grabpage-bot
             - ksenks-bot
             - rtnumber-bot
+            - excerpt-bot
 
     hello:
         build: hello
