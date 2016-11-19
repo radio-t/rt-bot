@@ -1,0 +1,7 @@
+excerpt-bot:
+    build: .
+    container_name: excerpt-bot
+    hostname: sample-bot
+    restart: always
+    ports:
+        - "8080:8080"

@@ -284,3 +284,14 @@ services:
           options:
               max-size: "10m"
               max-file: "5"
+
+    excerpt-bot:
+        build: excerpt-bot
+        container_name: excerpt-bot
+        hostname: excerpt-bot
+        restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
