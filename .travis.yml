@@ -9,7 +9,9 @@ services:
 cache:
   directories:
     - $HOME/.cache/pip
-    - /var/lib/docker
+    - /var/lib/docker/image
+    - /var/lib/docker/containers
+    - /var/lib/docker/aufs
 
 env:
   SSL_KEY: nginx.key
