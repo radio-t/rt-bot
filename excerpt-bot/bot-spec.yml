@@ -1,4 +1,4 @@
-bot_name: "anek-bot"
+bot_name: "excerpt-bot"
 
 ignored_commands:
   - "Привет"
