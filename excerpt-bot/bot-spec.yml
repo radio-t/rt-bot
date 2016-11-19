@@ -1,0 +1,9 @@
+bot_name: "anek-bot"
+
+ignored_commands:
+  - "Привет"
+  - "http://aaa.bbb.com/aaa.png"
+
+test_cases:
+  - command: "https://radio-t.com/p/2016/11/06/bot/"
+    result: "^В выпуске 520 была озвучена идея.*"
