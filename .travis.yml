@@ -22,7 +22,7 @@ before_install:
 
 install:
   - pip install -r ci/requirements.txt
-  - docker-compose build --pull
+  - docker-compose build
 
 before_script:
   - docker-compose up -d
