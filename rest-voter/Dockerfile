@@ -11,4 +11,4 @@ WORKDIR /rest-voter
 
 EXPOSE 8080
 
-RUN ./gradlew bootRun
+CMD ["./gradlew", "bootRun"]
