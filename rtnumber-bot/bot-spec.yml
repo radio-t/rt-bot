@@ -16,5 +16,5 @@ test_cases:
   - command: "!выпуск"
     result: ".+"
 
-  - command: "Номер!"
+  - command: "темы пользователей! :2"
     result: ".+"

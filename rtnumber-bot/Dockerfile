@@ -4,6 +4,9 @@ COPY requirements.txt /tmp/
 
 RUN pip3 install --no-cache-dir --disable-pip-version-check -r /tmp/requirements.txt
 
+RUN apk --no-cache add git && cd /tmp/ && git clone https://github.com/disqus/disqus-python.git && \
+    cd disqus-python && python3 setup.py install
+
 RUN mkdir /usr/rtnumber-bot/
 
 COPY . /usr/rtnumber-bot/
