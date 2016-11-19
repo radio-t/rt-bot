@@ -1,6 +1,6 @@
 version: '2'
-services:
 
+services:
     nginx:
         image: umputun/nginx-le:latest
         container_name: nginx-bot
@@ -23,7 +23,9 @@ services:
 
         environment:
             - TZ=America/Chicago
-            - LETSENCRYPT=true
+            - LETSENCRYPT="$LETSENCRYPT"
+            - SSL_KEY="$SSL_KEY"
+            - SSL_CERT="$SSL_CERT"
             - LE_EMAIL=umputun@gmail.com
             - LE_FQDN=bot.radio-t.com
 
@@ -49,7 +51,7 @@ services:
 
     hello:
         build: hello
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/hello-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/hello-bot"
         container_name: hello-bot
         hostname: hello-bot
         restart: always
@@ -58,11 +60,11 @@ services:
           driver: json-file
           options:
               max-size: "10m"
-              max-file: "5"
+              max-file: "5a"
 
     memberberries:
         build: memberberries
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/memberberries"
+        image: "${DOCKER_HUB_NAMESPACE}/memberberries"
         container_name: memberberries-bot
         hostname: memberberries-bot
         restart: always
@@ -75,7 +77,7 @@ services:
 
     wiki-bot:
         build: wiki-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/wiki-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/wiki-bot"
         container_name: wiki-bot
         hostname: wiki-bot
         restart: always
@@ -88,7 +90,7 @@ services:
 
     search-bot:
         build: search-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/search-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/search-bot"
         container_name: search-bot
         hostname: search-bot
         restart: always
@@ -101,7 +103,7 @@ services:
 
     noter-bot:
         build: noter-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/boter-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/boter-bot"
         container_name: noter-bot
         hostname: noter-bot
         restart: always
@@ -114,7 +116,7 @@ services:
 
     repl-bot:
         build: rt-repl-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/repl-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/repl-bot"
         container_name: repl-bot
         hostname: repl-bot
         restart: always
@@ -127,7 +129,7 @@ services:
 
     stat-bot:
         build: stat-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/stat-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/stat-bot"
         container_name: stat-bot
         hostname: stat-bot
         restart: always
@@ -140,7 +142,7 @@ services:
 
     gif-bot:
         build: gif-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/gif-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/gif-bot"
         container_name: gif-bot
         hostname: gif-bot
         restart: always
@@ -153,7 +155,7 @@ services:
 
     giphy-bot:
         build: giphy-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/giphy-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/giphy-bot"
         container_name: giphy-bot
         hostname: giphy-bot
         restart: always
@@ -166,7 +168,7 @@ services:
 
     5minphp-bot:
         build: 5minphp-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/5minphp-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/5minphp-bot"
         container_name: 5minphp-bot
         hostname: 5minphp-bot
         restart: always
@@ -179,7 +181,7 @@ services:
 
     loro-bot:
         build: loro-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/loro-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/loro-bot"
         container_name: loro-bot
         hostname: loro-bot
         restart: always
@@ -192,7 +194,7 @@ services:
 
     brackets-bot:
         build: brackets-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/brackets-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/brackets-bot"
         container_name: brackets-bot
         hostname: brackets-bot
         restart: always
@@ -205,7 +207,7 @@ services:
 
     guido-bot:
         build: guido-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/guido-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/guido-bot"
         container_name: guido-bot
         hostname: guido-bot
         restart: always
@@ -229,7 +231,7 @@ services:
 
     karma-bot:
         build: karma-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/karma-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/karma-bot"
         container_name: karma-bot
         hostname: karma-bot
         restart: always
@@ -246,7 +248,7 @@ services:
 
     sovet-bot:
         build: sovet-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/sovet-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/sovet-bot"
         container_name: sovet-bot
         hostname: sovet-bot
         restart: always
@@ -259,7 +261,7 @@ services:
 
     anek-bot:
         build: anek-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/anek-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/anek-bot"
         container_name: anek-bot
         hostname: anek-bot
         restart: always
@@ -271,7 +273,7 @@ services:
 
     grabpage-bot:
         build: grabpage-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/grabpage-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/grabpage-bot"
         container_name: grabpage-bot
         hostname: grabpage-bot
         restart: always
@@ -283,7 +285,7 @@ services:
 
     ksenks-bot:
         build: ksenks-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/ksenks-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/ksenks-bot"
         container_name: ksenks-bot
         hostname: ksenks-bot
         restart: always
@@ -295,7 +297,7 @@ services:
 
     rtnumber-bot:
         build: rtnumber-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/rtnumber-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/rtnumber-bot"
         container_name: rtnumber-bot
         hostname: rtnumber-bot
         restart: always
@@ -307,7 +309,7 @@ services:
 
     excerpt-bot:
         build: excerpt-bot
-        image: "${DOCKER_HUB_NAMESPACE:-rt-bot}/excerpt-bot"
+        image: "${DOCKER_HUB_NAMESPACE}/excerpt-bot"
         container_name: excerpt-bot
         hostname: excerpt-bot
         restart: always
