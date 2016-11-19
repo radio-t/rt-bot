@@ -20,18 +20,23 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=US/ST=Test/L=Test/O=Dis/CN=localhost" -keyout "etc/ssl/${SSL_KEY}" -out "etc/ssl/${SSL_CERT}"
 
-install:
-  - pip install -r ci/requirements.txt
-  - sed -i "s|LETSENCRYPT=true|LETSENCRYPT=false\\n            - SSL_KEY=${SSL_KEY}\\n            - SSL_CERT=${SSL_CERT}|g" docker-compose.yml
-  - docker-compose build
+# install:
+#  - pip install -r ci/requirements.txt
+#  - docker-compose pull
+#  - sed -i "s|LETSENCRYPT=true|LETSENCRYPT=false\\n            - SSL_KEY=${SSL_KEY}\\n            - SSL_CERT=${SSL_CERT}|g" docker-compose.yml
+#  - docker-compose build
 
-before_script:
-  - docker-compose up -d
+#before_script:
+#  - docker-compose up -d
 
 script:
-  - echo "Waiting nginx-bot to launch on nginx-bot:443..."
-  - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1; done
-  - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
+#  - echo "Waiting nginx-bot to launch on nginx-bot:443..."
+#  - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1; done
+#  - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
+  - if [ "$TRAVIS_BRANCH" = "docker_hub" ]; then \
+        python ci/prepare_docker_hub.py; \
+        python ci/push_all_to_docker_hub.py; \
+    fi
 
 after_script:
   - docker-compose down
