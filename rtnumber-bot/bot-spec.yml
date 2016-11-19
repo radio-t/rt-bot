@@ -12,9 +12,3 @@ ignored_commands:
 test_cases:
   - command: "время!"
     result: ".+"
-
-  - command: "!выпуск"
-    result: ".+"
-
-  - command: "темы пользователей! :2"
-    result: ".+"
