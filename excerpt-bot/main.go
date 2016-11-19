@@ -106,7 +106,7 @@ func excerpt(link string) (result string, err error) {
 		// Domain    string `json:"domain"`
 		// Author    string `json:"author"`
 		// URL       string `json:"url"`
-		// Title     string `json:"title"`
+		Title   string `json:"title"`
 		Excerpt string `json:"excerpt"`
 		// Published string `json:"date_published"`
 		// Dek       string `json:"dek"`
@@ -122,7 +122,7 @@ func excerpt(link string) (result string, err error) {
 		return "", err
 	}
 
-	return response.Excerpt, nil
+	return fmt.Sprintf("%s\n\n_%s_", response.Excerpt, response.Title), nil
 }
 
 func link(input string) (link string, err error) {
