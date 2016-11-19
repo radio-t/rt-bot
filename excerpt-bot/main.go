@@ -122,7 +122,7 @@ func excerpt(link string) (result string, err error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("%s\n\n_%s_", response.Excerpt, response.Title), nil
+	return fmt.Sprintf("%s\\n\\n_%s_", response.Excerpt, response.Title), nil
 }
 
 func link(input string) (link string, err error) {
