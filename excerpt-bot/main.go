@@ -79,7 +79,7 @@ func main() {
 	http.HandleFunc("/info", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "%s", string(`{"author": "umputun", "info": "раскрывает ссылки в короткое описание"}`))
+		fmt.Fprintf(w, "%s", string(`{"author": "umputun", "info": "excerpt бот раскрывает ссылки в короткое описание"}`))
 	})
 
 	if err := http.ListenAndServe(":8080", nil); err != nil {
