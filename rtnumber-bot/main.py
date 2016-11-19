@@ -138,8 +138,14 @@ async def http_event(request):
         output = {'text': text, 'bot': 'rtnumber-bot'}
         return web.json_response(data=output, status=201)
 
-    if 'темы слушателей!' in input_text.strip().lower() or '!темы слушателей' in input_text.strip().lower():
+    def is_one_of_cmds_in_input(cmds, input):
+        for cmd in cmds:
+            if cmd in input.strip().lower():
+                return cmd
 
+    command = is_one_of_cmds_in_input(['темы слушателей!', '!темы слушателей',
+                                       'темы пользователей!', '!темы пользователей'], input_text)
+    if command:
         def gen_user_themes_text(posts_list, max_posts=0):
             text_out = '**Темы слушателей:**\n'
             if max_posts <= 0:
@@ -153,7 +159,7 @@ async def http_event(request):
         max_len = 0
         if ':' in input_text:
             part1, part2 = input_text.strip().lower().split(':', 1)
-            if part1.strip() in ['!темы слушателей', 'темы слушателей!'] and part2.strip().isdigit():
+            if part1.strip() == command and part2.strip().isdigit():
                 max_len = int(part2)
 
         if not disqus_thread_id:
