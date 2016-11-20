@@ -17,10 +17,11 @@ func main() {
 	go deploy(ch)
 
 	http.HandleFunc("/deploy", auth(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("deploy request from %s", r.RemoteAddr)
 		st := time.Now()
 		ch <- struct{}{}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, `{"status": "ok", "duration": %v}`, time.Since(st))
+		fmt.Fprintf(w, `{"status": "ok", "duration": %v, "from": %s}`, time.Since(st), r.RemoteAddr)
 	}))
 
 	if err := http.ListenAndServeTLS(":443", "/srv/rt-bot/etc/ssl/le-crt.pem", "/srv/rt-bot/etc/ssl/le-key.pem", nil); err != nil {
