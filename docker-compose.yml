@@ -53,7 +53,7 @@ services:
 
     hello:
         build: hello
-        image: "${DOCKER_REGISTRY_NAMESPACE}/hello-bot"
+        image: rtbot/hello-bot
         container_name: hello-bot
         hostname: hello-bot
         restart: always
@@ -66,7 +66,7 @@ services:
 
     memberberries:
         build: memberberries
-        image: "${DOCKER_REGISTRY_NAMESPACE}/memberberries"
+        image: rtbot/memberberries
         container_name: memberberries-bot
         hostname: memberberries-bot
         restart: always
@@ -79,7 +79,7 @@ services:
 
     wiki-bot:
         build: wiki-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/wiki-bot"
+        image: rtbot/wiki-bot
         container_name: wiki-bot
         hostname: wiki-bot
         restart: always
@@ -92,7 +92,7 @@ services:
 
     search-bot:
         build: search-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/search-bot"
+        image: rtbot/search-bot
         container_name: search-bot
         hostname: search-bot
         restart: always
@@ -105,7 +105,7 @@ services:
 
     noter-bot:
         build: noter-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/boter-bot"
+        image: rtbot/boter-bot
         container_name: noter-bot
         hostname: noter-bot
         restart: always
@@ -118,7 +118,7 @@ services:
 
     repl-bot:
         build: rt-repl-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/repl-bot"
+        image: rtbot/repl-bot
         container_name: repl-bot
         hostname: repl-bot
         restart: always
@@ -131,7 +131,7 @@ services:
 
     stat-bot:
         build: stat-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/stat-bot"
+        image: rtbot/stat-bot
         container_name: stat-bot
         hostname: stat-bot
         restart: always
@@ -144,7 +144,7 @@ services:
 
     gif-bot:
         build: gif-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/gif-bot"
+        image: rtbot/gif-bot
         container_name: gif-bot
         hostname: gif-bot
         restart: always
@@ -157,7 +157,7 @@ services:
 
     giphy-bot:
         build: giphy-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/giphy-bot"
+        image: rtbot/giphy-bot
         container_name: giphy-bot
         hostname: giphy-bot
         restart: always
@@ -170,7 +170,7 @@ services:
 
     5minphp-bot:
         build: 5minphp-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/5minphp-bot"
+        image: rtbot/5minphp-bot
         container_name: 5minphp-bot
         hostname: 5minphp-bot
         restart: always
@@ -183,7 +183,7 @@ services:
 
     loro-bot:
         build: loro-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/loro-bot"
+        image: rtbot/loro-bot
         container_name: loro-bot
         hostname: loro-bot
         restart: always
@@ -196,7 +196,7 @@ services:
 
     brackets-bot:
         build: brackets-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/brackets-bot"
+        image: rtbot/brackets-bot
         container_name: brackets-bot
         hostname: brackets-bot
         restart: always
@@ -209,7 +209,7 @@ services:
 
     guido-bot:
         build: guido-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/guido-bot"
+        image: rtbot/guido-bot
         container_name: guido-bot
         hostname: guido-bot
         restart: always
@@ -233,7 +233,7 @@ services:
 
     karma-bot:
         build: karma-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/karma-bot"
+        image: rtbot/karma-bot
         container_name: karma-bot
         hostname: karma-bot
         restart: always
@@ -250,7 +250,7 @@ services:
 
     sovet-bot:
         build: sovet-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/sovet-bot"
+        image: rtbot/sovet-bot
         container_name: sovet-bot
         hostname: sovet-bot
         restart: always
@@ -263,7 +263,7 @@ services:
 
     anek-bot:
         build: anek-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/anek-bot"
+        image: rtbot/anek-bot
         container_name: anek-bot
         hostname: anek-bot
         restart: always
@@ -275,7 +275,7 @@ services:
 
     grabpage-bot:
         build: grabpage-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/grabpage-bot"
+        image: rtbot/grabpage-bot
         container_name: grabpage-bot
         hostname: grabpage-bot
         restart: always
@@ -287,7 +287,7 @@ services:
 
     ksenks-bot:
         build: ksenks-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/ksenks-bot"
+        image: rtbot/ksenks-bot
         container_name: ksenks-bot
         hostname: ksenks-bot
         restart: always
@@ -299,7 +299,7 @@ services:
 
     rtnumber-bot:
         build: rtnumber-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/rtnumber-bot"
+        image: rtbot/rtnumber-bot
         container_name: rtnumber-bot
         hostname: rtnumber-bot
         restart: always
@@ -311,7 +311,7 @@ services:
 
     excerpt-bot:
         build: excerpt-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/excerpt-bot"
+        image: rtbot/excerpt-bot
         container_name: excerpt-bot
         hostname: excerpt-bot
         restart: always
@@ -323,7 +323,7 @@ services:
 
     tweet-bot:
         build: tweet-bot
-        image: "${DOCKER_REGISTRY_NAMESPACE}/tweet-bot"
+        image: rtbot/tweet-bot
         container_name: tweet-bot
         hostname: tweet-bot
         restart: always
@@ -335,7 +335,7 @@ services:
   
     rest-voter:
         build: rest-voter
-        image: "${DOCKER_REGISTRY_NAMESPACE}/rest-voter"
+        image: rtbot/rest-voter
         container_name: rest-voter
         hostname: rest-voter
         restart: always
