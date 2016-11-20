@@ -92,7 +92,9 @@ def run_bot_testcase(url, test_case) -> bool:
         )
         result = False
 
-    if not test_case.response.text_regexp.match(response_data.get('text', "")):
+    if not test_case.response.text_regexp.match(
+        response_data.get('text', ""), re.M
+    ):
         logger.error(
             '{} does not match the regexp {}.'
             ' Be careful with escaping of regex\'s special symbols.'.format(
