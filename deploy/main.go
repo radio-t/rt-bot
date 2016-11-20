@@ -43,17 +43,18 @@ func auth(fn http.HandlerFunc) http.HandlerFunc {
 
 func deploy(ch <-chan struct{}) {
 	for range ch {
-		log.Print("deploy request")
+		log.Print("deploy request started")
 		cmd := exec.Command("sh", "-c", "/srv/deploy.sh")
 		var out, stderr bytes.Buffer
 		cmd.Stdout = &out
 		cmd.Stderr = &stderr
 		err := cmd.Run()
 		if err != nil {
-			log.Printf("error %s", stderr.String())
+			log.Printf("deploy error %s", stderr.String())
 			return
 		}
 		log.Printf("out: %s", out.String())
 		log.Printf("err: %s", stderr.String())
+		log.Print("deploy request completed")
 	}
 }
