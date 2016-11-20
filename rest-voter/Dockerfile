@@ -4,11 +4,12 @@ RUN mkdir /rest-voter
 
 COPY . /rest-voter
 
-RUN chmod 777 /rest-voter
-RUN chmod 777 /rest-voter/gradlew
-
 WORKDIR /rest-voter
 
+RUN chmod 777 /rest-voter/gradlew
+
 EXPOSE 8080
+
+RUN ./gradlew build
 
 CMD ["./gradlew", "bootRun"]
