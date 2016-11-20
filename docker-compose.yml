@@ -48,6 +48,7 @@ services:
             - ksenks-bot
             - rtnumber-bot
             - excerpt-bot
+            - tweet-bot
 
     hello:
         build: hello
@@ -312,6 +313,18 @@ services:
         image: "${DOCKER_REGISTRY_NAMESPACE}/excerpt-bot"
         container_name: excerpt-bot
         hostname: excerpt-bot
+        restart: always
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+    tweet-bot:
+        build: tweet-bot
+        image: "${DOCKER_REGISTRY_NAMESPACE}/tweet-bot"
+        container_name: tweet-bot
+        hostname: tweet-bot
         restart: always
         logging:
           driver: json-file
