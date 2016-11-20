@@ -1,0 +1,21 @@
+bot_name: "noter-bot"
+display_name: "sbot"
+
+defaults:
+  username: "test"
+
+ignored_commands:
+  - "Привет"
+
+test_cases:
+  - command: "sbot list"
+    result: "Your story is empty"
+
+  - command: "bot note Вот тут Бобук пошутил про фотоаппараты"
+    result: "### test, сохранено$"
+
+  - command: "sbot list"
+    result: "^### Вот твоя история, test.+"
+
+  - command: "sbot clear"
+    result: "^### Твоя история пуста, test$"
