@@ -1,6 +1,6 @@
 #/bin/sh
 cd /srv/rt-bot
-export DOCKER_HOST=unix://var/run/docker.sock
+# export DOCKER_HOST=unix:///var/run/docker.sock
 
 echo "deploy bots"
 /usr/bin/docker-compose ps

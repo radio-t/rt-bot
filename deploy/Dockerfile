@@ -1,6 +1,6 @@
 FROM golang:alpine
 
-ENV DOCKER_HOST unix://var/run/docker.sock
+ENV DOCKER_HOST unix:///var/run/docker.sock
 RUN apk add --update docker py-pip && pip install docker-compose && docker -v
 
 ADD . /go/src/github.com/umputun/rt-bot/deploy
