@@ -11,13 +11,14 @@ cache:
     - $HOME/.cache/pip
 
 env:
-  SSL_KEY: nginx.key
-  SSL_CERT: nginx.crt
-  LETSENCRYPT: false
-  DOCKER_REGISTRY_HOST: docker.io
-  DOCKER_REGISTRY_LOGIN:
-  DOCKER_REGISTRY_PASSWORD:
-  BOTS_WAIT_TIMEOUT: 10
+  global:
+    - SSL_KEY=nginx.key
+    - SSL_CERT=nginx.crt
+    - LETSENCRYPT=false
+    - DOCKER_REGISTRY_HOST=docker.io
+    - DOCKER_REGISTRY_LOGIN=
+    - DOCKER_REGISTRY_PASSWORD=
+    - BOTS_WAIT_TIMEOUT=10
 
 before_install:
   - pip install docker-compose==1.9.0

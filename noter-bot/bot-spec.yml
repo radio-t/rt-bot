@@ -1,5 +1,5 @@
 bot_name: "noter-bot"
-display_name: "sbot"
+bot_display_name: "sbot"
 
 defaults:
   username: "test"
