@@ -1,4 +1,5 @@
-FROM microsoft/dotnet:1.0.1-sdk-projectjson
+FROM microsoft/dotnet:1.1-sdk-projectjson
+
 ENV ASPNETCORE_ENVIRONMENT Production
 
 RUN mkdir /app
