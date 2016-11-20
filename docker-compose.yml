@@ -47,7 +47,6 @@ services:
             - grabpage-bot
             - ksenks-bot
             - rtnumber-bot
-            - rest-voter
             - excerpt-bot
             - tweet-bot
             - rest-voter
@@ -309,18 +308,6 @@ services:
           options:
               max-size: "10m"
               max-file: "5" 
-
-    rest-voter:
-        build: rest-voter
-        container_name: rest-voter
-        hostname: rest-voter
-        restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
 
     excerpt-bot:
         build: excerpt-bot
