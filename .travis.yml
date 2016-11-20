@@ -33,7 +33,7 @@ before_script:
 script:
   - set -e
   - echo "Waiting nginx-bot to launch on nginx-bot:443..."
-  - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1;
+  - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1; done
   - echo "Waiting $BOTS_WAIT_TIMEOUT seconds to ensure if all bots are ready..."; sleep "$BOTS_WAIT_TIMEOUT"
   - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
   - |
