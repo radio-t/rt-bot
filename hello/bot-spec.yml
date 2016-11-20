@@ -5,4 +5,4 @@ ignored_commands:
 
 test_cases:
   - command: "Привет"
-    result: "Hello!"
+    result: ".+"

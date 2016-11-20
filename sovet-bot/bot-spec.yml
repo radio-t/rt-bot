@@ -8,5 +8,5 @@ test_cases:
   - command: "совет"
     result: ".+"
 
-  - command: "sovet"
+  - command: "как жить?"
     result: ".+"
