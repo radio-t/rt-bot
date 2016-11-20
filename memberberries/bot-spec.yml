@@ -1,5 +1,5 @@
 bot_name: "memberberries"
-display_name: "MemberBerries"
+bot_display_name: "MemberBerries"
 
 ignored_commands:
   - "Привет"
