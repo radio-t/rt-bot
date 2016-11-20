@@ -1,0 +1,7 @@
+rtnumber-bot:
+    build: .
+    container_name: rtnumber-bot
+    hostname: rtnumber-bot
+    restart: always
+    ports:
+        - "8080:8080"

@@ -2,13 +2,12 @@ FROM microsoft/dotnet:1.1-sdk-projectjson
 
 ENV ASPNETCORE_ENVIRONMENT Production
 
-COPY . /app
-
+RUN mkdir /app
 WORKDIR /app
-
-RUN ["dotnet", "restore"]
-
-RUN ["dotnet", "build"]
+COPY ./project.json /app
+RUN dotnet restore
+COPY . /app
+RUN dotnet build
 
 EXPOSE 8080/tcp
 

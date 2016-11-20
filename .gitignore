@@ -1,0 +1,5 @@
+node_modules/
+.idea
+*.pyc
+__pycache__
+etc/ssl/*

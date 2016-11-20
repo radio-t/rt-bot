@@ -1,0 +1,14 @@
+bot_name: "rtnumber-bot"
+
+defaults:
+  username: "rtnumber-bot"
+  display_name: "rtnumber-bot"
+
+ignored_commands:
+  -  "Привет"
+  -  "время"
+  -  "Подскажите номер выпуска"
+
+test_cases:
+  - command: "время!"
+    result: ".+"

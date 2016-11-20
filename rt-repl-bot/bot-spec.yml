@@ -1,0 +1,15 @@
+bot_name: "repl-bot"
+bot_display_name: "REPL-bot"
+
+ignored_commands:
+  - "Привет"
+  - "Как дела?"
+  - "Один два три"
+
+test_cases:
+  - command: "clj> (+ 1 1)"
+    result: "```\\n2"
+  - command: "clj>"
+    result: "```\\nEOF while reading"
+  - command: "clj> (def var1 5)"
+    result: "```\\n#'sandbox[0-9]{1,4}/var1"
