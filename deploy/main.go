@@ -23,7 +23,7 @@ func main() {
 		fmt.Fprintf(w, `{"status": "ok", "duration": %v}`, time.Since(st))
 	}))
 
-	if err := http.ListenAndServeTLS(":443", "/srv/rt-bot/etc/ssl/nginx.crt", "/srv/rt-bot/etc/ssl/nginx.key", nil); err != nil {
+	if err := http.ListenAndServeTLS(":443", "/srv/rt-bot/etc/ssl/le-crt.pem", "/srv/rt-bot/etc/ssl/le-key.pem", nil); err != nil {
 		log.Fatalf("failed to start server, %v", err)
 	}
 }
