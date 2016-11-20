@@ -39,7 +39,7 @@ script:
   - echo "Waiting 30 seconds to ensure if all bots are ready..."; sleep 30
   - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
   - |
-      if [ "$TRAVIS_BRANCH" = "master" ]; then
+      if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         docker login \
           --username "$DOCKER_REGISTRY_LOGIN" \
           --password "$DOCKER_REGISTRY_PASSWORD" \
