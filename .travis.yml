@@ -19,6 +19,9 @@ env:
     - DOCKER_REGISTRY_LOGIN=
     - DOCKER_REGISTRY_PASSWORD=
     - BOTS_WAIT_TIMEOUT=10
+    - DEPLOY_TRIGGER_URL=https://bot.radio-t.com:1443/deploy
+    - DEPLOY_USER=
+    - DEPLOY_PASSWD=
 
 before_install:
   - pip install docker-compose==1.9.0
@@ -44,6 +47,12 @@ script:
           --password "$DOCKER_REGISTRY_PASSWORD" \
           "$DOCKER_REGISTRY_HOST"
         docker-compose push
+        echo "Deploying containers..."
+        deploy_result=$(curl -X POST \
+            -u "${DEPLOY_USER}:${DEPLOY_PASSWD}" \
+            "$DEPLOY_TRIGGER_URL")
+        echo "$deploy_result"
+        echo "$deploy_result" | grep -q '"status": "ok"'
       fi
 
 after_script:
