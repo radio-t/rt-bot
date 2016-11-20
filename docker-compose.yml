@@ -343,4 +343,4 @@ services:
           driver: json-file
           options:
               max-size: "10m"
-              max-file: "5"			  
+              max-file: "5"
