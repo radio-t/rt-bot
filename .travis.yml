@@ -17,7 +17,7 @@ env:
   DOCKER_REGISTRY_HOST: docker.io
   DOCKER_REGISTRY_LOGIN:
   DOCKER_REGISTRY_PASSWORD:
-  BOTS_WAIT_TIMEOUT: 60
+  BOTS_WAIT_TIMEOUT: 10
 
 before_install:
   - pip install docker-compose==1.9.0

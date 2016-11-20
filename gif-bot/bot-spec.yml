@@ -1,7 +1,7 @@
 bot_name: "gif-bot"
 
 ignored_commands:
-  - "показать гифку"
+  - "показать сиськи"
 
 test_cases:
   - command: "показать гифку"

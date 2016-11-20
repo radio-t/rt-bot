@@ -28,6 +28,7 @@ public class Server {
         Spark.port(8080);
         Spark.post("/event", (req, resp) -> {
             resp.status(201);
+            resp.type("application/json");
             return server.getAnswer(req);
         });
     }
