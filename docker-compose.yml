@@ -30,8 +30,8 @@ services:
             - LE_FQDN=bot.radio-t.com
 
         depends_on:
-            - hello
             - memberberries
+            - hello
             - wiki-bot
             - search-bot
             - noter-bot
