@@ -1,0 +1,8 @@
+bot_name: "hcalendar-bot"
+
+ignored_commands:
+  - "Hi"
+
+test_cases:
+  - command: "hcalendar"
+    result: ".+"
