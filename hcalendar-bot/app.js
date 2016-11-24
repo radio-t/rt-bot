@@ -45,7 +45,7 @@ app
 .get('/info', (req, res, next) => {
 	res
 	.status(200)
-	.json({author: 'hcalendar bot', info: 'Hebrew Calendar', commands: ['hcalendar']})
+	.json({author: 'constructor-igor', info: 'Hebrew Calendar', commands: ['hcalendar']})
 	.end();
 })
 .get('/event', (req, res, next) => {
@@ -56,6 +56,14 @@ app
 .post('/event', (req, res, next) => {
 	var msg = req.body;
 
+	if (msg.text == "hi hcalendar")
+	{
+		var data = {text: "hi", bot: "hcalendar"};
+		res
+			.status(201)
+			.json(data)
+			.end();		
+	} else
 	if (msg.text == "hcalendar")
 	{
 		var uDate = new Date();

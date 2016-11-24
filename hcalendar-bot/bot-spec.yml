@@ -4,5 +4,5 @@ ignored_commands:
   - "Hi"
 
 test_cases:
-  - command: "hcalendar"
-    result: ".+"
+  - command: "hi hcalendar"
+    result: "hi"
