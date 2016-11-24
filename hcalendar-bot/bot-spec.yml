@@ -1,5 +1,8 @@
 bot_name: "hcalendar-bot"
 
+defaults:
+  display_name: "hcalendar"
+
 ignored_commands:
   - "Hi"
 
