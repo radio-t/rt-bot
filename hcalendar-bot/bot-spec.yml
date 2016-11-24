@@ -2,7 +2,3 @@ bot_name: "hcalendar-bot"
 
 ignored_commands:
   - "Hi"
-
-test_cases:
-  - command: "hi hcalendar"
-    result: "hi"
