@@ -58,7 +58,7 @@ app
 
 	if (msg.text == "hi hcalendar")
 	{
-		var data = {text: "hi", bot: "hcalendar"};
+		var data = {text: "hi", bot: "hcalendar-bot"};
 		res
 			.status(201)
 			.json(data)
@@ -73,7 +73,7 @@ app
 
 		var hebDate = kdate.civ2heb_v1(tday, tmonth, tyear);
 		var currentData = hebDateToString(hebDate);
-		var data = {text: currentData, bot: "hcalendar"};
+		var data = {text: currentData, bot: "hcalendar-bot"};
 		res
 			.status(201)
 			.json(data)
