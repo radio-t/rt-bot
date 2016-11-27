@@ -174,9 +174,8 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func query(q string) (string, error) {
-	if strings.HasPrefix(q, "поиск") && strings.HasSuffix(q, "!") {
+	if strings.HasPrefix(q, "поиск") {
 		q = strings.Replace(q, "поиск", "", 1)
-		q = strings.Replace(q, "!", "", -1)
 		q = strings.TrimSpace(q)
 
 		if q == "" {
