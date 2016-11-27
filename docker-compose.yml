@@ -50,6 +50,7 @@ services:
             - excerpt-bot
             - tweet-bot
             - rest-voter
+            - hcalendar-bot
 
 
     hello:
