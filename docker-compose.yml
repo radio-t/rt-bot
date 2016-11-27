@@ -262,6 +262,19 @@ services:
               max-size: "10m"
               max-file: "5"
 
+    hcalendar-bot:
+        build: hcalendar-bot
+        image: rtbot/hcalendar-bot
+        container_name: hcalendar-bot
+        hostname: hcalendar-bot
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
     anek-bot:
         build: anek-bot
         image: rtbot/anek-bot
