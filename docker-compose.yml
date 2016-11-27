@@ -7,7 +7,7 @@ services:
         hostname: nginx-bot
         restart: always
 
-        logging:
+        logging: &default_logging
           driver: json-file
           options:
               max-size: "10m"
@@ -59,12 +59,7 @@ services:
         container_name: hello-bot
         hostname: hello-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     memberberries:
         build: memberberries
@@ -72,12 +67,7 @@ services:
         container_name: memberberries-bot
         hostname: memberberries-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     wiki-bot:
         build: wiki-bot
@@ -85,12 +75,7 @@ services:
         container_name: wiki-bot
         hostname: wiki-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     search-bot:
         build: search-bot
@@ -98,12 +83,7 @@ services:
         container_name: search-bot
         hostname: search-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     noter-bot:
         build: noter-bot
@@ -111,12 +91,7 @@ services:
         container_name: noter-bot
         hostname: noter-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     repl-bot:
         build: rt-repl-bot
@@ -124,12 +99,7 @@ services:
         container_name: repl-bot
         hostname: repl-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     stat-bot:
         build: stat-bot
@@ -137,12 +107,7 @@ services:
         container_name: stat-bot
         hostname: stat-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     gif-bot:
         build: gif-bot
@@ -150,12 +115,7 @@ services:
         container_name: gif-bot
         hostname: gif-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     giphy-bot:
         build: giphy-bot
@@ -163,12 +123,7 @@ services:
         container_name: giphy-bot
         hostname: giphy-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     5minphp-bot:
         build: 5minphp-bot
@@ -176,12 +131,7 @@ services:
         container_name: 5minphp-bot
         hostname: 5minphp-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     loro-bot:
         build: loro-bot
@@ -189,12 +139,7 @@ services:
         container_name: loro-bot
         hostname: loro-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     brackets-bot:
         build: brackets-bot
@@ -202,12 +147,7 @@ services:
         container_name: brackets-bot
         hostname: brackets-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     guido-bot:
         build: guido-bot
@@ -215,12 +155,7 @@ services:
         container_name: guido-bot
         hostname: guido-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     karma-bot-storage:
       image: redis:3-alpine
@@ -243,12 +178,7 @@ services:
           - REDIS_HOST=karma-bot-storage
         depends_on:
           - karma-bot-storage
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     sovet-bot:
         build: sovet-bot
@@ -256,12 +186,7 @@ services:
         container_name: sovet-bot
         hostname: sovet-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     hcalendar-bot:
         build: hcalendar-bot
@@ -269,12 +194,7 @@ services:
         container_name: hcalendar-bot
         hostname: hcalendar-bot
         restart: always
-
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     anek-bot:
         build: anek-bot
@@ -282,11 +202,7 @@ services:
         container_name: anek-bot
         hostname: anek-bot
         restart: always
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     grabpage-bot:
         build: grabpage-bot
@@ -294,11 +210,7 @@ services:
         container_name: grabpage-bot
         hostname: grabpage-bot
         restart: always
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     ksenks-bot:
         build: ksenks-bot
@@ -306,11 +218,7 @@ services:
         container_name: ksenks-bot
         hostname: ksenks-bot
         restart: always
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     rtnumber-bot:
         build: rtnumber-bot
@@ -318,11 +226,7 @@ services:
         container_name: rtnumber-bot
         hostname: rtnumber-bot
         restart: always
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     excerpt-bot:
         build: excerpt-bot
@@ -330,11 +234,7 @@ services:
         container_name: excerpt-bot
         hostname: excerpt-bot
         restart: always
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     tweet-bot:
         build: tweet-bot
@@ -342,11 +242,7 @@ services:
         container_name: tweet-bot
         hostname: tweet-bot
         restart: always
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
 
     rest-voter:
         build: rest-voter
@@ -354,8 +250,4 @@ services:
         container_name: rest-voter
         hostname: rest-voter
         restart: always
-        logging:
-          driver: json-file
-          options:
-              max-size: "10m"
-              max-file: "5"
+        logging: *default_logging
