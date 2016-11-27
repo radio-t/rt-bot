@@ -1,0 +1,11 @@
+bot_name: "search-bot"
+bot_display_name: "search-bot"
+defaults:
+  username: "test-user"
+  display_name: "Test User"
+ignored_commands:
+  - "Выпуск"
+  - "Тест поиск"
+test_cases:
+  - command: "Поиск Umputun"
+    result: "^\\\\n\* \*\*\[Выпуск 271\]\(https:\/\/radio-t\.com\/p\/2012\/01\/08\/podcast-271\/\)\*\*: SLB от Umputun\\\\n$"
