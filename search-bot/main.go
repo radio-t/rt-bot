@@ -185,7 +185,7 @@ func query(q string) (string, error) {
 		return search.Query(searchIndex, q, allShows)
 	}
 
-	if strings.HasPrefix(q, "выпуск") && strings.HasSuffix(q, "!") {
+	if strings.HasPrefix(q, "выпуск") {
 		return getShowDetail(q)
 	}
 
@@ -203,7 +203,6 @@ func getHelp() (string, error) {
 
 func getShowDetail(q string) (string, error) {
 	q = strings.Replace(q, "выпуск", "", 1)
-	q = strings.Replace(q, "!", "", -1)
 	q = strings.TrimSpace(q)
 	num, err := strconv.Atoi(q)
 	if err != nil {
