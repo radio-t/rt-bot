@@ -1,7 +1,6 @@
 import datetime
 import os
 import re
-from json.decoder import JSONDecodeError
 
 import googlemaps
 from flask import Flask, json, request
@@ -67,5 +66,6 @@ def event():
                 'bot': app.config['BOT_NAME']
             }, ensure_ascii=False), 201
 
-    except JSONDecodeError:
+    # JSONDecodeError or have no connection with Google API services
+    except Exception:
         return ExpectationFailed()
