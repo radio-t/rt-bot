@@ -17,7 +17,7 @@ google_key = os.environ.get('GOOGLE_KEY')
 if not google_key:
     raise ValueError('GOOGLE_KEY environment variable is not set')
 
-gmaps_api = googlemaps.Client(google_key)
+gmaps_api = googlemaps.Client(google_key, timeout=5)
 
 
 @app.route('/event', methods=['POST'])
