@@ -5,6 +5,7 @@
 #    pip-compile --output-file requirements/local.txt requirements/common.in requirements/local.in
 #
 click==6.6                # via flask
+coverage==4.2
 decorator==4.0.10         # via ipython, traitlets
 flask==0.11.1
 googlemaps==2.4.4
