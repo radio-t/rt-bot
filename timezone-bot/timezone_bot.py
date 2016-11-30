@@ -75,6 +75,7 @@ def event():
 
 @app.route('/info')
 def info():
+    """Get info about bot"""
     return json.dumps({
         'author': 'Anton Prokhorov',
         'info': 'Bot which shows time in location which is passed by a query, '
