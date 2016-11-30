@@ -71,3 +71,15 @@ def event():
     # JSONDecodeError or have no connection with Google API services
     except Exception:
         return ExpectationFailed()
+
+
+@app.route('/info')
+def info():
+    return json.dumps({
+        'author': 'Anton Prokhorov',
+        'info': 'Bot which shows time in location which is passed by a query, '
+                'example: on request "время в красноярске" bot have to '
+                'respond: "Местное время в Krasnoyarsk, Krasnoyarsk Krai, '
+                'Russia сейчас 30.11.2016 23:29:24',
+        'commands': ['погода в <city>']
+    }, ensure_ascii=False)
