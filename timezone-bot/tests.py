@@ -6,8 +6,8 @@ from flask import json
 from .timezone_bot import app
 
 
-class TimeZoneBotTestCase(TestCase):
-    """Test case for timezone_bot"""
+class EventTestCase(TestCase):
+    """Test case for POST /event"""
 
     def setUp(self):
         self.client = app.test_client()
@@ -85,6 +85,23 @@ class TimeZoneBotTestCase(TestCase):
         self.assertEquals(resp.status_code, 201)
         dict_data = json.loads(resp.data)
         self.assertIn('Местное время в Krasnoyarsk сейчас', dict_data['text'])
+
+
+class InfoTestCase(TestCase):
+    """Test case for GET /info endpoint"""
+
+    def setUp(self):
+        self.client = app.test_client()
+        self.url = '/info'
+
+    def test_info_obtaining(self):
+        """Ensure that correct fields exists in response"""
+        resp = self.client.get(self.url)
+        self.assertEquals(resp.status_code, 200)
+        dict_data = json.loads(resp.data)
+        self.assertIn('author', dict_data)
+        self.assertIn('info', dict_data)
+        self.assertIn('commands', dict_data)
 
 
 if __name__ == '__main__':
