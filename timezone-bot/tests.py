@@ -19,7 +19,8 @@ class TimeZoneBotTestCase(TestCase):
                 {
                     'geometry': {
                         'location': 'Location'
-                    }
+                    },
+                    'formatted_address': 'Krasnoyarsk'
                 }
             ]
         }
@@ -55,7 +56,8 @@ class TimeZoneBotTestCase(TestCase):
         self.assertEquals(resp.status_code, 201)
         places.assert_called_with('красноярске')
         dict_data = json.loads(resp.data)
-        self.assertEquals(dict_data['text'], 'Не могу найти город красноярске')
+        self.assertEquals(dict_data['text'], 'Не могу найти город по запросу '
+                                             '"красноярске"')
 
     @mock.patch('googlemaps.Client.places')
     @mock.patch('googlemaps.Client.timezone')
@@ -82,7 +84,7 @@ class TimeZoneBotTestCase(TestCase):
         resp = self.client.post(self.url, data=self.valid_data)
         self.assertEquals(resp.status_code, 201)
         dict_data = json.loads(resp.data)
-        self.assertIn('Местное время в красноярске сейчас', dict_data['text'])
+        self.assertIn('Местное время в Krasnoyarsk сейчас', dict_data['text'])
 
 
 if __name__ == '__main__':

@@ -50,7 +50,7 @@ def event():
                 localized_time = datetime.datetime.now(location)
                 return json.dumps({
                     'text': 'Местное время в {city} сейчас {time}'.format(
-                        city=city,
+                        city=places['results'][0]['formatted_address'],
                         time=localized_time.strftime(app.config['TIME_FORMAT'])
                     ),
                     'bot': app.config['BOT_NAME']
@@ -62,7 +62,9 @@ def event():
                 }, ensure_ascii=False), 201
         else:
             return json.dumps({
-                'text': 'Не могу найти город {city}'.format(city=city),
+                'text': 'Не могу найти город по запросу "{city}"'.format(
+                    city=city
+                ),
                 'bot': app.config['BOT_NAME']
             }, ensure_ascii=False), 201
 
