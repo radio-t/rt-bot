@@ -9,17 +9,19 @@ services:
 cache:
   directories:
     - $HOME/.cache/pip
-    - /var/lib/docker/image
-    - /var/lib/docker/containers
-    - /var/lib/docker/aufs
 
 env:
-  SSL_KEY: nginx.key
-  SSL_CERT: nginx.crt
-  LETSENCRYPT: false
-  DOCKER_REGISTRY_HOST: docker.io
-  DOCKER_REGISTRY_LOGIN:
-  DOCKER_REGISTRY_PASSWORD:
+  global:
+    - SSL_KEY=nginx.key
+    - SSL_CERT=nginx.crt
+    - LETSENCRYPT=false
+    - DOCKER_REGISTRY_HOST=docker.io
+    - DOCKER_REGISTRY_LOGIN=
+    - DOCKER_REGISTRY_PASSWORD=
+    - BOTS_WAIT_TIMEOUT=10
+    - DEPLOY_TRIGGER_URL=https://bot.radio-t.com:1443/deploy
+    - DEPLOY_USER=
+    - DEPLOY_PASSWD=
 
 before_install:
   - pip install docker-compose==1.9.0
@@ -36,7 +38,7 @@ script:
   - set -e
   - echo "Waiting nginx-bot to launch on nginx-bot:443..."
   - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1; done
-  - echo "Waiting 30 seconds to ensure if all bots are ready..."; sleep 30
+  - echo "Waiting $BOTS_WAIT_TIMEOUT seconds to ensure if all bots are ready..."; sleep "$BOTS_WAIT_TIMEOUT"
   - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
   - |
       if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
@@ -45,6 +47,12 @@ script:
           --password "$DOCKER_REGISTRY_PASSWORD" \
           "$DOCKER_REGISTRY_HOST"
         docker-compose push
+        echo "Deploying containers..."
+        deploy_result=$(curl -X POST \
+            -u "${DEPLOY_USER}:${DEPLOY_PASSWD}" \
+            "$DEPLOY_TRIGGER_URL")
+        echo "$deploy_result"
+        echo "$deploy_result" | grep -q '"status": "ok"'
       fi
 
 after_script:
