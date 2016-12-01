@@ -54,19 +54,25 @@ def event():
                         time=localized_time.strftime(app.config['TIME_FORMAT'])
                     ),
                     'bot': app.config['BOT_NAME']
-                }, ensure_ascii=False), 201
+                }, ensure_ascii=False), 201, {
+                           'Content-Type': 'application/json; charset=utf-8'
+                       }
             else:
                 return json.dumps({
                     'text': 'Не могу получить данные о часовом поясе',
                     'bot': app.config['BOT_NAME']
-                }, ensure_ascii=False), 201
+                }, ensure_ascii=False), 201, {
+                           'Content-Type': 'application/json; charset=utf-8'
+                       }
         else:
             return json.dumps({
                 'text': 'Не могу найти город по запросу "{city}"'.format(
                     city=city
                 ),
                 'bot': app.config['BOT_NAME']
-            }, ensure_ascii=False), 201
+            }, ensure_ascii=False), 201, {
+                       'Content-Type': 'application/json; charset=utf-8'
+                   }
 
     # JSONDecodeError or have no connection with Google API services
     except Exception:
