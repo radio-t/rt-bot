@@ -132,6 +132,7 @@ def test_bot_list(bot_names: set) -> bool:
 
     given_bot_names = set(response.json())
     if given_bot_names == bot_names:
+        logger.warn("Bot list is actual.")
         return True
 
     if given_bot_names < bot_names:
@@ -160,7 +161,7 @@ if __name__ == "__main__":
 
     if not is_success:
         logger.error("\nFailed bots: {}".format(
-            ', '.join(b.bot_name for b in failed_jjjjооbots)
+            ', '.join(b.bot_name for b in failed_bots)
         ))
 
     is_bot_list_ok = test_bot_list(set(bots.keys()))
