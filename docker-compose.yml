@@ -1,0 +1,253 @@
+version: '2'
+
+services:
+    nginx:
+        image: umputun/nginx-le:latest
+        container_name: nginx-bot
+        hostname: nginx-bot
+        restart: always
+
+        logging: &default_logging
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+        volumes:
+            - ./etc/ssl:/etc/nginx/ssl
+            - ./etc/nginx.conf:/etc/nginx/service.conf
+
+        ports:
+            - "80:80"
+            - "443:443"
+
+        environment:
+            - TZ=America/Chicago
+            - LETSENCRYPT=$LETSENCRYPT
+            - SSL_KEY=$SSL_KEY
+            - SSL_CERT=$SSL_CERT
+            - LE_EMAIL=umputun@gmail.com
+            - LE_FQDN=bot.radio-t.com
+
+        depends_on:
+            - memberberries
+            - hello
+            - wiki-bot
+            - search-bot
+            - noter-bot
+            - repl-bot
+            - 5minphp-bot
+            - karma-bot
+            - loro-bot
+            - guido-bot
+            - giphy-bot
+            - gif-bot
+            - stat-bot
+            - anek-bot
+            - grabpage-bot
+            - ksenks-bot
+            - rtnumber-bot
+            - excerpt-bot
+            - tweet-bot
+            - rest-voter
+            - hcalendar-bot
+
+
+    hello:
+        build: hello
+        image: rtbot/hello-bot
+        container_name: hello-bot
+        hostname: hello-bot
+        restart: always
+        logging: *default_logging
+
+    memberberries:
+        build: memberberries
+        image: rtbot/memberberries
+        container_name: memberberries-bot
+        hostname: memberberries-bot
+        restart: always
+        logging: *default_logging
+
+    wiki-bot:
+        build: wiki-bot
+        image: rtbot/wiki-bot
+        container_name: wiki-bot
+        hostname: wiki-bot
+        restart: always
+        logging: *default_logging
+
+    search-bot:
+        build: search-bot
+        image: rtbot/search-bot
+        container_name: search-bot
+        hostname: search-bot
+        restart: always
+        logging: *default_logging
+
+    noter-bot:
+        build: noter-bot
+        image: rtbot/boter-bot
+        container_name: noter-bot
+        hostname: noter-bot
+        restart: always
+        logging: *default_logging
+
+    repl-bot:
+        build: rt-repl-bot
+        image: rtbot/repl-bot
+        container_name: repl-bot
+        hostname: repl-bot
+        restart: always
+        logging: *default_logging
+
+    stat-bot:
+        build: stat-bot
+        image: rtbot/stat-bot
+        container_name: stat-bot
+        hostname: stat-bot
+        restart: always
+        logging: *default_logging
+
+    gif-bot:
+        build: gif-bot
+        image: rtbot/gif-bot
+        container_name: gif-bot
+        hostname: gif-bot
+        restart: always
+        logging: *default_logging
+
+    giphy-bot:
+        build: giphy-bot
+        image: rtbot/giphy-bot
+        container_name: giphy-bot
+        hostname: giphy-bot
+        restart: always
+        logging: *default_logging
+
+    5minphp-bot:
+        build: 5minphp-bot
+        image: rtbot/5minphp-bot
+        container_name: 5minphp-bot
+        hostname: 5minphp-bot
+        restart: always
+        logging: *default_logging
+
+    loro-bot:
+        build: loro-bot
+        image: rtbot/loro-bot
+        container_name: loro-bot
+        hostname: loro-bot
+        restart: always
+        logging: *default_logging
+
+    brackets-bot:
+        build: brackets-bot
+        image: rtbot/brackets-bot
+        container_name: brackets-bot
+        hostname: brackets-bot
+        restart: always
+        logging: *default_logging
+
+    guido-bot:
+        build: guido-bot
+        image: rtbot/guido-bot
+        container_name: guido-bot
+        hostname: guido-bot
+        restart: always
+        logging: *default_logging
+
+    karma-bot-storage:
+      image: redis:3-alpine
+      container_name: karma-bot-storage
+      hostname: karma-bot-storage
+      restart: always
+      logging:
+        driver: json-file
+        options:
+          max-size: "10m"
+          max-file: "5"
+
+    karma-bot:
+        build: karma-bot
+        image: rtbot/karma-bot
+        container_name: karma-bot
+        hostname: karma-bot
+        restart: always
+        environment:
+          - REDIS_HOST=karma-bot-storage
+        depends_on:
+          - karma-bot-storage
+        logging: *default_logging
+
+    sovet-bot:
+        build: sovet-bot
+        image: rtbot/sovet-bot
+        container_name: sovet-bot
+        hostname: sovet-bot
+        restart: always
+        logging: *default_logging
+
+    hcalendar-bot:
+        build: hcalendar-bot
+        image: rtbot/hcalendar-bot
+        container_name: hcalendar-bot
+        hostname: hcalendar-bot
+        restart: always
+        logging: *default_logging
+
+    anek-bot:
+        build: anek-bot
+        image: rtbot/anek-bot
+        container_name: anek-bot
+        hostname: anek-bot
+        restart: always
+        logging: *default_logging
+
+    grabpage-bot:
+        build: grabpage-bot
+        image: rtbot/grabpage-bot
+        container_name: grabpage-bot
+        hostname: grabpage-bot
+        restart: always
+        logging: *default_logging
+
+    ksenks-bot:
+        build: ksenks-bot
+        image: rtbot/ksenks-bot
+        container_name: ksenks-bot
+        hostname: ksenks-bot
+        restart: always
+        logging: *default_logging
+
+    rtnumber-bot:
+        build: rtnumber-bot
+        image: rtbot/rtnumber-bot
+        container_name: rtnumber-bot
+        hostname: rtnumber-bot
+        restart: always
+        logging: *default_logging
+
+    excerpt-bot:
+        build: excerpt-bot
+        image: rtbot/excerpt-bot
+        container_name: excerpt-bot
+        hostname: excerpt-bot
+        restart: always
+        logging: *default_logging
+
+    tweet-bot:
+        build: tweet-bot
+        image: rtbot/tweet-bot
+        container_name: tweet-bot
+        hostname: tweet-bot
+        restart: always
+        logging: *default_logging
+
+    rest-voter:
+        build: rest-voter
+        image: rtbot/rest-voter
+        container_name: rest-voter
+        hostname: rest-voter
+        restart: always
+        logging: *default_logging

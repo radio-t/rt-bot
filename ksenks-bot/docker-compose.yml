@@ -1,0 +1,7 @@
+ksenks-bot:
+    build: .
+    container_name: ksenks-bot
+    hostname: ksenks-bot
+    restart: always
+    ports:
+        - "8080:8080"
