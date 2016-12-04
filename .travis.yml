@@ -24,14 +24,17 @@ env:
     - DEPLOY_PASSWD=
 
 before_install:
+  - unset DOCKER_REGISTRY_LOGIN DOCKER_REGISTRY_PASSWORD DEPLOY_USER DEPLOY_PASSWD
   - pip install docker-compose==1.9.0
   - openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=US/ST=Test/L=Test/O=Dis/CN=localhost" -keyout "etc/ssl/${SSL_KEY}" -out "etc/ssl/${SSL_CERT}"
 
 install:
+  - unset DOCKER_REGISTRY_LOGIN DOCKER_REGISTRY_PASSWORD DEPLOY_USER DEPLOY_PASSWD
   - pip install -r ci/requirements.txt
   - docker-compose build
 
 before_script:
+  - unset DOCKER_REGISTRY_LOGIN DOCKER_REGISTRY_PASSWORD DEPLOY_USER DEPLOY_PASSWD
   - docker-compose up -d
 
 script:
@@ -39,7 +42,14 @@ script:
   - echo "Waiting nginx-bot to launch on nginx-bot:443..."
   - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1; done
   - echo "Waiting $BOTS_WAIT_TIMEOUT seconds to ensure if all bots are ready..."; sleep "$BOTS_WAIT_TIMEOUT"
-  - BOT_BASE_URL="https://localhost" python ci/run_bot_tests.py .
+  - |
+      DOCKER_REGISTRY_LOGIN= \
+      DOCKER_REGISTRY_PASSWORD= \
+      DEPLOY_USER= \
+      DEPLOY_PASSWD= \
+      BOT_BASE_URL="https://localhost" \
+      python ci/run_bot_tests.py .
+
   - |
       if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         docker login \
