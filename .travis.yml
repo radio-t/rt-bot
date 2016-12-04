@@ -43,7 +43,6 @@ script:
   - while ! wget --no-check-certificate https://localhost/ping &> /dev/null; do sleep 1; done
   - echo "Waiting $BOTS_WAIT_TIMEOUT seconds to ensure if all bots are ready..."; sleep "$BOTS_WAIT_TIMEOUT"
   - |
-
       DOCKER_REGISTRY_LOGIN=
       DOCKER_REGISTRY_PASSWORD=
       DEPLOY_USER=
