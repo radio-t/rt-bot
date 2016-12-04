@@ -18,7 +18,7 @@ env:
     - DOCKER_REGISTRY_HOST=docker.io
     - DOCKER_REGISTRY_LOGIN=
     - DOCKER_REGISTRY_PASSWORD=
-    - BOTS_WAIT_TIMEOUT=10
+    - BOTS_WAIT_TIMEOUT=20
     - DEPLOY_TRIGGER_URL=https://bot.radio-t.com:1443/deploy
     - DEPLOY_USER=
     - DEPLOY_PASSWD=

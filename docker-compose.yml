@@ -51,6 +51,7 @@ services:
             - tweet-bot
             - rest-voter
             - hcalendar-bot
+            - timezone-bot
 
 
     hello:
@@ -249,5 +250,13 @@ services:
         image: rtbot/rest-voter
         container_name: rest-voter
         hostname: rest-voter
+        restart: always
+        logging: *default_logging
+
+    timezone-bot:
+        build: timezone-bot
+        image: rtbot/timezone-bot
+        container_name: timezone-bot
+        hostname: timezone-bot
         restart: always
         logging: *default_logging
