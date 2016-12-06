@@ -1,0 +1,25 @@
+bot_name: "doit-bot"
+
+ignored_commands:
+  - "Привет"
+  - "бобук"
+  - "google"
+  - "яндекс"
+  - "..."
+  - "добра всем"
+
+test_cases:
+  - command: "хочу"
+    result: "^(So just do it)$"
+
+  - command: "сделай"
+    result: "^(try it!)$"
+
+  - command: "невозможно"
+    result: "^(Nothing is impossible)$"
+
+  - command: "не могу"
+    result: "^(Nothing is impossible)|(Yes you can)"
+
+  - command: "завтра"
+    result: "^(Yesterday you said tomorrow)|(Don't let your dreams be dreams)|(You should get to the point)$"
