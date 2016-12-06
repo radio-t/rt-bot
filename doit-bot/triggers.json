@@ -12,6 +12,14 @@
     "a": ["try it!"]
   },
   {
+    "w": "сделаю",
+    "a": [
+      "So just do it",
+      "try it!",
+      "what are you waiting for? DO IT!"
+    ]
+  },
+  {
     "w": "устал",
     "a": ["If you're tired of starting over STOP giving up!"]
   },
@@ -26,12 +34,6 @@
     "w": "невозможно",
     "a": [
       "Nothing is impossible"
-    ]
-  },
-  {
-    "w": "жди",
-    "a": [
-      "No, what are you waiting for?"
     ]
   },
   {
