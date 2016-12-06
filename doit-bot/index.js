@@ -11,12 +11,12 @@ const getIndex = (arr) =>
 	
 const getAnswer = ({a}) => a[getIndex(a)];
 
-const getResult = (trigger) => JSON.stringify({
+const getResult = (trigger) => ({
 	text: getAnswer(trigger),
 	bot: 'doit-bot'
 });
 
-const info = JSON.stringify({
+const info = ({
 	author: 'Rabinzon',
 	info: 'Побуждает на разного рода действий, вбрасывая цитаты из [ Shia Labeouf "Just do it"](https://goo.gl/eD9hRr)'
 });
