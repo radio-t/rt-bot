@@ -52,6 +52,7 @@ services:
             - rest-voter
             - hcalendar-bot
             - timezone-bot
+            - doit-bot
 
 
     hello:
@@ -258,5 +259,13 @@ services:
         image: rtbot/timezone-bot
         container_name: timezone-bot
         hostname: timezone-bot
+        restart: always
+        logging: *default_logging
+
+    doit-bot:
+        build: doit-bot
+        image: rtbot/doit-bot
+        container_name: doit-bot
+        hostname: doit-bot
         restart: always
         logging: *default_logging
