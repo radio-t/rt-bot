@@ -16,6 +16,11 @@ const getResult = (trigger) => JSON.stringify({
 	bot: 'doit-bot'
 });
 
+const info = JSON.stringify({
+	author: 'Rabinzon',
+	info: 'Побуждает на разного рода действий, вбрасывая цитаты из [ Shia Labeouf "Just do it"](https://goo.gl/eD9hRr)'
+});
+
 app.use(bodyParser.json());
 
 app.post('/event', (req, res) => {
@@ -27,10 +32,8 @@ app.post('/event', (req, res) => {
 	else res.status(417).end();
 });
 
-app.all('/info', (req, res) => res.json(
-	JSON.stringify({author: 'rabinzon', info: 'цитирует Shia LaBeouf'})
-));
+app.all('/info', (req, res) => res.json(info));
 
-app.all('/', (req, res) => res.send('doit-bot'));
+app.all('/', (req, res) => res.json(info));
 
 app.listen(8080);
