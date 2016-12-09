@@ -26,3 +26,5 @@
         "
 }
 ```
+
+[Оригинальный репозиторий](https://github.com/exelban/money_bot)
