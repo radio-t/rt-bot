@@ -57,6 +57,7 @@ app.all('/event', function(req, res) {
             else req.send(417).end();
         });
     }
+    else req.send(417).end();
 });
 
 app.all('/info', function(req, res) {
