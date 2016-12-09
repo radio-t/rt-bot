@@ -11,7 +11,7 @@ const currency = {
 };
 
 
-app.all('/event', function(req, res) {
+app.post('/event', function(req, res) {
     var text = res.body.text;
     var v = 0;
     var c = 0;
