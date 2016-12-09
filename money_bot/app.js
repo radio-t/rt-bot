@@ -63,8 +63,6 @@ app.post('/event', function(req, res) {
 });
 
 app.all('/info', function(req, res) {
-    res.header('Content-Type', 'application/json');
-    res.sendStatus(200);
     res.json({
         author: 'exelban',
         info: 'Если в сообщение была упомянутая какая то валюта то конвертирует ее в долар, евро, грн, руб. (30$ = 27.95 EUR, 1,9101.85 руб...)'
