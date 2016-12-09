@@ -44,10 +44,11 @@ app.post('/event', function(req, res) {
                 let inHrn = (quotes[2].val*parseFloat(v)).toFixed(2);
                 let inRub = (quotes[3].val*parseFloat(v)).toFixed(2);
 
-                let responseText = inDolar + " $ (доларов)\n"+
-                    inEuro + " € (евро)\n"+
-                    inHrn + " ₴ (гривень)\n"+
-                    inRub + " ₽ (рублей)\n";
+                let responseText = "";
+                if(c!="USD") responseText += inDolar + " USD\n";
+                if(c!="EUR") responseText += inEuro + " EUR\n";
+                if(c!="UAH") responseText += inHrn + " UAH\n";
+                if(c!="RUB") responseText += inRub + " RUB\n";
 
                 res.status(201);
                 res.json({
