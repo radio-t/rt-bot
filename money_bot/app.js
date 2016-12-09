@@ -49,18 +49,17 @@ app.post('/event', function(req, res) {
                     inHrn + " ₴ (гривень)\n"+
                     inRub + " ₽ (рублей)\n";
 
-                res.header('Content-Type', 'application/json');
-                res.sendStatus(201);
+                res.status(201);
                 res.json({
                     bot: "money_bot",
                     text: responseText
                 });
                 res.end();
             }
-            else res.sendStatus(417).end();
+            else res.status(417).end();
         });
     }
-    else res.sendStatus(417).end();
+    else res.status(417).end();
 });
 
 app.all('/info', function(req, res) {
