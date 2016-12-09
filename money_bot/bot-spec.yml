@@ -13,4 +13,4 @@ ignored_commands:
   
 test_cases:
   - command: "а на digital ocean такой сервер стоит 5 евро"
-    result: "€|₴|₽"
+    result: "евро"
