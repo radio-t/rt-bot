@@ -34,7 +34,6 @@ app.all('/event', function(req, res) {
     if(v!=0 && c!=0){
         request("http://free.currencyconverterapi.com/api/v3/convert?q="+c+"_USD,"+c+"_EUR,"+c+"_UAH,"+c+"_RUB", function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log(1);
                 var results = JSON.parse(body).results;
                 var quotes = Object.keys(results).map(function (key) { return results[key]; });
                 var inDolar = (quotes[0].val*parseFloat(v)).toFixed(2);
