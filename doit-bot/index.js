@@ -17,8 +17,8 @@ const getResult = (trigger) => ({
 });
 
 const info = ({
-	author: 'Rabinzon',
-	info: 'Побуждает на разного рода действий, вбрасывая цитаты из [ Shia Labeouf "Just do it"](https://goo.gl/eD9hRr)'
+	author: 'Ildar Gilfanov @rabinzon',
+	info: 'Бот побуждает на разного рода действия, вбрасывая цитаты из [ Shia Labeouf "Just do it"](https://goo.gl/eD9hRr)'
 });
 
 app.use(bodyParser.json());
