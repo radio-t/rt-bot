@@ -11,8 +11,8 @@ const getIndex = (arr) =>
 	
 const getAnswer = ({a}) => a[getIndex(a)];
 
-const getResult = (trigger) => ({
-	text: getAnswer(trigger),
+const getResult = (trigger, username) => ({
+	text: `@${username} ${getAnswer(trigger)}`,
 	bot: 'doit-bot'
 });
 
@@ -24,7 +24,7 @@ const info = ({
 app.use(bodyParser.json());
 
 app.post('/event', (req, res) => {
-	const {text} = req.body;
+	const {text, username} = req.body;
 	
 	if (typeof text !== 'string') return res.status(417).end();
 	
@@ -32,7 +32,7 @@ app.post('/event', (req, res) => {
 
 	if (trigger) {
 		res.status(201);
-		res.json(getResult(trigger));
+		res.json(getResult(trigger, username));
 	}
 	else res.status(417).end();
 });
