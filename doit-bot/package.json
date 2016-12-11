@@ -2,9 +2,11 @@
   "name": "doit-bot",
   "version": "0.0.1",
   "main": "index.js",
+  "license": "ISC",
   "scripts": {
     "start": "nodemon index.js"
   },
+  "repository": "git@github.com:umputun/rt-bot.git",
   "author": "rabinzon ildarrazin@gmail.com",
   "dependencies": {
     "body-parser": "^1.15.2",
