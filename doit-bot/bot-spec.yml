@@ -1,5 +1,9 @@
 bot_name: "doit-bot"
 
+defaults:
+  username: "test-user"
+  display_name: "Test User"
+
 ignored_commands:
   - "Привет"
   - "бобук"
@@ -10,16 +14,16 @@ ignored_commands:
 
 test_cases:
   - command: "хочу"
-    result: "^(So just do it)$"
+    result: "^@test-user (So just do it)$"
 
-  - command: "сделай"
-    result: "^(try it!)$"
+  - command: "просто сделай "
+    result: "^@test-user (try it!)$"
 
   - command: "невозможно"
-    result: "^(Nothing is impossible)$"
+    result: "^@test-user (Nothing is impossible)$"
 
-  - command: "не могу"
-    result: "^(Nothing is impossible)|(Yes you can)"
+  - command: "я не могу"
+    result: "^@test-user ((Nothing is impossible)|(Yes you can))"
 
   - command: "завтра"
-    result: "^(Yesterday you said tomorrow)|(Don't let your dreams be dreams)|(You should get to the point)$"
+    result: "^@test-user ((Yesterday you said tomorrow)|(Don't let your dreams be dreams)|(You should get to the point))$"
