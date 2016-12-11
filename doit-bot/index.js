@@ -23,10 +23,12 @@ const info = ({
 
 app.use(bodyParser.json());
 
+const nothingToSay = res => res.status(417).end();
+
 app.post('/event', (req, res) => {
 	const {text, username} = req.body;
 	
-	if (typeof text !== 'string') return res.status(417).end();
+	if (typeof text !== 'string') return nothingToSay(res);
 	
 	const trigger = getTrigger(text);
 
@@ -34,7 +36,7 @@ app.post('/event', (req, res) => {
 		res.status(201);
 		res.json(getResult(trigger, username));
 	}
-	else res.status(417).end();
+	else nothingToSay(res);
 });
 
 app.all('/info', (req, res) => res.json(info));
