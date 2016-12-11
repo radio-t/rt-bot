@@ -4,7 +4,7 @@ const triggers = require('./triggers.json');
 const app = express();
 
 const getTrigger = (message) =>
-	triggers.filter(t => new RegExp(t.w, 'i').test(message))[0];
+	triggers.filter(t => new RegExp(`${t.w}$`, 'i').test(message.trim()))[0];
 
 const getIndex = (arr) =>
 	Math.floor(Math.random() * (arr.length - 0));
@@ -24,7 +24,12 @@ const info = ({
 app.use(bodyParser.json());
 
 app.post('/event', (req, res) => {
-	const trigger = getTrigger(req.body.text);
+	const {text} = req.body;
+	
+	if (typeof text !== 'string') return res.status(417).end();
+	
+	const trigger = getTrigger(text);
+
 	if (trigger) {
 		res.status(201);
 		res.json(getResult(trigger));
