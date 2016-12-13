@@ -12,7 +12,6 @@ import Control.Exception
 import Control.Lens
 import Control.Monad
 import Control.Monad.IO.Class
-import Control.Monad.Trans.Maybe
 import Data.Aeson
 import Data.Aeson.Lens
 import Data.Array
