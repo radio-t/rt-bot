@@ -82,7 +82,11 @@ fetcher xratesVar = do
     if Map.null xrates then threadDelayInSec 1
     -- normally update xrates once per a day at 5 a.m.
     else do
-        atomically $ swapTMVar xratesVar xrates
+        atomically $ do
+            isEmpty <- isEmptyTMVar xratesVar
+            case isEmpty of
+                True  -> putTMVar xratesVar xrates
+                False -> swapTMVar xratesVar xrates >> return ()
         now <- getCurrentTime
         let tomorrow = UTCTime (addDays 1 $ utctDay now) (fromIntegral $ 5 * 3600)
         threadDelayInSec . floor $ diffUTCTime tomorrow now
@@ -91,7 +95,7 @@ fetcher xratesVar = do
 
 libMain :: IO ()
 libMain = do
-    xrates <- atomically $ newTMVar Map.empty
+    xrates <- atomically $ newEmptyTMVar
     forkIO $ fetcher xrates
     scotty 8080 $ routes xrates
 
