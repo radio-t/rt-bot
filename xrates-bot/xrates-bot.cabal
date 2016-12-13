@@ -14,6 +14,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Lib
   build-depends:       base >= 4.7 && < 5
+                     , array
                      , text
                      , aeson
                      , aeson-lens
@@ -23,10 +24,17 @@ library
                      , bytestring
                      , http-client
                      , http-client-tls
+                     , http-types
                      , utf8-string
                      , mtl
                      , regex-base
                      , regex-compat-tdfa
+                     , containers
+                     , scotty
+                     , utf8-string
+                     , time
+                     , stm
+                     , transformers
 
   default-language:    Haskell2010
 
