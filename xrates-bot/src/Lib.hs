@@ -34,13 +34,13 @@ import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Read as T
 
 
-botID = "xrates-bot"
+botID = "xrates"
 botInfo = botID <> " TODO"
 
 
 rubSynonyms = ["RUB", "rubls", "rubl", "рублей", "рубля", "рубль", "руб", "руб.", "р.", "рублях", "₽"]
 usdSynonyms = ["USD", "dollars", "dollar", "долларов", "доллара", "доллар", "долларах", "$"]
-eurSynonyms = ["UER", "euros", "euro", "евро", "€"]
+eurSynonyms = ["EUR", "euros", "euro", "евро", "€"]
 uahSynonyms = ["UAH", "hryvnias", "hryvnia", "гривен", "гривны", "гривна", "гривнах", "₴"]
 
 currencySynonyms :: Map.Map T.Text T.Text
