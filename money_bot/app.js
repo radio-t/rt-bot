@@ -56,7 +56,7 @@ app.post('/event', function(req, res) {
                 if(c!="EUR") responseParts.push(inEuro.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " EUR");
                 if(c!="UAH") responseParts.push(inHrn.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " UAH");
                 if(c!="RUB") responseParts.push(inRub.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " RUB");
-                let responseText = responseParts.join("; ");
+                let responseText = responseParts.join(" - ");
                 
                 res.status(201);
                 res.json({
@@ -70,11 +70,10 @@ app.post('/event', function(req, res) {
     }
     else res.status(417).end();
 });
-
 app.all('/info', function(req, res) {
     res.json({
         author: 'exelban',
-        info: 'Если в сообщение была упомянутая какая то валюта (USD, EUR, UAH, RUB), бот конвертирует ее в доллары, евро, грн, руб. (5€ = 5.30 USD, 136.67 UAH, 335.51 RUB)'
+        info: 'Если в сообщение была упомянутая какая-то валюта (USD, EUR, UAH, RUB), бот конвертирует ее в доллары, евро, грн, руб. (5€ = 5.30 USD, 136.67 UAH, 335.51 RUB)'
     });
     res.end();
 });
