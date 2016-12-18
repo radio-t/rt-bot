@@ -14,7 +14,6 @@ const currency = {
     r: /(((₽|rub)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни)\s?)?(\s?(₽|руб|rub))))/i
 };
 
-
 app.post('/event', function(req, res) {
     let text = req.body.text;
     waterfall([
@@ -94,6 +93,5 @@ app.all('/info', function(req, res) {
     });
     res.end();
 });
-
 
 app.listen(8080);
