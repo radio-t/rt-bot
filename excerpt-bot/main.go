@@ -127,9 +127,12 @@ func excerpt(link string) (result string, err error) {
 }
 
 func link(input string) (link string, err error) {
-	if strings.Contains(link, "twitter.com") {
+
+	if strings.Contains(input, "twitter.com") {
+		log.Printf("ignore possible twitter link from %s", input)
 		return "", errors.New("ignore twitter")
 	}
+
 	if link := rLink.FindString(input); link != "" && !rImg.MatchString(link) {
 		log.Printf("found a link %s", link)
 		return link, nil
