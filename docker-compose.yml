@@ -53,7 +53,6 @@ services:
             - hcalendar-bot
             - timezone-bot
             - doit-bot
-            - xrates-bot
 
     hello:
         build: hello
@@ -278,10 +277,4 @@ services:
         restart: always
         logging: *default_logging
 
-    xrates-bot:
-        build: xrates-bot
-        image: rtbot/xrates-bot
-        container_name: xrates-bot
-        hostname: xrates-bot
-        restart: always
-        logging: *default_logging
+
