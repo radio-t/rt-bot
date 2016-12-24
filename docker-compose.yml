@@ -287,4 +287,10 @@ services:
         restart: always
         logging: *default_logging
 
-
+    random-bot:
+        build: random-bot
+        image: rtbot/random-bot
+        container_name: random-bot
+        hostname: random-bot
+        restart: always
+        logging: *default_logging
