@@ -53,6 +53,7 @@ services:
             - hcalendar-bot
             - timezone-bot
             - doit-bot
+            - money_bot
 
     hello:
         build: hello
