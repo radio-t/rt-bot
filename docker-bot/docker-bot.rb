@@ -18,6 +18,9 @@ post '/event' do
   @podcast_number = podcast.get_current_podcast_number
 
   message = @request_payload['text']
+  puts message
+  puts cmd.valid_commands
+  puts cmd.valid_commands.include? message.downcase
   if cmd.valid_commands.include? message.downcase
     resp = {:text => cmd.exec(message.downcase), :bot => 'docker-bot'}
     content_type 'application/json'

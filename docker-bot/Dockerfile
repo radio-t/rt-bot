@@ -1,4 +1,4 @@
-FROM ruby:2.3.3-onbuild
+FROM ruby:2.4-rc-onbuild
 ADD Gemfile .
 ADD Gemfile.lock .
 ADD Rakefile .
