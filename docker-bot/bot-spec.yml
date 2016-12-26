@@ -1,0 +1,11 @@
+bot_name: "docker-bot"
+ignored_commands:
+  - "докер"
+  - "шмокер"
+  - "blah blah blah"
+test_cases:
+  - command: "Cколько можно про докер?"
+    result: "^За текущий выпуск(№\d\d\d) про докер упоминали уже \d* раз.$"
+
+  - command: "Cколько можно про apple?"
+    result: "^За текущий выпуск(№\d\d\d) про apple упоминали уже \d* раз.$"
