@@ -8,10 +8,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 const currency = {
-    d: /(((\$|usd)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни)\s?)?(\s?(\$|дол|dol|баксов|usd))))/i,
-    e: /(((€|eur)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни)\s?)?(\s?(€|евро|эвро|eur|ewro))))/i,
-    h: /(((₴|uah)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни)\s?)?(\s?(₴|грн|гривень|гривны|hrn|hriven|uah))))/i,
-    r: /(((₽|rub)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни)\s?)?(\s?(₽|руб|rub))))/i
+    d: /(((\$|usd)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни|k|к)\s?)?(\s?(\$|дол|dol|баксов|usd))))/i,
+    e: /(((€|eur)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни|k|к)\s?)?(\s?(€|евро|эвро|eur|ewro))))/i,
+    h: /(((₴|uah)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни|k|к)\s?)?(\s?(₴|грн|гривень|гривны|hrn|hriven|uah))))/i,
+    r: /(((₽|rub)\s?)(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?)|(([0-9]+\s[0-9]+\s[0-9]+|[0-9]+\s[0-9]+|[0-9]+)((,|\.)[0-9]+)?(\s(милион|тысяч|сотень|сотни|k|к)\s?)?(\s?(₽|руб|rub))))/i
 };
 
 app.post('/event', function(req, res) {
@@ -49,6 +49,8 @@ app.post('/event', function(req, res) {
             if(~v.indexOf("тысячи")) v = v.replace("тысячи", "000");
             if(~v.indexOf("милион")) v = v.replace("милион", "000000");
             if(~v.indexOf("милионов")) v = v.replace("милионов", "000000");
+            if(~v.indexOf("k")) v = v.replace("k", "000");
+            if(~v.indexOf("к")) v = v.replace("к", "000");
             v = v.replace(/[^\d(,|\.)-]/g, '');
             callback(null, v, c);
         },
@@ -61,13 +63,13 @@ app.post('/event', function(req, res) {
                     let inEuro = (quotes[1].val*parseFloat(v)).toFixed(2);
                     let inHrn = (quotes[2].val*parseFloat(v)).toFixed(2);
                     let inRub = (quotes[3].val*parseFloat(v)).toFixed(2);
-
+                    
                     let responseParts = [];
-                    if(c!="USD") responseParts.push(inDolar.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " USD");
-                    if(c!="EUR") responseParts.push(inEuro.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " EUR");
-                    if(c!="UAH") responseParts.push(inHrn.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " UAH");
-                    if(c!="RUB") responseParts.push(inRub.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " RUB");
-                    let responseText = responseParts.join(" - ");
+                    if(c!="USD") responseParts.push((inDolar.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " $").replace(".00", ""));
+                    if(c!="EUR") responseParts.push((inEuro.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " €").replace(".00", ""));
+                    if(c!="UAH") responseParts.push((inHrn.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " грн.").replace(".00", ""));
+                    if(c!="RUB") responseParts.push((inRub.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + " руб.").replace(".00", ""));
+                    let responseText = responseParts.join(" | ");
 
                     callback(null, responseText);
                 }
@@ -89,7 +91,7 @@ app.post('/event', function(req, res) {
 app.all('/info', function(req, res) {
     res.json({
         author: 'exelban',
-        info: 'Если в сообщение была упомянутая какая-то валюта (USD, EUR, UAH, RUB), бот конвертирует ее в доллары, евро, грн, руб. (5€ = 5.30 USD, 136.67 UAH, 335.51 RUB)'
+        info: 'Если в сообщение была упомянутая какая-то валюта (USD, EUR, UAH, RUB), бот конвертирует ее в доллары, евро, грн, руб. (5€ = 5.30 $ | 136.67 грн. | 335.51 руб.)'
     });
     res.end();
 });

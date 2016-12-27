@@ -54,6 +54,7 @@ services:
             - timezone-bot
             - doit-bot
             - docker-bot
+            - money_bot
 
     hello:
         build: hello
