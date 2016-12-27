@@ -53,6 +53,7 @@ services:
             - hcalendar-bot
             - timezone-bot
             - doit-bot
+            - docker-bot
             - money_bot
 
     hello:
@@ -275,6 +276,14 @@ services:
         image: rtbot/money_bot
         container_name: money_bot
         hostname: money_bot
+        restart: always
+        logging: *default_logging
+
+    docker-bot:
+        build: docker-bot
+        image: rtbot/docker-bot
+        container_name: docker-bot
+        hostname: docker-bot
         restart: always
         logging: *default_logging
 
