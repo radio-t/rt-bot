@@ -12,6 +12,8 @@ namespace Bot4Bots
     [Route("")]
     public class BotController : Controller
     {
+        private static readonly string BotName = "bot-4-bots"; 
+
         private static readonly Dictionary<string,string> BotsStatsCommands = new Dictionary<string, string>
         {
             { "/bots stats", "returns bot's stats from Github: created date, last changed date etc.." },
@@ -33,7 +35,7 @@ namespace Bot4Bots
             return new InfoModel
             {
                 Author = "khaale",
-                Info = "bot-4-bots - показывает расширенную информацию о ботах",
+                Info = $"{BotName} - показывает расширенную информацию о ботах",
                 Commands = BotsStatsCommands.Select(x => $"{x.Key} - {x.Value}").ToArray()
             };
         }
@@ -49,10 +51,10 @@ namespace Bot4Bots
                 var messageModel = new EventResponseModel
                 {
                     Text = message,
-                    Bot = "bot4bots"
+                    Bot = BotName
                 };
 
-                return Ok(messageModel);
+                return Created("",messageModel);
             }
             else
             {
@@ -99,7 +101,7 @@ namespace Bot4Bots
             [JsonProperty("info")] public string Info { get; set; }
             [JsonProperty("commands")] public string[] Commands { get; set; }
         }
-        
+
         public class EventModel
         {
             [JsonProperty("text")] public string Text { get; set; }
