@@ -12,7 +12,7 @@ namespace Bot4Bots
     [Route("")]
     public class BotController : Controller
     {
-        private static readonly Dictionary<string,string> NewBotsCommands = new Dictionary<string, string>
+        private static readonly Dictionary<string,string> BotsStatsCommands = new Dictionary<string, string>
         {
             { "/bots stats", "returns bot's stats from Github: created date, last changed date etc.." },
             { "/статистика ботов", "возвращает информацию о боте из Github: когда и кем бот был создан и последний раз изменен" }
@@ -34,7 +34,7 @@ namespace Bot4Bots
             {
                 Author = "khaale",
                 Info = "bot-4-bots - показывает расширенную информацию о ботах",
-                Commands = NewBotsCommands.Select(x => $"{x.Key} - {x.Value}").ToArray()
+                Commands = BotsStatsCommands.Select(x => $"{x.Key} - {x.Value}").ToArray()
             };
         }
         
@@ -60,45 +60,46 @@ namespace Bot4Bots
             }
         }
 
-    private bool IsBotsStatsRequest(EventModel evt)
-    {
-        return NewBotsCommands.Keys.Contains(evt.Text?.Trim());
-    }
-
-    private string GetBotsStats()
-    {
-        var githubBotSummaries = _githubService.GetSummaries();
-
-        if (!githubBotSummaries.Any())
+        private bool IsBotsStatsRequest(EventModel evt)
         {
-            return "Sorry, Github data have not been loaded yet :(";
+            return BotsStatsCommands.Keys.Contains(evt.Text?.Trim());
         }
 
-        var tableRows = (
-            from bi in githubBotSummaries
-            orderby bi.CreatedBy?.CommitDate descending
-            select $"[{bi.Name}]({bi.Link})|" +
-                   $"{bi.CreatedBy?.CommitDate:d}|{bi.CreatedBy?.User}|" +
-                   $"{bi.LastChangedBy?.CommitDate:d}|{bi.LastChangedBy?.User}|"
-            ).ToList();
-
-        var tableHeader = new[]
+        private string GetBotsStats()
         {
-                "Bot Name | Created On &darr; | Created By | Last Changed On | Last Changed By",
-                "---------|-------------------|------------|-----------------|----------------"
-            };
+            var githubBotSummaries = _githubService.GetSummaries();
 
-        var message = string.Join(Environment.NewLine, tableHeader.Concat(tableRows));
+            if (!githubBotSummaries.Any())
+            {
+                return "Sorry, Github data have not been loaded yet :(";
+            }
 
-        return message;
-    }
+            var tableRows = (
+                from bi in githubBotSummaries
+                orderby bi.CreatedBy?.CommitDate descending
+                select $"[{bi.Name}]({bi.Link})|" +
+                    $"{bi.CreatedBy?.CommitDate:d}|{bi.CreatedBy?.User}|" +
+                    $"{bi.LastChangedBy?.CommitDate:d}|{bi.LastChangedBy?.User}|"
+                ).ToList();
 
-    public class InfoModel
+            var tableHeader = new[]
+            {
+                    "Bot Name | Created On &darr; | Created By | Last Changed On | Last Changed By",
+                    "---------|-------------------|------------|-----------------|----------------"
+                };
+
+            var message = string.Join(Environment.NewLine, tableHeader.Concat(tableRows));
+
+            return message;
+        }
+
+        public class InfoModel
         {
             [JsonProperty("author")] public string Author { get; set; }
             [JsonProperty("info")] public string Info { get; set; }
             [JsonProperty("commands")] public string[] Commands { get; set; }
         }
+        
         public class EventModel
         {
             [JsonProperty("text")] public string Text { get; set; }
