@@ -32,12 +32,16 @@ type info struct {
 
 var (
 	commandReg = regexp.MustCompile(`^/random`)
-	botInfo    = info{"Ildar Gilfanov @rabinzon", "random-bot возвращает рандомное число, элемент списка", []string{
-		"/random - число от 0 до 100",
-		"/random min max - число от min до max",
-		"/random Umputun Ksenks Gray Bobuk - например Ksenks",
-		"/random да нет - да или нет"}}
 	botName = "random-bot"
+	botInfo    = info{
+		"Ildar Gilfanov @rabinzon",
+		"random-bot возвращает рандомное число или элемент списка. Вместе с ответом приходит рандомная строчка. " +
+		"Пример ответа: `Я принял решение: 12`. Если не повезет, бот может не ответить, сославшись на занятость. ",
+		[]string{
+			"`/random` - рандомная строка: число от 0 до 100",
+			"`/random min max` - рандомная строка: число от min до max",
+			"`/random Umputun Ksenks Gray Bobuk` - рандомная строка: например Ksenks",
+			"`/random да нет` - рандомная строка: да или нет"}}
 )
 
 func main() {
