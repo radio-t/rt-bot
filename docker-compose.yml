@@ -55,6 +55,7 @@ services:
             - doit-bot
             - docker-bot
             - money_bot
+            - random-bot
 
     hello:
         build: hello
