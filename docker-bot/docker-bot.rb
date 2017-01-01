@@ -18,9 +18,6 @@ post '/event' do
   @podcast_number = podcast.get_current_podcast_number
 
   message = @request_payload['text']
-  puts message
-  puts cmd.valid_commands
-  puts cmd.valid_commands.include? message.downcase
   if cmd.valid_commands.include? message.downcase
     resp = {:text => cmd.exec(message.downcase), :bot => 'docker-bot'}
     content_type 'application/json'
@@ -41,7 +38,7 @@ get '/info' do
   info = {
     :author => 'https://github.com/naushniki',
     :info => 'Если в чате кто-то жалуется на то, что ведущие слишком долго обсуждают одну из своих излюбленных тем, этот бот сообщит, сколько раз та или иная тема была упомянута в чате в ходе текущего выпуска.',
-    :commands => cmd.valid_commands   
+    :commands => cmd.valid_commands
   }
   body JSON.generate(info)
 end
