@@ -53,6 +53,7 @@ services:
             - hcalendar-bot
             - timezone-bot
             - doit-bot
+            - bot-4-bots
 
     hello:
         build: hello
@@ -277,4 +278,10 @@ services:
         restart: always
         logging: *default_logging
 
-
+    bot-4-bots:
+        build: bot-4-bots
+        image: rtbot/bot-4-bots
+        container_name: bot-4-bots
+        hostname: bot-4-bots
+        restart: always
+        logging: *default_logging 

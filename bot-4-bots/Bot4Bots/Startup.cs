@@ -22,7 +22,7 @@ namespace Bot4Bots
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseUrls("http://localhost:8080")
+                .UseUrls("http://0.0.0.0:8080")
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
