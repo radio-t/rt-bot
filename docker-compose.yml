@@ -53,6 +53,9 @@ services:
             - hcalendar-bot
             - timezone-bot
             - doit-bot
+            - docker-bot
+            - money_bot
+            - random-bot
             - bot-4-bots
 
     hello:
@@ -278,10 +281,26 @@ services:
         restart: always
         logging: *default_logging
 
+    docker-bot:
+        build: docker-bot
+        image: rtbot/docker-bot
+        container_name: docker-bot
+        hostname: docker-bot
+        restart: always
+        logging: *default_logging
+
+    random-bot:
+        build: random-bot
+        image: rtbot/random-bot
+        container_name: random-bot
+        hostname: random-bot
+        restart: always
+        logging: *default_logging
+
     bot-4-bots:
         build: bot-4-bots
         image: rtbot/bot-4-bots
         container_name: bot-4-bots
         hostname: bot-4-bots
         restart: always
-        logging: *default_logging 
+        logging: *default_logging
