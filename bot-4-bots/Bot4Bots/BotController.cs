@@ -106,7 +106,7 @@ namespace Bot4Bots
         {
             [JsonProperty("text")] public string Text { get; set; }
             [JsonProperty("username")] public string UserName { get; set; }
-            [JsonProperty("display_name")] public string[] DisplayName { get; set; }
+            [JsonProperty("display_name")] public string DisplayName { get; set; }
         }
 
         public class EventResponseModel
