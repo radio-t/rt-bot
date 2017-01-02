@@ -14,10 +14,10 @@ namespace Bot4Bots
     {
         private static readonly string BotName = "bot-4-bots"; 
 
-        private static readonly Dictionary<string,string> BotsStatsCommands = new Dictionary<string, string>
+        private static readonly Dictionary<string,string> BotsSummaryCommands = new Dictionary<string, string>
         {
-            { "/bots stats", "returns bot's stats from Github: created date, last changed date etc.." },
-            { "/статистика ботов", "возвращает информацию о боте из Github: когда и кем бот был создан и последний раз изменен" }
+            { "/bots summary", "returns bot's summary from Github: created date, last changed date etc.." },
+            { "/сводка ботов", "возвращает сводку о ботах из Github: когда и кем бот был создан и последний раз изменен" }
         };
 
         private readonly GithubService _githubService;
@@ -36,7 +36,7 @@ namespace Bot4Bots
             {
                 Author = "khaale",
                 Info = $"{BotName} - показывает расширенную информацию о ботах",
-                Commands = BotsStatsCommands.Select(x => $"{x.Key} - {x.Value}").ToArray()
+                Commands = BotsSummaryCommands.Select(x => $"{x.Key} - {x.Value}").ToArray()
             };
         }
         
@@ -47,7 +47,7 @@ namespace Bot4Bots
             if (IsBotsStatsRequest(evt))
             {
                 _logger.LogDebug("Getting new bots");
-                var message = GetBotsStats();
+                var message = GetBotsSummary();
                 var messageModel = new EventResponseModel
                 {
                     Text = message,
@@ -64,10 +64,10 @@ namespace Bot4Bots
 
         private bool IsBotsStatsRequest(EventModel evt)
         {
-            return BotsStatsCommands.Keys.Contains(evt.Text?.Trim());
+            return BotsSummaryCommands.Keys.Contains(evt.Text?.Trim());
         }
 
-        private string GetBotsStats()
+        private string GetBotsSummary()
         {
             var githubBotSummaries = _githubService.GetSummaries();
 
