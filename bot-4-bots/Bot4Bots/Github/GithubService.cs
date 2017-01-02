@@ -6,7 +6,9 @@ namespace Bot4Bots.Github
 {
     public class GithubService
     {
-        private volatile IReadOnlyCollection<GithubBotSummary> _summaries = new GithubBotSummary[0];
+        private IReadOnlyCollection<GithubBotSummary> _summaries = new GithubBotSummary[0];
+        private string _lastCommitSha = null; 
+
 
         private readonly GithubGateway _gateway;
         private readonly ILogger _logger;
@@ -24,13 +26,25 @@ namespace Bot4Bots.Github
 
         public void LoadSummaries()
         {
-            var ts = Stopwatch.StartNew();
             _logger.LogInformation("Loading bots from Github..");
 
-            _summaries = _gateway.GetSummary();
+            var lastCommitSha = _gateway.GetLastCommit();
+            _logger.LogInformation($"Loaded last commit SHA: '{lastCommitSha}', in cache: '{_lastCommitSha}'");
+            
+            if (lastCommitSha != _lastCommitSha)
+            {
+                _lastCommitSha = lastCommitSha;
 
-            ts.Stop();
-            _logger.LogInformation("{0} bots were loaded from Github in {1}", _summaries.Count, ts.Elapsed);
+                var ts = Stopwatch.StartNew();
+                _summaries = _gateway.GetSummary();
+                ts.Stop();
+
+                _logger.LogInformation("{0} bots were loaded from Github in {1}", _summaries.Count, ts.Elapsed);
+            }
+            else 
+            {
+                _logger.LogInformation("Nothing was changed since last check. Loading was skipped.");
+            }
         }
-    } 
+    }
 }

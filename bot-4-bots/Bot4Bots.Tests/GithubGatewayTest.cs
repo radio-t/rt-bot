@@ -94,6 +94,20 @@ namespace Bot4Bots.Tests
                    x => Assert.That(x.CreatedBy.User, Is.Not.Match("[<>]")));
         }
 
+        [Test]
+        public void GetLastCommit_ShouldReturn_LastCommitForRepository()
+        {
+            //arrange
+            var sut = CreateSut();
+
+            //act
+            var result = sut.GetLastCommit();
+
+            //assert
+            Assert.That(result, Is.Not.Null);
+        }
+
+
         private void AssertCollection<T>(IReadOnlyCollection<T> collection, params Action<T>[] assertions)
         {
             foreach (var item in collection)

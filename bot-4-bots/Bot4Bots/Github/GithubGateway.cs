@@ -32,6 +32,14 @@ namespace Bot4Bots.Github
             _client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("curl", "7.35.0"));
         }
 
+        public string GetLastCommit()
+        {
+            var rootUri = $"https://api.github.com/repos/{_targetUser}/{_targetRepo}/commits";
+            var response = _client.GetStringAsync(rootUri).Result;
+            var commits = JsonConvert.DeserializeObject<List<GithubCommitItem>>(response);
+            return commits.First().sha;
+        }
+
         public IReadOnlyCollection<GithubBotSummary> GetSummary()
         {
             var rootContentItems = GetGithubContentItems();
@@ -131,6 +139,11 @@ namespace Bot4Bots.Github
             public string name { get; set; }
             public string path { get; set; }
             public string type { get; set; }
+        }
+
+        public class GithubCommitItem
+        {
+            public string sha { get; set; }
         }
     }
 }
