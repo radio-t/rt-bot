@@ -6,8 +6,8 @@ ignored_commands:
   - "Как дела?"
 
 test_cases:
-  - command: "/bots stats"
+  - command: "/bots summary"
     result: ".+"
 
-  - command: "/статистика ботов"
+  - command: "/сводка ботов"
     result: ".+"
