@@ -12,6 +12,7 @@ namespace Bot4Bots
     [Route("")]
     public class BotController : Controller
     {
+        private static readonly string NewLine = @"\n";
         private static readonly string BotName = "bot-4-bots"; 
 
         private static readonly Dictionary<string,string> BotsSummaryCommands = new Dictionary<string, string>
@@ -86,11 +87,11 @@ namespace Bot4Bots
 
             var tableHeader = new[]
             {
-                    "Bot Name | Created On &darr; | Created By | Last Changed On | Last Changed By",
-                    "---------|-------------------|------------|-----------------|----------------"
-                };
+                    NewLine + "Bot Name | Created On &darr; | Created By | Last Changed On | Last Changed By",
+                              "---------|-------------------|------------|-----------------|----------------"
+            };
 
-            var message = string.Join(Environment.NewLine, tableHeader.Concat(tableRows));
+            var message = string.Join(NewLine, tableHeader.Concat(tableRows));
 
             return message;
         }
