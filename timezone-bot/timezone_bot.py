@@ -6,12 +6,14 @@ import googlemaps
 from flask import Flask, json, request
 from pytz import timezone
 from werkzeug.exceptions import ExpectationFailed
+import logging
 
 app = Flask(__name__)
 
 app.config.from_envvar('APP_CONFIG')
 
 google_key = os.environ.get('GOOGLE_KEY')
+logging.basicConfig(level=logging.INFO, handlers=[logging.StreamHandler()])
 
 if not google_key:
     raise ValueError('GOOGLE_KEY environment variable is not set')
@@ -22,6 +24,7 @@ gmaps_api = googlemaps.Client(google_key, timeout=5)
 @app.route('/event', methods=['POST'])
 def event():
     """Main event of app"""
+    log = logging.getLogger("/event")
     try:
         message = json.loads(request.data).get('text', None)
 
@@ -75,7 +78,8 @@ def event():
                    }
 
     # JSONDecodeError or have no connection with Google API services
-    except Exception:
+    except Exception as e:
+        log.exception(e)
         return ExpectationFailed()
 
 

@@ -5,7 +5,7 @@ ENV FLASK_APP=timezone_bot.py \
 RUN apk add --no-cache python3 python3-dev build-base linux-headers
 WORKDIR /home/app
 RUN pip3 install --upgrade pip
-RUN pip3 install certifi
+RUN pip3 install certifi==2015.04.28
 COPY requirements requirements
 RUN pip3 install -r requirements/production.txt
 COPY . .
