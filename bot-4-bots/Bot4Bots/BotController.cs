@@ -82,13 +82,13 @@ namespace Bot4Bots
                 orderby bi.CreatedBy?.CommitDate descending
                 select $"[{bi.Name}]({bi.Link})|" +
                     $"{bi.CreatedBy?.CommitDate:d}|{bi.CreatedBy?.User}|" +
-                    $"{bi.LastChangedBy?.CommitDate:d}|{bi.LastChangedBy?.User}|"
+                    $"{bi.LastChangedBy?.CommitDate:d}|{bi.LastChangedBy?.User}"
                 ).ToList();
 
             var tableHeader = new[]
             {
-                    NewLine + "Bot Name | Created On &darr; | Created By | Last Changed On | Last Changed By",
-                              "---------|-------------------|------------|-----------------|----------------"
+                    NewLine + NewLine + "Bot Name | Created On &darr; | Created By | Last Changed On | Last Changed By",
+                                        "---------|-------------------|------------|-----------------|----------------"
             };
 
             var message = string.Join(NewLine, tableHeader.Concat(tableRows));
