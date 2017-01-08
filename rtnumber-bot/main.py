@@ -72,6 +72,7 @@ async def http_info(request):
 
 
 async def http_event(request):
+    global last_response
     try:
         input_json = await request.json()
     except json.decoder.JSONDecodeError:
