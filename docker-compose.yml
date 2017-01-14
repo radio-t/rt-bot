@@ -44,7 +44,6 @@ services:
             - gif-bot
             - stat-bot
             - anek-bot
-            - grabpage-bot
             - ksenks-bot
             - rtnumber-bot
             - excerpt-bot
