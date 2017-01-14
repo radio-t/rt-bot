@@ -209,14 +209,6 @@ services:
         restart: always
         logging: *default_logging
 
-    grabpage-bot:
-        build: grabpage-bot
-        image: rtbot/grabpage-bot
-        container_name: grabpage-bot
-        hostname: grabpage-bot
-        restart: always
-        logging: *default_logging
-
     ksenks-bot:
         build: ksenks-bot
         image: rtbot/ksenks-bot
