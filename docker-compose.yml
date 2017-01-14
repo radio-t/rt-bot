@@ -184,14 +184,6 @@ services:
           - karma-bot-storage
         logging: *default_logging
 
-    sovet-bot:
-        build: sovet-bot
-        image: rtbot/sovet-bot
-        container_name: sovet-bot
-        hostname: sovet-bot
-        restart: always
-        logging: *default_logging
-
     hcalendar-bot:
         build: hcalendar-bot
         image: rtbot/hcalendar-bot
