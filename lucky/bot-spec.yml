@@ -17,9 +17,9 @@ test_cases:
   - command: 
       text: "хочу"
       username: "test"
-    result: "Заявка от участника "test" принята!"
+    result: "Заявка от участника \"test\" принята!"
 
   - command:
       text: "lucky stop"
       username: "umputun"
-    result: "Розыгрыш завершен, учавствовали 1. Наш победитель "test", поздравляем!"
+    result: "Розыгрыш завершен, учавствовали 1. Наш победитель \"test\", поздравляем!"
