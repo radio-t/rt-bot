@@ -9,6 +9,9 @@ https://github.com/umputun/rt-bot
 ### Команды
 
 `lucky start` - Начать прием заявок. Доступно только для ведущих ^(umputun|bobuk|grayru|ksenks)$
+
 `lucky stop` - Остановить прием заявок и пределить победителя. Доступно только для ведущих ^(umputun|bobuk|grayru|ksenks)$
+
 `lucky status` - Текущий статус розыгрыша
+
 `хочу` - Участвовать в розыгрыше, если прием заявок начат
