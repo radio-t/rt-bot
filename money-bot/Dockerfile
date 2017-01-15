@@ -4,6 +4,7 @@ MAINTAINER Serhiy Mytrovtsiy <mitrovtsiy@ukr.net>
 ENV NODE_PATH=.:/usr/lib/node_modules:/node_modules
 
 RUN set -x && \
+    npm install --silent -g nodemon mocha && \
     mkdir -p /node_modules
 
 COPY ./package.json /package.json
