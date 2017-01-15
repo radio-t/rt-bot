@@ -1,6 +1,6 @@
-bot_name: "money_bot"
+bot_name: "money-bot"
 
-bot_display_name: "money_bot"
+bot_display_name: "money-bot"
 
 defaults:
   username: "test-user"
