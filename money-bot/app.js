@@ -171,12 +171,12 @@ app.post('/event', function(req, res) {
                 name_4 = "RUB";
             }
 
-            let responseText = "**_"+req.body.username+"_** упомянул " + v + " "+ c + "\n"+
-                "| "+c+"           | "+v+"           | Курсы           | \n"+
-                "|:-------------:|:--------------:|:--------------:|\n"+
-                "| "+name_1+" | "+res_1+" | "+cur_1.toFixed(2)+" |\n"+
-                "| "+name_2+" | "+res_2+" | "+cur_2.toFixed(2)+" |\n"+
-                "| "+name_3+" | "+res_3+" | "+cur_3.toFixed(2)+" |\n"+
+            let responseText = "**_"+req.body.username+"_** упомянул " + v + " "+ c + ""\n\n"+
+                "| "+c+"           | "+v+"           | Курсы           | "\n"+
+                "|:-------------:|:--------------:|:--------------:|"\n"+
+                "| "+name_1+" | "+res_1+" | "+cur_1.toFixed(2)+" |"\n"+
+                "| "+name_2+" | "+res_2+" | "+cur_2.toFixed(2)+" |"\n"+
+                "| "+name_3+" | "+res_3+" | "+cur_3.toFixed(2)+" |"\n"+
                 "| "+name_4+" | "+res_4+" | "+cur_4.toFixed(2)+" |";
 
             callback(null, responseText);
