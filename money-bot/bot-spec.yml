@@ -13,4 +13,4 @@
  -  		
  -test_cases:		
  -  - command: "а на digital ocean такой сервер стоит 5 евро"		
- -    result: "^[0-9]+"
+ -    result: "^test-user"
