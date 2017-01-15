@@ -18,9 +18,9 @@
 
 | EUR           | 5              | Currency           |
 |:-------------:|:--------------:|:------------------:|
-| USD           | 4.25           | "+cur_1.toFixed(2)+" |
-| UAH           | 4.25           | "+cur_2.toFixed(2)+" |
-| RUB           | 4.25           | "+cur_3.toFixed(2)+" |
-| BYN           | 4.25           | "+cur_4.toFixed(2)+" |
+| USD           | 4.25           | 0.00               |
+| UAH           | 4.25           | 0.00               |
+| RUB           | 4.25           | 0.00               |
+| BYN           | 4.25           | 0.00               |
 
 [Оригинальный репозиторий](https://github.com/exelban/money-bot)
