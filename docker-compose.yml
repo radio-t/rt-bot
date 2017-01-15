@@ -57,6 +57,7 @@ services:
             - money_bot
             - random-bot
             - bot-4-bots
+            - lucky
 
     hello:
         build: hello
