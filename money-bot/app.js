@@ -171,7 +171,7 @@ app.post('/event', function(req, res) {
                 name_4 = "RUB";
             }
 
-            let responseText = "**_"+req.body.username+"_** упомянул " + v + " "+ c + "\n\n"+
+            let responseText = "**_"+req.body.username+"_** упомянул " + v + " "+ c + "\\n\\n"+
                 "| "+c+"           | "+v+"           | Курсы           | \n"+
                 "|:-------------:|:--------------:|:--------------:|\n"+
                 "| "+name_1+" | "+res_1+" | "+cur_1.toFixed(2)+" |\n"+
