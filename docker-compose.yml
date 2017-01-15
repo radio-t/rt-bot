@@ -304,3 +304,12 @@ services:
         hostname: bot-4-bots
         restart: always
         logging: *default_logging
+
+    lucky:
+        build: lucky
+        image: rtbot/lucky
+        container_name: lucky
+        hostname: lucky
+        restart: always
+        logging: *default_logging
+
