@@ -1,6 +1,6 @@
-bot_name: "money_bot"
+bot_name: "money-bot"
 
-bot_display_name: "money_bot"
+bot_display_name: "money-bot"
 
 defaults:
   username: "test-user"
@@ -13,4 +13,4 @@ ignored_commands:
   
 test_cases:
   - command: "а на digital ocean такой сервер стоит 5 евро"
-    result: "^[0-9]+"
+    result: ".+"
