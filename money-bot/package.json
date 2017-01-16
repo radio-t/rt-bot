@@ -1,10 +1,7 @@
 {
-  "name": "money_bot",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
+  "name": "money-bot",
+  "version": "0.1.0",
+  "private": false,
   "dependencies": {
     "body-parser": "~1.15.2",
     "express": "~4.14.0",

@@ -44,7 +44,6 @@ services:
             - gif-bot
             - stat-bot
             - anek-bot
-            - grabpage-bot
             - ksenks-bot
             - rtnumber-bot
             - excerpt-bot
@@ -54,7 +53,7 @@ services:
             - timezone-bot
             - doit-bot
             - docker-bot
-            - money_bot
+            - money-bot
             - random-bot
             - bot-4-bots
             - lucky
@@ -186,14 +185,6 @@ services:
           - karma-bot-storage
         logging: *default_logging
 
-    sovet-bot:
-        build: sovet-bot
-        image: rtbot/sovet-bot
-        container_name: sovet-bot
-        hostname: sovet-bot
-        restart: always
-        logging: *default_logging
-
     hcalendar-bot:
         build: hcalendar-bot
         image: rtbot/hcalendar-bot
@@ -207,14 +198,6 @@ services:
         image: rtbot/anek-bot
         container_name: anek-bot
         hostname: anek-bot
-        restart: always
-        logging: *default_logging
-
-    grabpage-bot:
-        build: grabpage-bot
-        image: rtbot/grabpage-bot
-        container_name: grabpage-bot
-        hostname: grabpage-bot
         restart: always
         logging: *default_logging
 
@@ -274,11 +257,11 @@ services:
         restart: always
         logging: *default_logging
 
-    money_bot:
-        build: money_bot
-        image: rtbot/money_bot
-        container_name: money_bot
-        hostname: money_bot
+    money-bot:
+        build: money-bot
+        image: rtbot/money-bot
+        container_name: money-bot
+        hostname: money-bot
         restart: always
         logging: *default_logging
 
