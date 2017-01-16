@@ -53,7 +53,7 @@ services:
             - timezone-bot
             - doit-bot
             - docker-bot
-            - money_bot
+            - money-bot
             - random-bot
             - bot-4-bots
 
@@ -256,11 +256,11 @@ services:
         restart: always
         logging: *default_logging
 
-    money_bot:
-        build: money_bot
-        image: rtbot/money_bot
-        container_name: money_bot
-        hostname: money_bot
+    money-bot:
+        build: money-bot
+        image: rtbot/money-bot
+        container_name: money-bot
+        hostname: money-bot
         restart: always
         logging: *default_logging
 
