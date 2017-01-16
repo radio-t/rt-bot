@@ -21,8 +21,8 @@ type event struct {
 }
 
 type response struct {
-	Text string
-	Bot  string
+	Text string `json:"text"`
+	Bot  string `json:"bot"`
 }
 
 func initPatterns() (*regexp.Regexp, *regexp.Regexp, *regexp.Regexp, *regexp.Regexp, *regexp.Regexp) {
@@ -63,10 +63,13 @@ func main() {
 			пишем 'Хочу', голоса учитываются один раз`
 		} else if isAdmin && stopPat.MatchString(text) && acceptVotes {
 			acceptVotes = false
-			winner := chooseWinner(participants)
-			message := fmt.Sprintf("Розыгрыш завершен, учавствовали %d. Наш победитель %q, поздравляем!",
-				len(participants), winner)
-			participants = map[string]bool{}
+			message := "Никто не выявил желание получить подарок :("
+			if len(participants) > 0 {
+				winner := chooseWinner(participants)
+				message = fmt.Sprintf("Розыгрыш завершен, учавствовали %d. Наш победитель %q, поздравляем!",
+					len(participants), winner)
+				participants = map[string]bool{}
+			}
 			return http.StatusCreated, message
 		} else if !isAdmin && partPat.MatchString(text) && acceptVotes {
 			participants[user] = true
