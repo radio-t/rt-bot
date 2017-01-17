@@ -59,8 +59,7 @@ func main() {
 			return http.StatusCreated, message
 		} else if isAdmin && startPat.MatchString(text) && !acceptVotes {
 			acceptVotes = true
-			return http.StatusCreated, `Заявки на учатие в розыгрыше принимаются,
-			пишем 'Хочу', голоса учитываются один раз`
+			return http.StatusCreated, `Заявки на учатие в розыгрыше принимаются, пишем 'Хочу', голоса учитываются один раз`
 		} else if isAdmin && stopPat.MatchString(text) && acceptVotes {
 			acceptVotes = false
 			message := "Никто не выявил желание получить подарок :("
