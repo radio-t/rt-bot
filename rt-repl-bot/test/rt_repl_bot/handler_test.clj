@@ -13,11 +13,6 @@
       (is (= 200 (:status response)))
       (is (str/starts-with? (:body response) "{\"author\":\"Alex 'SimY4' Simkin\",\"info\":\"Clojure REPL bot\",\"commands\":"))))
 
-  (testing "Test GET /healthcheck"
-    (let [response (request :get "/healthcheck" nil)]
-      (is (= 200 (:status response)))
-      (is (str/starts-with? (:body response) "{\"status\":\"OK\",\"statistics\":"))))
-
   (testing "Test POST /event should skip random messages with 417 code"
     (is (= 417 (:status (request :post "/event" "random body"))))
     (is (= 417 (:status (request :post "/event" {"text" "randon text"})))))
