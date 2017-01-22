@@ -216,7 +216,7 @@ class KarmaApp:
             return 'Статистика кармы пользователей пуста.'
 
         message = 'Топ {} пользователей:\n\n'.format(len(results))
-        for k, v in results:
+        for k, v in results.items():
             message += '- {}: {}\n'.format(k, v)
             break
 
