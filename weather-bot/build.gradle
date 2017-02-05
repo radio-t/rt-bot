@@ -1,0 +1,45 @@
+group 'com.epam'
+version '1.0-SNAPSHOT'
+
+final mainClass = "app.Main"
+
+final spark_version = '2.5.4'
+final junit_version = '4.12'
+
+buildscript {
+    ext.kotlin_version = '1.0.6'
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "com.sparkjava:spark-core:$spark_version"
+    //test dependencies
+    testCompile "junit:junit:$junit_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClass
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
