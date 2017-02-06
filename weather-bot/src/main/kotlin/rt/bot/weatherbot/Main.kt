@@ -12,43 +12,52 @@ import com.fasterxml.jackson.jr.ob.JSON.std as json
  * @since 05.02.2017
  */
 
-private const val BOT_NAME = "weather-bot"
-private const val AUTHOR_NAME = "mylog00"
-private const val COMMANDS = "[TODO]"
+class Main {
 
-private val LOG = LoggerFactory.getLogger("Main.class")
+    companion object Main {
+        private const val BOT_NAME = "weather-bot"
+        private const val AUTHOR_NAME = "mylog00"
+        private const val COMMANDS = "[@weather cityname]"
+        private const val PREFIX = "@weather"
 
-fun main(args: Array<String>) {
+        private val TYPE = APPLICATION_JSON.toString()
+        private val LOG = LoggerFactory.getLogger("MainKt.class")
 
-    Spark.get("/info") { req, res ->
-        res.type(APPLICATION_JSON.toString())
-        "{author: ${AUTHOR_NAME}, info: ${BOT_NAME}, commands: ${COMMANDS}}"
-    }
+        @JvmStatic fun main(args: Array<String>) {
 
-    Spark.post("/event") { req, res ->
-
-        res.type(APPLICATION_JSON.toString())
-
-        val eventJson = trim(res.body())
-        if (eventJson != "") {
-            try {
-                val event = json.beanFrom(Event::class.java, eventJson)
-                res.status(HttpStatus.CREATED_201)
-                //TODO
-                val response = Response("answer", BOT_NAME)
-                return@post json.asString(response)
-            } catch (ex: JSONObjectException) {
-                ex.printStackTrace()
-                LOG.error("Can't parse: $eventJson")
+            Spark.get("/info") { req, res ->
+                res.type(TYPE)
+                return@get "{author:$AUTHOR_NAME,info:$BOT_NAME,commands: $COMMANDS}"
             }
+
+            Spark.post("/event") { req, res ->
+
+                res.type(TYPE)
+
+                val eventJson = trim(res.body())
+                if (eventJson != "") {
+                    try {
+                        val event = json.beanFrom(Event::class.java, eventJson)
+                        if (event.text.startsWith(PREFIX, true)) {
+                            res.status(HttpStatus.CREATED_201)
+                            //TODO
+                            val response = BotResponse("answer", BOT_NAME)
+                            return@post json.asString(response)
+                        }
+                    } catch (ex: JSONObjectException) {
+                        ex.printStackTrace()
+                        LOG.error("Can't parse: $eventJson")
+                    }
+                }
+                res.status(HttpStatus.EXPECTATION_FAILED_417)
+                return@post null
+            }
+
         }
-        res.status(HttpStatus.EXPECTATION_FAILED_417)
-        return@post null
+
+        private fun trim(str: String?): String {
+            if (str == null) return ""
+            return str.trim()
+        }
     }
-
-}
-
-private fun trim(str: String?): String {
-    if (str == null) return ""
-    return str.trim()
 }
