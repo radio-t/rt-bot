@@ -1,5 +1,6 @@
 package rt.bot.weatherbot
 
+import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.jr.ob.JSONObjectException
 import org.eclipse.jetty.http.HttpStatus
 import org.eclipse.jetty.http.MimeTypes.Type.APPLICATION_JSON
@@ -21,7 +22,7 @@ class Main {
         private const val PREFIX = "@weather"
 
         private val TYPE = APPLICATION_JSON.toString()
-        private val LOG = LoggerFactory.getLogger("MainKt.class")
+        private val LOG = LoggerFactory.getLogger(Main::class.java)
 
         @JvmStatic fun main(args: Array<String>) {
 
@@ -34,7 +35,7 @@ class Main {
 
                 res.type(TYPE)
 
-                val eventJson = trim(res.body())
+                val eventJson = trim(req.body())
                 if (eventJson != "") {
                     try {
                         val event = json.beanFrom(Event::class.java, eventJson)
@@ -46,11 +47,14 @@ class Main {
                         }
                     } catch (ex: JSONObjectException) {
                         ex.printStackTrace()
+                        LOG.error("Can't process: $eventJson")
+                    } catch (ex: JsonParseException) {
+                        ex.printStackTrace()
                         LOG.error("Can't parse: $eventJson")
                     }
                 }
                 res.status(HttpStatus.EXPECTATION_FAILED_417)
-                return@post null
+                return@post "tst"
             }
 
         }

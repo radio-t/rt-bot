@@ -2,7 +2,7 @@ package rt.bot.weatherbot
 
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
-import java.io.BufferedReader
+import rt.bot.weatherbot.openweather.OpenWeatherData
 import java.io.InputStream
 import java.io.InputStreamReader
 import com.fasterxml.jackson.jr.ob.JSON.std as json
@@ -15,18 +15,18 @@ class WeatherServiceImpl : IWeatherService {
 
     private val client = HttpClients.createDefault()
 
-    override fun getWeather(cityName: String): String {
+    override fun getWeather(cityName: String): OpenWeatherData? {
         val request = "http://api.openweathermap.org/data/2.5/weather?q=$cityName" +
                 "&appid=3691aaeb837f49f145b9f22d8e2de0bd" +
-                "&units=metric"
+                "&units=metric" +
+                "&lang=ru"
         val httpGet = HttpGet(request)
         val response = client.execute(httpGet)
 
         response.use { response ->
             val body = read(response.entity.content)
-            val map = json.mapFrom<String>(body)
+            return json.beanFrom(OpenWeatherData::class.java, body)
         }
-        return ""
     }
 
     private companion object WeatherServiceImpl {
