@@ -5,4 +5,4 @@ package rt.bot.weatherbot
  * @since 05.02.2017
  */
 data class BotResponse(val text: String,
-                       val bot: String)
+                       val bot: String = Main.BOT_NAME)

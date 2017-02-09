@@ -4,7 +4,7 @@ package rt.bot.weatherbot.openweather
  * @author Dmitrii Kniazev
  * @since 07.02.2017
  */
-class Weather {
+internal class Weather {
     /**Weather condition id*/
     var id: Int = 0
     /**Group of weather parameters (Rain, Snow, Extreme etc.)*/

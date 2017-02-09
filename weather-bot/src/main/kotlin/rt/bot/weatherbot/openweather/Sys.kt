@@ -4,7 +4,7 @@ package rt.bot.weatherbot.openweather
  * @author Dmitrii Kniazev
  * @since 07.02.2017
  */
-class Sys {
+internal class Sys {
     /**Internal parameter*/
     var type: Int = 0
     /**Internal parameter*/

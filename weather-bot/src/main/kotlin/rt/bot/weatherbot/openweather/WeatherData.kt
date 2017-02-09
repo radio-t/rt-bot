@@ -7,7 +7,7 @@ import java.util.Collections
  * @author Dmitrii Kniazev
  * @since 06.02.2017
  */
-class OpenWeatherData {
+internal class WeatherData {
     /**City geo location*/
     var coord: Geolocation? = null
     /**Weather type*/

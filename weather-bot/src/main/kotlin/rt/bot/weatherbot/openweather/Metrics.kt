@@ -4,7 +4,7 @@ package rt.bot.weatherbot.openweather
  * @author Dmitrii Kniazev
  * @since 07.02.2017
  */
-class Metrics {
+internal class Metrics {
     /**Temperature. Unit Default: Kelvin*/
     var temp: Int = 0
     /**
