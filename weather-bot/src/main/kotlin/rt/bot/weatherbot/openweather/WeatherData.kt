@@ -29,7 +29,7 @@ internal class WeatherData {
     /**City ID*/
     var id: Long = 0
     /**City name*/
-    var name: String? = null
+    var name: String = "Unknown"
     /**Internal parameter*/
     var cod: Int = 0
 

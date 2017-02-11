@@ -18,20 +18,38 @@ object WeatherServiceImpl : IWeatherService {
     override fun getWeather(cityName: String): BotResponse {
         val request = "http://api.openweathermap.org/data/2.5/weather?q=$cityName" +
                 "&appid=3691aaeb837f49f145b9f22d8e2de0bd" +
-                "&units=metric" +
-                "&lang=ru"
+                "&units=metric"
         val httpGet = HttpGet(request)
         val response = client.execute(httpGet)
 
         response.use { response ->
             val body = read(response.entity.content)
             val weather = json.beanFrom(WeatherData::class.java, body)
-            return BotResponse("")
+            return BotResponse(formatWeather(weather))
         }
     }
 
     private fun read(input: InputStream): String {
         return InputStreamReader(input).use(InputStreamReader::readText)
+    }
+
+    private fun formatWeather(weather: WeatherData): String {
+        val city = weather.name
+        val openWeatherLink = "http://openweathermap.org/city/${weather.id}"
+        val temp = weather.main?.temp ?: 0
+        val condition = weather.weather
+                .map { it.description?.capitalize() }
+                .joinToString()
+        val images = weather.weather
+                .map { getImgLink(it) }
+                .reduce { s1, s2 -> s1 + s2 }
+        return "\n**[$city]($openWeatherLink) $temp°C**  \n" +
+                condition + "  \n" +
+                images
+    }
+
+    private fun getImgLink(w: Weather): String {
+        return "![${w.description}](http://openweathermap.org/img/w/${w.icon}.png)"
     }
 
 }
