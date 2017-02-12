@@ -32,6 +32,7 @@ class Main {
 
 
         @JvmStatic fun main(args: Array<String>) {
+            Spark.port(8080) // Spark will run on port 8080
 
             Spark.get("/info") { req, res ->
                 res.type(JSON_TYPE)
@@ -59,8 +60,7 @@ class Main {
                         LOG.error("Can't process request", ex.cause)
                     }
                 }
-                res.status(HttpStatus.EXPECTATION_FAILED_417)
-                return@post ""
+                Spark.halt(HttpStatus.EXPECTATION_FAILED_417)
             }
 
         }
