@@ -57,6 +57,7 @@ services:
             - random-bot
             - bot-4-bots
             - lucky
+            - weather-bot
 
     hello:
         build: hello
@@ -297,3 +298,10 @@ services:
         restart: always
         logging: *default_logging
 
+    weather-bot:
+        build: weather-bot
+        image: rtbot/weather-bot
+        container_name: weather-bot
+        hostname: weather-bot
+        restart: always
+        logging: *default_logging
