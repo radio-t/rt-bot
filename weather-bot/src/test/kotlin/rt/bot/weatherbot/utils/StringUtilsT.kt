@@ -43,6 +43,9 @@ class StringUtilsT {
 
         request = "@weather:  m   "
         assertEquals("", StringUtils.parseRequest(request))
+
+        request = "some text"
+        assertEquals("", StringUtils.parseRequest(request))
     }
 
 }

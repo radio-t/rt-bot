@@ -21,6 +21,7 @@ class Main {
     companion object Main {
         const val BOT_NAME = "weather-bot"
         const val AUTHOR_NAME = "mylog00"
+        const val TEST_REQUEST = "@weather:!status"
         const val PREFIX = "@weather:"
         private const val COMMANDS = "[$PREFIX" + "cityname]"
 
@@ -30,6 +31,7 @@ class Main {
 
         private val JSON_TYPE = APPLICATION_JSON.toString()
 
+        private val TEST_RESPONSE = BotResponse("weather-bot work fine")
 
         @JvmStatic fun main(args: Array<String>) {
             Spark.port(8080) // Spark will run on port 8080
@@ -44,6 +46,10 @@ class Main {
                 if (eventJson != "") {
                     try {
                         val event = json.beanFrom(Event::class.java, eventJson)
+                        if (TEST_REQUEST == event.text) {
+                            res.type(JSON_TYPE)
+                            return@post json.asString(TEST_RESPONSE)
+                        }
                         val cityName = StringUtils.parseRequest(event.text)
                         if (cityName != "") {
                             val response = SERVICE.getWeather(cityName)
