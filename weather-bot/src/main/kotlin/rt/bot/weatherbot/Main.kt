@@ -48,6 +48,7 @@ class Main {
                         val event = json.beanFrom(Event::class.java, eventJson)
                         if (TEST_REQUEST == event.text) {
                             res.type(JSON_TYPE)
+                            res.status(HttpStatus.CREATED_201)
                             return@post json.asString(TEST_RESPONSE)
                         }
                         val cityName = StringUtils.parseRequest(event.text)
