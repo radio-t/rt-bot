@@ -38,7 +38,7 @@ class Main {
 
             Spark.get("/info") { req, res ->
                 res.type(JSON_TYPE)
-                return@get "{author:$AUTHOR_NAME,info:$BOT_NAME,commands: $COMMANDS}"
+                return@get "{author:$AUTHOR_NAME, info:$BOT_NAME, commands:$COMMANDS}"
             }
 
             Spark.post("/event") { req, res ->
@@ -69,7 +69,12 @@ class Main {
                 }
                 Spark.halt(HttpStatus.EXPECTATION_FAILED_417)
             }
+            printInfo()
+        }
 
+        private fun printInfo() {
+            println("Weather-bot running successfully")
+            println(":: Spark ::             (v2.5.4)")
         }
     }
 }
