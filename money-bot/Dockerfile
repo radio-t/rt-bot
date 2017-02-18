@@ -10,6 +10,8 @@ RUN set -x && \
 COPY ./package.json /package.json
 RUN npm install --silent --prefix /
 
+
+COPY ./currency.json /currency.json
 COPY ./app.js /app.js
 
 EXPOSE 8080
