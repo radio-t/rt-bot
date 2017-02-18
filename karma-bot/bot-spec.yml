@@ -18,5 +18,14 @@ test_cases:
       text: "selevit +1"
     result: "^Вы не можете изменять свою карму!$"
 
+  - command: "/karma-top"
+    result: "^Статистика кармы пользователей пуста.$"
+
   - command: "selevit++"
     result: "^Карма пользователя @selevit увеличена \\(текущее значение: \\d+\\).$"
+
+  - command: "/karma-top 0"
+    result: "^Количество пользователей в /karma top \\[n\\] должно быть > 0.$"
+
+  - command: "/karma-top 10"
+    result: "^Топ 1 пользователей:\\\\n\\\\n- selevit: 1\\\\n$"
