@@ -268,6 +268,7 @@ async def main_loop(web_app):
                     raise
                 except:
                     log.error('Unknown error in main loop', exc_info=1)
+                    await asyncio.sleep(30)
     except asyncio.CancelledError:
         pass
 
