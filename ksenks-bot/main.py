@@ -22,13 +22,13 @@ DEBUG_COMMANDS = True
 DEBUG_IGNORE_TIME_UNTIL = 0
 DEBUG_RESET_FLAG = False
 
-DEFAULT_PROBABILITY = 0.95
+DEFAULT_PROBABILITY = 0.97
 PROBABILITY = DEFAULT_PROBABILITY
 
 last_detects = []
 last_ksenks_timestamp = 0
 svm_model = None
-MAX_BAD_INPUT_IN_ROW = 3
+MAX_BAD_INPUT_IN_ROW = 5
 
 last_logs = ArrayHandler(max_count=200)
 logging.basicConfig(format='%(asctime)-15s %(levelname)-8s %(message)s', level=logging.INFO,
