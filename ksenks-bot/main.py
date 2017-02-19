@@ -28,6 +28,7 @@ PROBABILITY = DEFAULT_PROBABILITY
 last_detects = []
 last_ksenks_timestamp = 0
 svm_model = None
+MAX_BAD_INPUT_IN_ROW = 3
 
 last_logs = ArrayHandler(max_count=200)
 logging.basicConfig(format='%(asctime)-15s %(levelname)-8s %(message)s', level=logging.INFO,
@@ -97,6 +98,16 @@ async def http_event(request):
         set_probability = input_json.get('probability')
         set_ignoretime = input_json.get('ignoretime')
         get_log = input_json.get('showlog')
+        set_debug = input_json.get('debug')
+
+        if set_debug in ['0', '1']:
+            if set_debug == '1':
+                log.info('Someone changed log_level to DEBUG')
+                log.level = logging.DEBUG
+            else:
+                log.info('Someone changed log_level to INFO')
+                log.level = logging.INFO
+            return web.json_response({'text': 'Ок!'})
 
         if set_away_secs:
             secs_away = int(set_away_secs)
@@ -176,6 +187,8 @@ async def process_stream(resp):
     not_processed_frames = []
     log.info('staring processing stream')
 
+    bad_input_in_row = 0
+
     while True:
         if DEBUG_COMMANDS:
             global DEBUG_RESET_FLAG
@@ -193,6 +206,14 @@ async def process_stream(resp):
         frames, tail = audio.get_frames_from_mp3(stream_chunk, tail)
         if not len(frames):
             log.warning("Can't extract mp3 frames from mp3")
+            bad_input_in_row += 1
+            if bad_input_in_row >= MAX_BAD_INPUT_IN_ROW:
+                log.error('Too many bad audio data in a row')
+                resp.close()
+                break
+        else:
+            bad_input_in_row = 0
+
         not_processed_frames += frames
 
         if len(not_processed_frames) > 100:
@@ -234,7 +255,7 @@ async def main_loop(web_app):
                     if (current_date.weekday() == 5 and current_date.hour >= 23) or \
                             (current_date.weekday() == 6 and current_date.hour <= 3) or \
                             (DEBUG_COMMANDS and DEBUG_IGNORE_TIME_UNTIL and time() < DEBUG_IGNORE_TIME_UNTIL):
-                        async with session.get(STREAM_URL) as resp:
+                        async with session.get(STREAM_URL, timeout=60) as resp:
                             await process_stream(resp)
                     else:
                         log.info('now is not a stream time, waiting...')
