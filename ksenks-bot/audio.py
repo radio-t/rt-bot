@@ -86,7 +86,10 @@ def probe_ksenks_on_pcm(pcm, svm_model):
         max_freqs_values = np.zeros(len(freqs))
         # loop for each freq (in pxx[i] stored freq's values for each timepoint for freq #i)
         for i, freq in enumerate(pxx):
-            avg_freqs_values[i] = np.log10(np.sum(freq) / len(freq)) / np.log10(2 ** 16)
+            if np.sum(freq) == 0:
+                avg_freqs_values[i] = 0
+            else:
+                avg_freqs_values[i] = np.log10(np.sum(freq) / len(freq)) / np.log10(2 ** 16)
             if np.max(freq):
                 max_freqs_values[i] = np.log10(np.max(freq)) / np.log10(2 ** 16)  # scaled = [0,1]
             if np.min(freq):
