@@ -10,6 +10,8 @@ import audio
 import pytz
 from aiohttp import web
 from log_handler import ArrayHandler
+from timeout import Timeout
+
 
 SECS_BEFORE_SILENT = 1 * 60
 SECS_BEFORE_SLEEP = 5 * 60
@@ -185,23 +187,25 @@ async def process_stream(resp):
 
         stream_chunk = await resp.content.read(65536)
         if not stream_chunk:
-            log.warn("Can't read audio stream")
+            log.warning("Can't read audio stream")
             break
 
         frames, tail = audio.get_frames_from_mp3(stream_chunk, tail)
         if not len(frames):
-            log.warn("Can't extract mp3 frames from mp3")
+            log.warning("Can't extract mp3 frames from mp3")
         not_processed_frames += frames
 
         if len(not_processed_frames) > 100:
-            pcm = audio.get_pcm_from_frames(not_processed_frames)
+            with Timeout(10, 'get_pcm_from_frames'):
+                pcm = audio.get_pcm_from_frames(not_processed_frames)
             not_processed_frames = []
             if not pcm:
-                log.warn('Decoding error')
+                log.warning('Decoding error')
                 continue
 
             global svm_model
-            probability, svm_model = audio.probe_ksenks_on_pcm(pcm, svm_model)
+            with Timeout(10, 'probe_ksenks_on_pcm'):
+                probability, svm_model = audio.probe_ksenks_on_pcm(pcm, svm_model)
             if not probability:
                 log.error("Can't load SVM model.")
                 exit()
@@ -236,7 +240,13 @@ async def main_loop(web_app):
                         log.info('now is not a stream time, waiting...')
                         await asyncio.sleep(30)
                 except aiohttp.ClientResponseError:
-                    log.warn('Response error, maybe wrong stream url')
+                    log.warning('Response error, maybe wrong stream url')
+                except TimeoutError as e:
+                    log.error('TimeoutError in main loop: %s' % e)
+                except asyncio.CancelledError:
+                    raise
+                except:
+                    log.error('Unknown error in main loop', exc_info=1)
     except asyncio.CancelledError:
         pass
 
