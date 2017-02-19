@@ -307,7 +307,7 @@ services:
         restart: always
         logging: *default_logging
 
-    weather-bot:
+    or-bot:
         build: or-bot
         image: rtbot/or-bot
         container_name: or-bot
