@@ -54,14 +54,13 @@ end_better_phrases = [
 
 
 def better_handler(text):
-  _text = text.strip()
 
-  _text = _text[11:].strip()
+  text = text[11:].strip()
 
-  if _text[-1] == "?":
-    _text = _text[:-1]
+  if text[-1] == "?":
+    text = text[:-1]
 
-  variation = _text.split(' или ')
+  variation = text.split(' или ')
   r = random.randint(0, len(variation) - 1)
 
   choice = variation[r].strip()
@@ -79,8 +78,9 @@ def event():
     return silence()
 
   message = data.get('text')
+  message = message.strip()
 
-  if (re.match(r"что лучше, ", _text) or re.match(r"кто лучше, ", _text)) and re.search(r" или ", _text):
+  if (re.match(r"что лучше, ", message) or re.match(r"кто лучше, ", message)) and re.search(r" или ", message):
     return Response(
       response=json.dumps({'text': better_handler(message), 'bot': 'or-bot'}),
       status=201,
