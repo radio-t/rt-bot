@@ -56,24 +56,21 @@ end_better_phrases = [
 def better_handler(text):
   _text = text.strip()
 
-  if (re.match(r"что лучше, ", _text) or re.match(r"кто лучше, ", _text)) and re.search(r" или ", _text):
-    _text = _text[11:].strip()
+  _text = _text[11:].strip()
 
-    if _text[-1] == "?":
-      _text = _text[:-1]
+  if _text[-1] == "?":
+    _text = _text[:-1]
 
-    variation = _text.split(' или ')
-    r = random.randint(0, len(variation) - 1)
+  variation = _text.split(' или ')
+  r = random.randint(0, len(variation) - 1)
 
-    choice = variation[r].strip()
+  choice = variation[r].strip()
 
-    start_phrases_choice = start_better_phrases[random.randint(0, len(start_better_phrases) - 1)]
-    end_phrases_choice = end_better_phrases[random.randint(0, len(end_better_phrases) - 1)]
+  start_phrases_choice = start_better_phrases[random.randint(0, len(start_better_phrases) - 1)]
+  end_phrases_choice = end_better_phrases[random.randint(0, len(end_better_phrases) - 1)]
 
-    return start_phrases_choice + choice + end_phrases_choice
-  else:
-    return silence()
-
+  return start_phrases_choice + choice + end_phrases_choice
+  
 
 def event():
   try:
@@ -83,11 +80,14 @@ def event():
 
   message = data.get('text')
 
-  return Response(
-    response=json.dumps({'text': better_handler(message), 'bot': 'or-bot'}),
-    status=201,
-    mimetype="application/json"
-  )
+  if (re.match(r"что лучше, ", _text) or re.match(r"кто лучше, ", _text)) and re.search(r" или ", _text):
+    return Response(
+      response=json.dumps({'text': better_handler(message), 'bot': 'or-bot'}),
+      status=201,
+      mimetype="application/json"
+    )
+  else:
+    return silence()
 
 
 def info():
