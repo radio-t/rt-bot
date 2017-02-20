@@ -115,4 +115,4 @@ app.add_url_rule('/event', 'event', event, methods=['POST'])
 app.add_url_rule('/info', 'info', info, methods=['GET'])
 
 if __name__ == "__main__":
-  app.run(debug=True)
+  app.run(host='0.0.0.0', port=8080)
