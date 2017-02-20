@@ -43,8 +43,8 @@ object WeatherServiceImpl : IWeatherService {
         val images = weather.weather
                 .map { getImgLink(it) }
                 .reduce { s1, s2 -> s1 + s2 }
-        return "\n**[$city]($openWeatherLink) $temp°C**  \n" +
-                condition + "  \n" +
+        return "  \\n**[$city]($openWeatherLink) $temp°C**  \\n" +
+                condition + "  \\n" +
                 images
     }
 
