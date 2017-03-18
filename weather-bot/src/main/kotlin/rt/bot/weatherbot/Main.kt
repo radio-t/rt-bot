@@ -21,8 +21,8 @@ class Main {
     companion object Main {
         const val BOT_NAME = "weather-bot"
         const val AUTHOR_NAME = "mylog00"
-        const val TEST_REQUEST = "@weather:!status"
-        const val PREFIX = "@weather:"
+        const val TEST_REQUEST = "!weather:!status"
+        const val PREFIX = "!weather:"
         private const val COMMANDS = "[$PREFIX" + "cityname]"
 
         private val LOG = LoggerFactory.getLogger(Main::class.java)

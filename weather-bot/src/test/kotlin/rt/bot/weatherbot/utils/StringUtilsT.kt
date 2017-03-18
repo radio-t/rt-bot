@@ -20,28 +20,28 @@ class StringUtilsT {
     }
 
     @Test fun testParseRequest() {
-        var request = "@weather:LoNdon"
+        var request = "!weather:LoNdon"
         assertEquals("london", StringUtils.parseRequest(request))
 
-        request = "@weather:  New     York   "
+        request = "!weather:  New     York   "
         assertEquals("new+york", StringUtils.parseRequest(request))
 
-        request = "@weather: ny"
+        request = "!weather: ny"
         assertEquals("ny", StringUtils.parseRequest(request))
 
-        request = "@weather:  NeW-----yorK   "
+        request = "!weather:  NeW-----yorK   "
         assertEquals("new-york", StringUtils.parseRequest(request))
 
-        request = "@weather:  -new york   "
+        request = "!weather:  -new york   "
         assertEquals("", StringUtils.parseRequest(request))
 
-        request = "@weather: york 23   "
+        request = "!weather: york 23   "
         assertEquals("", StringUtils.parseRequest(request))
 
-        request = "@weather: лондон   "
+        request = "!weather: лондон   "
         assertEquals("", StringUtils.parseRequest(request))
 
-        request = "@weather:  m   "
+        request = "!weather:  m   "
         assertEquals("", StringUtils.parseRequest(request))
 
         request = "some text"
