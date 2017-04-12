@@ -39,8 +39,8 @@
   "REPL bot application"
   (->
     app-routes
-    (wrap-defaults api-defaults)
     (instrument)
     (wrap-json-body)
     (wrap-json-response)
-    (expose-metrics-as-json)))
+    (expose-metrics-as-json)
+    (wrap-defaults api-defaults)))
