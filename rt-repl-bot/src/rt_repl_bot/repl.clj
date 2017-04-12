@@ -21,7 +21,7 @@
             eval-result (repl-sandbox form {#'*out* out})
             out-string (.toString out)]
         (if (.isEmpty out-string)
-          eval-result
+          (str eval-result)
           (str out-string "\n" eval-result)))
       (catch TimeoutException _
         "Evaluation timed out in 5 seconds")
