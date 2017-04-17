@@ -50,7 +50,6 @@ services:
             - tweet-bot
             - rest-voter
             - hcalendar-bot
-            - timezone-bot
             - doit-bot
             - docker-bot
             - money-bot
