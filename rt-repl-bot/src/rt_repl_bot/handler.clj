@@ -12,7 +12,7 @@
 (defn handle-command [command]
   "Handles REST POST /event call and returns constructed response"
   (let [eval-result (repl/eval-command command)]
-    (log/info "clj>" command "~" eval-result)
+    (log/info "clj>" command "\t ~" eval-result)
     {:status  201
      :body    {:text (str "```\n" eval-result "\n```")
                :bot  "REPL-bot"}
@@ -25,10 +25,10 @@
     {:status 200
      :body   {:author   "Alex 'SimY4' Simkin"
               :info     "Clojure REPL bot"
-              :commands ["clj> (do\n  (prn \"Весь текст после префикса 'clj>' будет вычислен как форма Clojure. Например:)\n  (+ 5 5))\n```\n10\n```"]}
+              :commands ["clj> (+ 5 5) ;; Весь текст после префикса 'clj>' будет вычислен как форма Clojure.\n```\n10\n```"]}
      })
   (POST "/event" {body :body}
-    (let [text (or (get body "text") "")]
+    (let [text (get body "text" "")]
       (cond
         (str/starts-with? text "clj>") (handle-command (subs text 4))
         :else {:status 417 :body {:status "Expectation Failed"}})))

@@ -1,52 +1,65 @@
 (ns rt-repl-bot.handler-test
   (:require [clojure.test :refer :all]
             [clojure.string :as str]
+            [ring.mock.request :as mock]
             [rt-repl-bot.handler :refer :all]))
-
-(defn request [method resource body]
-  (app {:request-method method :uri resource :body body}))
 
 (deftest handler-test
 
   (testing "Test GET /info"
-    (let [response (request :get "/info" nil)]
+    (let [response (app (mock/request :get "/info"))]
       (is (= 200 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type")))
+      (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))
       (is (str/starts-with? (:body response) "{\"author\":\"Alex 'SimY4' Simkin\",\"info\":\"Clojure REPL bot\",\"commands\":"))))
 
+  (testing "Test POST /event should skip malformed JSON requests with 400 code"
+    (let [request (-> (mock/request :post "/event" "random body")
+                      (mock/content-type "application/json"))
+          response (app request)]
+      (is (= 400 (:status response)))))
+
   (testing "Test POST /event should skip random messages with 417 code"
-    (let [response (request :post "/event" "random body")]
+    (let [request (-> (mock/request :post "/event" "{\"text\": \"randon text\"}")
+                      (mock/content-type "application/json"))
+          response (app request)]
       (is (= 417 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type"))))
-    (let [response (request :post "/event" {"text" "randon text"})]
-      (is (= 417 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type")))))
+      (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))))
 
   (testing "Test POST /event should evaluate clojure commands and respond with 201 code"
-    (let [response (request :post "/event" {"text" "clj> (+ 1 1)"})]
+    (let [request (-> (mock/request :post "/event" "{\"text\": \"clj> (+ 1 1)\"}")
+                      (mock/content-type "application/json"))
+          response (app request)]
       (is (= 201 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type")))
+      (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))
       (is (= "{\"text\":\"```\\n2\\n```\",\"bot\":\"REPL-bot\"}" (:body response))))
-    (let [response (request :post "/event" {"text" "clj>"})]
+    (let [request (-> (mock/request :post "/event" "{\"text\": \"clj>\"}")
+                      (mock/content-type "application/json"))
+          response (app request)]
       (is (= 201 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type")))
+      (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))
       (is (= "{\"text\":\"```\\nEOF while reading\\n```\",\"bot\":\"REPL-bot\"}" (:body response))))
-    (let [response (request :post "/event" {"text" "clj>(def var1 5)"})]
+    (let [request (-> (mock/request :post "/event" "{\"text\": \"clj>(def var1 5)\"}")
+                      (mock/content-type "application/json"))
+          response (app request)]
       (is (= 201 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type")))
+      (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))
       (is (re-matches #"\{\"text\":\"```\\n#'sandbox[0-9]{1,4}/var1\\n```\",\"bot\":\"REPL-bot\"\}" (:body response))))
-    (let [response (request :post "/event" {"text" "clj> (while true)"})]
+    (let [request (-> (mock/request :post "/event" "{\"text\": \"clj> (while true)\"}")
+                      (mock/content-type "application/json"))
+          response (app request)]
       (is (= 201 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type")))
+      (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))
       (is (= "{\"text\":\"```\\nEvaluation timed out in 5 seconds\\n```\",\"bot\":\"REPL-bot\"}" (:body response))))
-    (let [response (request :post "/event" {"text" "clj> (+ var1 5)"})]
+    (let [request (-> (mock/request :post "/event" "{\"text\": \"clj> (+ var1 5)\"}")
+                      (mock/content-type "application/json"))
+          response (app request)]
       (is (= 201 (:status response)))
-      (is (= "application/json; charset=utf8" (get-in (:headers response) "Content-Type")))
+      (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))
       (is (= "{\"text\":\"```\\n10\\n```\",\"bot\":\"REPL-bot\"}" (:body response)))))
 
   (testing "Test 404"
-    (is (= 404 (:status (request :post "/info" nil))))
-    (is (= 404 (:status (request :post "/heathcheck" nil))))
-    (is (= 404 (:status (request :get "/event" {"text" "clj>(+1 1)"}))))
-    (is (= 404 (:status (request :get "/" nil))))
-    (is (= 404 (:status (request :get "/random" nil))))))
+    (is (= 404 (:status (app (mock/request :post "/info")))))
+    (is (= 404 (:status (app (mock/request :post "/heathcheck")))))
+    (is (= 404 (:status (app (mock/request :get "/event" "{\"text\": \"clj> (+1 1)\"}")))))
+    (is (= 404 (:status (app (mock/request :get "/")))))
+    (is (= 404 (:status (app (mock/request :get "/random")))))))
