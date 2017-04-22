@@ -11,6 +11,9 @@ func TestBracketsGood(t *testing.T) {
 		{"((()", "))"},
 		{"(([", "]))"},
 		{"()()()([{", "}])"},
+		{":(", ""},
+		{":-(", ""},
+		{"(:(()", ")"},
 	}
 	for _, c := range cases {
 		result, err := processString(c.in)

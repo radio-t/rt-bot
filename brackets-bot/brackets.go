@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"strings"
 )
 
 var openingBrackets = [...]rune{'(', '[', '{', '<', '«'}
@@ -9,6 +10,8 @@ var closingBrackets = [...]rune{')', ']', '}', '>', '»'}
 
 var inconsistentError = errors.New("Stack is inconsistent")
 var emptyError = errors.New("Stack is empty")
+
+var ignoredStrings = [...]string{":(", ":-("}
 
 type bracketsStack []rune
 
@@ -65,6 +68,10 @@ func (a bracketsStack) getResult() []rune {
 }
 
 func processString(str string) (string, error) {
+	for _, x := range ignoredStrings {
+		str = strings.Replace(str, x, "", -1)
+	}
+
 	runes := []rune(str)
 	brackets_stack := bracketsStack{}
 	for _, s := range runes {
