@@ -6,11 +6,11 @@ defaults:
 
 ignored_commands:
   - "some text"
-  - "@weather:  m   "
-  - "@weather: лондон   "
-  - "@weather: york 23   "
-  - "@weather:  -new york   "
+  - "!weather:  m   "
+  - "!weather: лондон   "
+  - "!weather: york 23   "
+  - "!weather:  -new york   "
 
 test_cases:
-  - command: "@weather:!status"
+  - command: "!weather:!status"
     result: "weather-bot work fine"
