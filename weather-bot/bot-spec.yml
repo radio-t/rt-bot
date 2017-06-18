@@ -1,0 +1,16 @@
+bot_name: "weather-bot"
+bot_display_name: "weather-bot"
+
+defaults:
+  username: "test_name"
+
+ignored_commands:
+  - "some text"
+  - "!weather:  m   "
+  - "!weather: лондон   "
+  - "!weather: york 23   "
+  - "!weather:  -new york   "
+
+test_cases:
+  - command: "!weather:!status"
+    result: "weather-bot work fine"

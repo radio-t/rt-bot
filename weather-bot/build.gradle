@@ -1,0 +1,53 @@
+group 'rt.bot'
+version '0.1'
+
+final mainClass = "rt.bot.weatherbot.Main"
+
+final spark_version = '2.5.4'
+final junit_version = '4.12'
+final logback_version = '1.0.13'
+final jackson_jr_version = '2.8.5'
+final httpclient_version = '4.5.3'
+
+buildscript {
+    ext.kotlin_version = '1.0.6'
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //main dependencies
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile "com.sparkjava:spark-core:$spark_version"
+    compile "ch.qos.logback:logback-classic:$logback_version"
+    compile "com.fasterxml.jackson.jr:jackson-jr-objects:$jackson_jr_version"
+    compile "org.apache.httpcomponents:httpclient:$httpclient_version"
+    //test dependencies
+    testCompile "junit:junit:$junit_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClass
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

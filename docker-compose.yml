@@ -50,13 +50,14 @@ services:
             - tweet-bot
             - rest-voter
             - hcalendar-bot
-            - timezone-bot
             - doit-bot
             - docker-bot
             - money-bot
             - random-bot
             - bot-4-bots
             - lucky
+            - weather-bot
+            - or-bot
 
     hello:
         build: hello
@@ -164,6 +165,7 @@ services:
 
     karma-bot-storage:
       image: redis:3-alpine
+      command: redis-server --appendonly yes
       container_name: karma-bot-storage
       hostname: karma-bot-storage
       restart: always
@@ -297,3 +299,18 @@ services:
         restart: always
         logging: *default_logging
 
+    weather-bot:
+        build: weather-bot
+        image: rtbot/weather-bot
+        container_name: weather-bot
+        hostname: weather-bot
+        restart: always
+        logging: *default_logging
+
+    or-bot:
+        build: or-bot
+        image: rtbot/or-bot
+        container_name: or-bot
+        hostname: or-bot
+        restart: always
+        logging: *default_logging
