@@ -2,6 +2,7 @@ import asyncio
 import hashlib
 import json.decoder
 import logging
+import traceback
 from datetime import datetime, timedelta
 from time import time
 
@@ -195,8 +196,8 @@ async def http_event(request):
 
 
 async def main_loop(web_app):
-    try:
-        while True:
+    while True:
+        try:
             global last_update_timestamp
 
             if time() > last_update_timestamp + 24 * 3600:
@@ -254,8 +255,13 @@ async def main_loop(web_app):
                 if podcast_num_found and themes_num_found:
                     last_update_timestamp = time()
             await asyncio.sleep(10)
-    except asyncio.CancelledError:
-        pass
+        except asyncio.CancelledError:
+            pass
+        except:
+            log.warning('Unhandled exception in main_loop')
+            print(traceback.format_exc())
+            await asyncio.sleep(1)
+
 
 
 async def start_background_tasks(web_app):
