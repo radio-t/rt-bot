@@ -106,7 +106,7 @@ async def http_event(request):
 
     if input_text.strip().lower() in ['время!', '!время']:
         weekday = dt.weekday()
-        if last_response==None or (datetime.now() - last_response).seconds>45:
+        if last_response == None or (datetime.now() - last_response).seconds > 45:
             if weekday == 5:
                 if dt.hour < 23:
                     min_until_rt = 23 * 60 - (dt.hour * 60 + dt.minute)
@@ -261,7 +261,6 @@ async def main_loop(web_app):
             log.warning('Unhandled exception in main_loop')
             print(traceback.format_exc())
             await asyncio.sleep(1)
-
 
 
 async def start_background_tasks(web_app):
