@@ -168,7 +168,7 @@ async def http_event(request):
                 text_out += new_line
             return text_out
 
-        max_len = 0
+        max_len = 5
         if ':' in input_text:
             part1, part2 = input_text.strip().lower().split(':', 1)
             if part1.strip() == command and part2.strip().isdigit():
