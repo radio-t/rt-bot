@@ -31,8 +31,8 @@ def create_requests_session():
         return
     username = 'tweetbotrt'
     password = 'LEIa8BwGKWe87mZvmxEu'
-    data = {'session[username_or_email]': username, 
-            'session[password]': password, 
+    data = {'session[username_or_email]': username,
+            'session[password]': password,
             'authenticity_token': authenticity_token,
             'remember_me': '1',
             'return_to_ssl': 'true',
