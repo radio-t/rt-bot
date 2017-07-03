@@ -3,14 +3,26 @@ bot_name: "money-bot"
 bot_display_name: "money-bot"
 
 defaults:
-  username: "test-user"
-  display_name: "Test User"
+  username: "user"
+  display_name: "User"
   
 ignored_commands:
-  - "Ignored message 1"
-  - "Ignored message 2"
-  - "Ignored message 3"
+  - "100 миллионов миллиардов"
+  - "100 тысяч"
+  - "123к тугриков"
+  - "message with $ and with 100 123k"
+  - "word $word word$ word"
   
 test_cases:
   - command: "а на digital ocean такой сервер стоит 5 евро"
-    result: ".+"
+    result: "\\*\\*_user_\\*\\* упомянул 5 EUR.*"
+  - command: "5$ бобук"
+    result: "\\*\\*_user_\\*\\* упомянул 5 USD.+"
+  - command: "5 миллионов долларов"
+    result: "\\*\\*_user_\\*\\* упомянул 5 000 000 USD.+"
+  - command: "5к баксов"
+    result: "\\*\\*_user_\\*\\* упомянул 5 000 USD.+"
+  - command: "usd 5 000 000.51"
+    result: "\\*\\*_user_\\*\\* упомянул 5 000 000\\.51 USD.*"
+  - command: "₽42к"
+    result: "\\*\\*_user_\\*\\* упомянул 42 000 RUB.*"
