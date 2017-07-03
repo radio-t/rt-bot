@@ -2,6 +2,7 @@ import asyncio
 import hashlib
 import json.decoder
 import logging
+import traceback
 from datetime import datetime, timedelta
 from time import time
 
@@ -105,7 +106,7 @@ async def http_event(request):
 
     if input_text.strip().lower() in ['время!', '!время']:
         weekday = dt.weekday()
-        if last_response==None or (datetime.now() - last_response).seconds>45:
+        if last_response == None or (datetime.now() - last_response).seconds > 45:
             if weekday == 5:
                 if dt.hour < 23:
                     min_until_rt = 23 * 60 - (dt.hour * 60 + dt.minute)
@@ -167,7 +168,7 @@ async def http_event(request):
                 text_out += new_line
             return text_out
 
-        max_len = 0
+        max_len = 5
         if ':' in input_text:
             part1, part2 = input_text.strip().lower().split(':', 1)
             if part1.strip() == command and part2.strip().isdigit():
@@ -195,8 +196,8 @@ async def http_event(request):
 
 
 async def main_loop(web_app):
-    try:
-        while True:
+    while True:
+        try:
             global last_update_timestamp
 
             if time() > last_update_timestamp + 24 * 3600:
@@ -254,8 +255,12 @@ async def main_loop(web_app):
                 if podcast_num_found and themes_num_found:
                     last_update_timestamp = time()
             await asyncio.sleep(10)
-    except asyncio.CancelledError:
-        pass
+        except asyncio.CancelledError:
+            pass
+        except:
+            log.warning('Unhandled exception in main_loop')
+            print(traceback.format_exc())
+            await asyncio.sleep(1)
 
 
 async def start_background_tasks(web_app):
