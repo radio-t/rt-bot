@@ -75,6 +75,8 @@ app.post('/event', function(req, res) {
             else callback(true);
         },
         function(v, c, callback){
+            // remove keywords with 'к' symbols
+            v = v.replace(/бакс/gi, '')
             let val = v.replace(/[^\d(,|\.)-]/g, '');
             val = parseFloat(val);
             if(~v.indexOf("k")) val = val * 1000;
