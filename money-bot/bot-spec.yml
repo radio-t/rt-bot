@@ -26,3 +26,5 @@ test_cases:
     result: "\\*\\*_user_\\*\\* упомянул 5 000 000\\.51 USD.*"
   - command: "₽42к"
     result: "\\*\\*_user_\\*\\* упомянул 42 000 RUB.*"
+  - command: "5К $"
+    result: "\\*\\*_user_\\*\\* упомянул 5 000 USD.+"
