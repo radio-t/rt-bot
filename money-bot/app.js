@@ -42,7 +42,7 @@ let currency = {
 
 
 app.post('/event', function(req, res) {
-    let text = req.body.text;
+    let text = req.body.text.toLowerCase();
     waterfall([
         function(callback){
             let v = 0;
