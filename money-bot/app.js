@@ -349,5 +349,4 @@ function get_currency(){
 
 
 cron.schedule('56 * * * *', get_currency());
-get_currency();
 app.listen(8080);
