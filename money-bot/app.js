@@ -93,7 +93,7 @@ app.post('/event', function(req, res) {
         function(v, c, callback){
             // remove keywords with 'к' symbols
             v = v.replace(/бакс/gi, '')
-            v = v.replace(/(биткоин(а|ов)?|биток|битк(а|ов)?/gi, '')
+            v = v.replace(/(биткоин(а|ов)?|биток|битк(а|ов)?)/gi, '')
 
             let val = v.replace(/[^\d(,|\.)-]/g, '');
             val = parseFloat(val);
