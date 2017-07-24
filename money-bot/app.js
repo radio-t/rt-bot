@@ -107,7 +107,6 @@ app.post('/event', function(req, res) {
             else if(~v.indexOf("тыс")) val = val * 1000;
             else if(~v.indexOf("сотен")) val = val * 100;
             else if(~v.indexOf("сотни")) val = val * 100;
-            val = val.toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(".00", "");
             callback(null, val, c);
         },
         function(v, c, callback){
