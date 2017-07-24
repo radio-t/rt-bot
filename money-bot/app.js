@@ -328,7 +328,7 @@ function get_currency(){
                     currency.RUB_BTC = 1 / currency.BTC_RUB;
                     currency.BYN_BTC = 1 / currency.BTC_BYN;
 
-                    console.log('currencies updated.')
+                    console.log('currencies updated.');
 
                     callback(null);
                 }
