@@ -229,7 +229,9 @@ app.post('/event', function(req, res) {
                 name_5 = "BYN";
             }
 
-            let responseText = "**_"+req.body.username+"_** упомянул " + v + " "+ c + "\\n\\n"+
+            let pretty_value = v.toFixed(2).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(".00", "");
+
+            let responseText = "**_"+req.body.username+"_** упомянул " + pretty_value + " "+ c + "\\n\\n"+
                 "| "+c+"      | "+v+"     | Курсы                | \\n"+
                 "|:----------:|:---------:|:--------------------:|\\n"+
                 "| "+name_1+" | "+res_1+" | "+cur_1.toFixed(2)+" |\\n"+
