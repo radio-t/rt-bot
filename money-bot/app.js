@@ -22,22 +22,27 @@ let currency = {
     USD_UAH: 0,
     USD_RUB: 0,
     USD_BYN: 0,
+    USD_BTC: 0,
     EUR_USD: 0,
     EUR_UAH: 0,
     EUR_RUB: 0,
     EUR_BYN: 0,
+    EUR_BTC: 0,
     UAH_USD: 0,
     UAH_EUR: 0,
     UAH_RUB: 0,
     UAH_BYN: 0,
+    UAH_BTC: 0,
     RUB_USD: 0,
     RUB_EUR: 0,
     RUB_UAH: 0,
     RUB_BYN: 0,
+    RUB_BTC: 0,
     BYN_USD: 0,
     BYN_EUR: 0,
     BYN_UAH: 0,
-    BYN_RUB: 0
+    BYN_RUB: 0,
+    BYN_BTC: 0
 };
 
 
@@ -211,19 +216,13 @@ app.all('/info', function(req, res) {
 function get_currency(){
     waterfall([
         function(callback){
-            request("http://free.currencyconverterapi.com/api/v3/convert?q=USD_EUR,USD_UAH,USD_RUB,USD_BYN,EUR_USD,EUR_UAH,EUR_RUB,EUR_BYN,UAH_USD", {timeout: 3000}, function (error, response, body) {
+            request("http://free.currencyconverterapi.com/api/v3/convert?q=USD_EUR,USD_UAH", {timeout: 3000}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     let results = JSON.parse(body).results;
                     let quotes = Object.keys(results).map(function (key) { return results[key]; });
                     currency.USD_EUR = quotes[0].val;
                     currency.USD_UAH = quotes[1].val;
-                    currency.USD_RUB = quotes[2].val;
-                    currency.USD_BYN = quotes[3].val;
-                    currency.EUR_USD = quotes[4].val;
-                    currency.EUR_UAH = quotes[5].val;
-                    currency.EUR_RUB = quotes[6].val;
-                    currency.EUR_BYN = quotes[7].val;
-                    currency.UAH_USD = quotes[8].val;
+
                     callback(null);
                 }
                 else {
@@ -232,31 +231,51 @@ function get_currency(){
             });
         },
         function(callback){
-            request("http://free.currencyconverterapi.com/api/v3/convert?q=UAH_EUR,UAH_RUB,UAH_BYN,RUB_USD,RUB_EUR,RUB_UAH,RUB_BYN,BYN_USD,BYN_EUR,BYN_UAH", {timeout: 3000}, function (error, response, body) {
+            request("http://free.currencyconverterapi.com/api/v3/convert?q=USD_RUB,USD_BYN", {timeout: 3000}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     let results = JSON.parse(body).results;
                     let quotes = Object.keys(results).map(function (key) { return results[key]; });
-                    currency.UAH_EUR = quotes[0].val;
-                    currency.UAH_RUB = quotes[1].val;
-                    currency.UAH_BYN = quotes[2].val;
-                    currency.RUB_USD = quotes[3].val;
-                    currency.RUB_EUR = quotes[4].val;
-                    currency.RUB_UAH = quotes[5].val;
-                    currency.RUB_BYN = quotes[6].val;
-                    currency.BYN_USD = quotes[7].val;
-                    currency.BYN_EUR = quotes[8].val;
-                    currency.BYN_UAH = quotes[9].val;
+                    currency.USD_RUB = quotes[0].val;
+                    currency.USD_BYN = quotes[1].val;
+
+                    currency.EUR_USD = 1 / currency.USD_EUR;
+                    currency.EUR_UAH = currency.EUR_USD * currency.USD_UAH;
+                    currency.EUR_RUB = currency.EUR_USD * currency.USD_RUB;
+                    currency.EUR_BYN = currency.EUR_USD * currency.USD_BYN;
+
+                    currency.UAH_USD = 1 / currency.USD_UAH;
+                    currency.UAH_EUR = currency.UAH_USD * currency.USD_EUR;
+                    currency.UAH_RUB = currency.UAH_USD * currency.USD_RUB;
+                    currency.UAH_BYN = currency.UAH_USD * currency.USD_BYN;
+
+                    currency.RUB_USD = 1 / currency.USD_RUB;
+                    currency.RUB_EUR = currency.RUB_USD * currency.USD_EUR;
+                    currency.RUB_UAH = currency.RUB_USD * currency.USD_UAH;
+                    currency.RUB_BYN = currency.RUB_USD * currency.USD_BYN;
+
+                    currency.BYN_USD = 1 / currency.USD_BYN;
+                    currency.BYN_EUR = currency.BYN_USD * currency.USD_EUR;
+                    currency.BYN_UAH = currency.BYN_USD * currency.USD_UAH;
+                    currency.BYN_RUB = currency.BYN_USD * currency.USD_RUB;
+
                     callback(null);
                 }
                 else callback(true);
             });
         },
         function(callback){
-            request("http://free.currencyconverterapi.com/api/v3/convert?q=BYN_RUB", {timeout: 3000}, function (error, response, body) {
+            request("http://free.currencyconverterapi.com/api/v3/convert?q=USD_BTC", {timeout: 3000}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     let results = JSON.parse(body).results;
                     let quotes = Object.keys(results).map(function (key) { return results[key]; });
-                    currency.BYN_RUB = quotes[0].val;
+                    currency.USD_BTC = quotes[0].val;
+
+                    currency.BTC_USD = 1 / currency.USD_BTC;
+                    currency.BTC_EUR = currency.BTC_USD * currency.USD_EUR;
+                    currency.BTC_UAH = currency.BTC_USD * currency.USD_UAH;
+                    currency.BTC_RUB = currency.BTC_USD * currency.USD_RUB;
+                    currency.BTC_BYN = currency.BTC_USD * currency.USD_BYN;
+
                     callback(null);
                 }
                 else callback(true);
