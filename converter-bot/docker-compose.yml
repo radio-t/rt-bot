@@ -1,0 +1,7 @@
+converter-bot:
+    build: .
+    container_name: converter-bot
+    hostname: converter-bot
+    restart: always
+    ports:
+        - "8080:8080"

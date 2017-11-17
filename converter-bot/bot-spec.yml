@@ -1,0 +1,13 @@
+bot_name: "converter-bot"
+bot_display_name: "converter-bot"
+
+ignored_commands:
+  - "Привет"
+  - "Как дела?"
+
+test_cases:
+  - command: "что лучше, этот или тот?"
+    result: ".+"
+
+  - command: "кто лучше, я или он"
+    result: ".+"
