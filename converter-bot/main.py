@@ -12,11 +12,16 @@ def event():
         return silence()
 
     message = data.get('text')
+    display_name = data.get('display_name')
     message = message.strip()
-    app.converter.analyse(message)
-    if 1 == 1:
+    status, data = app.converter.analyse(message)
+    if status:
+        resp = display_name + ' упомянул ' + str(data['value']) + ' ' + str(data['unit'])
+        for item in data['data']:
+            resp += '\n\n' + ' ' + str(item['value']) + ' - ' + item['name']
+
         return Response(
-            response=json.dumps({'text': message, 'bot': 'converter-bot'}),
+            response=json.dumps({'text': resp, 'bot': 'converter-bot'}),
             status=201,
             mimetype="application/json"
         )
