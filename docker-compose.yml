@@ -58,6 +58,7 @@ services:
             - lucky
             - weather-bot
             - or-bot
+            - converter-bot
 
     hello:
         build: hello
@@ -312,5 +313,13 @@ services:
         image: rtbot/or-bot
         container_name: or-bot
         hostname: or-bot
+        restart: always
+        logging: *default_logging
+
+    converter-bot:
+        build: converter-bot
+        image: rtbot/converter-bot
+        container_name: converter-bot
+        hostname: converter-bot
         restart: always
         logging: *default_logging

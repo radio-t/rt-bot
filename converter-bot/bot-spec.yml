@@ -6,8 +6,8 @@ ignored_commands:
   - "Как дела?"
 
 test_cases:
-  - command: "что лучше, этот или тот?"
+  - command: "1 метр в сантиметрах"
     result: ".+"
 
-  - command: "кто лучше, я или он"
+  - command: "10 мегабайт"
     result: ".+"
