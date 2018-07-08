@@ -11,10 +11,10 @@ ignored_commands:
 
 test_cases:
   - command: "бобук!"
-    result: "https:\/\/twitter\.com\/bobuk\/status\/\d+"
+    result: "^https:\\/\\/twitter\\.com\\/bobuk\\/status\\/\\d+$"
 
   - command: "!твит ksenks"
-    result: "https:\/\/twitter\.com\/ksenks\/status\/\d+"
+    result: "^https:\\/\\/twitter\\.com\\/ksenks\\/status\\/\\d+$"
 
   - command: "!твит tweetbotrt"
-    result: "https:\/\/twitter\.com\/tweetbotrt\/status\/1013416833884581888"
+    result: "^https:\\/\\/twitter\\.com\\/tweetbotrt\\/status\\/1013416833884581888$"
