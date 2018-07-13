@@ -16,12 +16,8 @@ env:
     - SSL_CERT=nginx.crt
     - LETSENCRYPT=false
     - DOCKER_REGISTRY_HOST=docker.io
-    - DOCKER_REGISTRY_LOGIN=
-    - DOCKER_REGISTRY_PASSWORD=
     - BOTS_WAIT_TIMEOUT=30
     - DEPLOY_TRIGGER_URL=https://bot.radio-t.com:1443/deploy
-    - DEPLOY_USER=
-    - DEPLOY_PASSWD=
 
 before_install:
   - DOCKER_REGISTRY_LOGIN= DOCKER_REGISTRY_PASSWORD= DEPLOY_USER= DEPLOY_PASSWD= pip install docker-compose==1.9.0
