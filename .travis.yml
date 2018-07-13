@@ -43,10 +43,7 @@ script:
 
   - |
       if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-        docker login \
-          --username "$DOCKER_REGISTRY_LOGIN" \
-          --password "$DOCKER_REGISTRY_PASSWORD" \
-          "$DOCKER_REGISTRY_HOST"
+        docker login --username "$DOCKER_REGISTRY_LOGIN" --password "$DOCKER_REGISTRY_PASSWORD" "$DOCKER_REGISTRY_HOST"
         docker-compose push
         echo "Deploying containers..."
         deploy_result=$(curl -X POST \
