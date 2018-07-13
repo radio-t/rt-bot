@@ -1,0 +1,13 @@
+bot_name: "converter-bot"
+bot_display_name: "converter-bot"
+
+ignored_commands:
+  - "Привет"
+  - "Как дела?"
+
+test_cases:
+  - command: "1 метр в сантиметрах"
+    result: ".+"
+
+  - command: "10 мегабайт"
+    result: ".+"
